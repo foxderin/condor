@@ -1,0 +1,19 @@
+# Build context for the condor image: source tree minus artefacts that are
+# either rebuilt in the image (frontend/dist) or belong to a host install.
+.git
+frontend/node_modules
+frontend/dist
+frontend/dist.new
+frontend/dist.old
+data
+.condor
+reports
+config.yml
+audit_log.yml
+.env
+*.pickle
+__pycache__
+*.pyc
+.venv
+tests
+flows
