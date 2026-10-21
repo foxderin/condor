@@ -97,6 +97,15 @@ export const THEME_KEY = "condor_theme";
 export const DISPLAY_CURRENCY_KEY = "condor_display_currency";
 
 /**
+ * The UI language, or absent for "follow the browser" (lib/i18n).
+ *
+ * KEPT: it says how this screen is set up, not what the last person was doing.
+ * Wiping it on logout would flip the interface to English for a user who just
+ * signed out on their own laptop, which is the reason THEME_KEY is kept.
+ */
+export const LANGUAGE_KEY = "condor_language";
+
+/**
  * Which PnL series the charts draw, as a JSON array of series keys to *hide*
  * (FEAT-085). Empty or absent means draw everything, so a browser that has
  * never touched the legend and one whose storage is unreadable behave alike.
