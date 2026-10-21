@@ -5,6 +5,11 @@ frontend/node_modules
 frontend/dist
 frontend/dist.new
 frontend/dist.old
+# Runtime state, never image content. ConfigManager("config.yml") reads relative
+# to the working directory and writes the file itself on first boot
+# (_init_default_config), so an install must mount its own config.yml and
+# audit_log.yml to keep servers, users and permissions across a `docker run`.
+# Baking a host's copy in would ship someone's API credentials in the image.
 data
 .condor
 reports
