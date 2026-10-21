@@ -274,31 +274,31 @@ export function PoolSourceTabs({
       />
 
       <div className="flex flex-wrap items-center gap-0.5">
-        {GECKO_TABS.map((t) => (
+        {GECKO_TABS.map((tab) => (
           <button
-            key={t.view}
-            onClick={() => onSourceChange({ kind: "gecko", view: t.view })}
+            key={tab.view}
+            onClick={() => onSourceChange({ kind: "gecko", view: tab.view })}
             className={tabClass(
-              sameSource(source, { kind: "gecko", view: t.view }),
+              sameSource(source, { kind: "gecko", view: tab.view }),
             )}
           >
-            {t.label}
+            {tab.label()}
           </button>
         ))}
         {showGatewayTabs && (
           <>
             <span className="mx-1.5 h-4 w-px bg-[var(--color-border)]" />
-            {GATEWAY_TABS.map((t) => (
+            {GATEWAY_TABS.map((tab) => (
               <button
-                key={t.connector}
+                key={tab.connector}
                 onClick={() =>
-                  onSourceChange({ kind: "gateway", connector: t.connector })
+                  onSourceChange({ kind: "gateway", connector: tab.connector })
                 }
                 className={tabClass(
-                  sameSource(source, { kind: "gateway", connector: t.connector }),
+                  sameSource(source, { kind: "gateway", connector: tab.connector }),
                 )}
               >
-                {t.label}
+                {tab.label()}
               </button>
             ))}
           </>

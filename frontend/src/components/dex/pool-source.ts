@@ -1,3 +1,5 @@
+import { t } from "@/lib/i18n";
+
 /**
  * Which pool listing to browse. The upstreams take genuinely different arguments
  * — GeckoTerminal ranks a *chain*'s pools and searches by address, Gateway CLMM
@@ -10,10 +12,10 @@ export type PoolSource =
   | { kind: "favorites" };
 
 export const GECKO_TABS = [
-  { view: "trending", label: "Trending" },
-  { view: "top", label: "Top" },
-  { view: "new", label: "New" },
-  { view: "token", label: "Search" },
+  { view: "trending", label: () => t("Trending") },
+  { view: "top", label: () => t("Top") },
+  { view: "new", label: () => t("New") },
+  { view: "token", label: () => t("Search") },
 ] as const;
 
 /**
@@ -24,8 +26,8 @@ export const GECKO_TABS = [
  * not offering it. GeckoTerminal browsing works on every chain either way.
  */
 export const GATEWAY_TABS = [
-  { connector: "meteora", label: "Meteora" },
-  { connector: "orca", label: "Orca" },
+  { connector: "meteora", label: () => t("Meteora") },
+  { connector: "orca", label: () => t("Orca") },
 ] as const;
 
 export const GATEWAY_TAB_CHAIN = "solana";

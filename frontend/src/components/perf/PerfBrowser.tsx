@@ -299,17 +299,17 @@ type PeriodKey = keyof typeof PERIODS;
  * these three are one answer — the same shape the period strip below it has,
  * for the same reason.
  */
-const GRAINS: ReadonlyArray<{ key: Grain; label: string; hint: string }> = [
-  { key: "both", label: "Both", hint: "Every record: controllers, with the executors under them." },
+const GRAINS: ReadonlyArray<{ key: Grain; label: () => string; hint: () => string }> = [
+  { key: "both", label: () => t("Both"), hint: () => t("Every record: controllers, with the executors under them.") },
   {
     key: "controllers",
-    label: "Controllers",
-    hint: "Controller records only — each row reports its own numbers, with no executors under it.",
+    label: () => t("Controllers"),
+    hint: () => t("Controller records only — each row reports its own numbers, with no executors under it."),
   },
   {
     key: "executors",
-    label: "Executors",
-    hint: "Executors only — a controller row folds the executors that ran under it, and reports nothing of its own.",
+    label: () => t("Executors"),
+    hint: () => t("Executors only — a controller row folds the executors that ran under it, and reports nothing of its own."),
   },
 ];
 
@@ -2250,7 +2250,7 @@ export function PerfBrowser({
     return {
       // The same label the route entry uses, so the cache's half of this screen
       // and the reader's half render as one screen rather than two.
-      label: "Bots",
+      label: t("Bots"),
       subject,
       onScreen: {
         population,
@@ -2394,14 +2394,14 @@ export function PerfBrowser({
                     type="button"
                     onClick={() => setGrain(key)}
                     aria-pressed={grain === key}
-                    title={hint}
+                    title={hint()}
                     className={`flex-1 rounded px-1 py-1 text-[10px] font-medium transition-colors ${
                       grain === key
                         ? "bg-[var(--color-primary)]/15 text-[var(--color-primary)]"
                         : "text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
                     }`}
                   >
-                    {label}
+                    {label()}
                   </button>
                 ))}
               </div>
