@@ -17,6 +17,7 @@ import {
   type PerfLeaf,
 } from "@/lib/perf-tree";
 import type { DeedIndex } from "@/lib/agent-attribution";
+import { t } from "@/lib/i18n";
 
 export { DEFAULT_GROUPING, type GroupAxis };
 
@@ -62,8 +63,8 @@ export function formatGrouping(axes: readonly GroupAxis[]): string {
 /** One button on the picker: a question, and the nesting that answers it. */
 export interface GroupingPreset {
   key: string;
-  label: string;
-  hint: string;
+  label: () => string;
+  hint: () => string;
   axes: readonly GroupAxis[];
 }
 
@@ -79,26 +80,26 @@ export interface GroupingPreset {
 export const GROUPING_PRESETS: readonly GroupingPreset[] = [
   {
     key: "owner",
-    label: "Owner",
-    hint: "Every controller and executor under the agent that made it, Condor included.",
+    label: () => t("Owner"),
+    hint: () => t("Every controller and executor under the agent that made it, Condor included."),
     axes: ["agent", "bot"],
   },
   {
     key: "bot",
-    label: "Bot",
-    hint: "One row per bot, whoever deployed it — the thing you stop.",
+    label: () => t("Bot"),
+    hint: () => t("One row per bot, whoever deployed it — the thing you stop."),
     axes: ["bot"],
   },
   {
     key: "pair",
-    label: "Pair",
-    hint: "One row per trading pair, across the whole fleet.",
+    label: () => t("Pair"),
+    hint: () => t("One row per trading pair, across the whole fleet."),
     axes: ["pair"],
   },
   {
     key: "ctrlType",
-    label: "Type",
-    hint: "One row per controller class — pmm_simple, grid_strike, and so on.",
+    label: () => t("Type"),
+    hint: () => t("One row per controller class — pmm_simple, grid_strike, and so on."),
     axes: ["ctrlType"],
   },
 ];

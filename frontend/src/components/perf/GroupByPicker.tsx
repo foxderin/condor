@@ -43,14 +43,14 @@ export function GroupByPicker({
             type="button"
             onClick={() => onChange(preset.axes)}
             aria-pressed={active}
-            title={preset.hint}
+            title={preset.hint()}
             className={`flex-1 rounded px-1 py-1 text-[10px] font-medium transition-colors ${
               active
                 ? "bg-[var(--color-primary)]/15 text-[var(--color-primary)]"
                 : "text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
             }`}
           >
-            {preset.label}
+            {preset.label()}
           </button>
         );
       })}

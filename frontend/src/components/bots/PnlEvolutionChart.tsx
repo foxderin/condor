@@ -725,7 +725,7 @@ export function PnlEvolutionChart({ data, title, pnlHeight, volumeHeight, curren
             <div className="flex items-center gap-0.5" data-range-presets>
               {RANGE_PRESETS.filter((preset) => preset.ms < fullSpanMs).map((preset) => (
                 <RangeChip
-                  key={preset.label}
+                  key={preset.ms}
                   label={preset.label}
                   active={range?.trailing === preset.ms}
                   onClick={() => setRange({ start: null, end: null, trailing: preset.ms })}
