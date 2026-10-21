@@ -229,7 +229,7 @@ export function PersonRow({
         onConfirm={() => codeRunMut.mutate(true)}
         onClose={() => setConfirmCodeRun(false)}
       >
-        {t("This lets them execute arbitrary Python in the bot process: every configured server&apos;s credentials, the dashboard&apos;s JWT secret and the environment are readable, and the process is writable. It is admin-equivalent in practice. Only grant it to someone you would make an admin.")}</ConfirmDialog>
+        {t("This lets them execute arbitrary Python in the bot process: every configured server's credentials, the dashboard's JWT secret and the environment are readable, and the process is writable. It is admin-equivalent in practice. Only grant it to someone you would make an admin.")}</ConfirmDialog>
     </div>
   );
 }

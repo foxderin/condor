@@ -594,7 +594,7 @@ export function ApiKeysSettings() {
                       onCancel={() => setConfirmDelete(null)}
                       pending={deleteMut.isPending}
                       disabled={!isOwner}
-                      triggerLabel={isOwner ? "Delete credential" : OWNER_ONLY_HINT}
+                      triggerLabel={isOwner ? t("Delete credential") : OWNER_ONLY_HINT}
                     />
                   </div>
                 ))}
@@ -662,7 +662,7 @@ export function ApiKeysSettings() {
                         }
                         disabled={defaultWalletMut.isPending || !isOwner}
                         className="rounded p-1.5 text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-primary)] disabled:cursor-not-allowed disabled:opacity-50"
-                        title={isOwner ? "Set as default wallet for this chain" : OWNER_ONLY_HINT}
+                        title={isOwner ? t("Set as default wallet for this chain") : OWNER_ONLY_HINT}
                       >
                         <Star className="h-3.5 w-3.5" />
                       </button>
@@ -677,7 +677,7 @@ export function ApiKeysSettings() {
                       pending={deleteWalletMut.isPending}
                       disabled={!isOwner}
                       triggerLabel={
-                        isOwner ? "Remove wallet from Gateway" : OWNER_ONLY_HINT
+                        isOwner ? t("Remove wallet from Gateway") : OWNER_ONLY_HINT
                       }
                       confirmLabel={t("Confirm remove")}
                       cancelLabel="Cancel remove"

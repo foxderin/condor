@@ -230,7 +230,7 @@ export function DockPortfolio({ server }: { server: string }) {
     return (
       <div className="flex flex-col">
         <p className="px-3 py-2 text-[11px] text-[var(--color-red)]">
-          {t("Could not read")}{" "}{server}{t("&apos;s portfolio.")}</p>
+          {t("Could not read")}{" "}{server}{t("'s portfolio.")}</p>
         {footer}
       </div>
     );

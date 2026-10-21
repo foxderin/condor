@@ -183,7 +183,7 @@ export function GridConfigPanel({ state, dispatch, currentPrice, isSpot = false,
             {validation.levels > 0 && (
               <>
                 <p>
-                  ~{validation.levels} {t("levels &middot; ~$")}{perLevel.toFixed(2)}/level
+                  ~{validation.levels} {t("levels · ~$")}{perLevel.toFixed(2)}/level
                   {validation.levelConstraint === "amount" && (
                     <span className="ml-1 text-amber-400">{t("(limited by amount)")}</span>
                   )}

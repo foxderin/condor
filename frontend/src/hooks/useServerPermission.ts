@@ -1,5 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
+import { t } from "@/lib/i18n";
+
 import { type ServerInfo, api } from "@/lib/api";
 import { useServer } from "./useServer";
 
@@ -21,8 +23,9 @@ import { useServer } from "./useServer";
 const OWNER = "owner";
 
 /** Explanation shown on controls that only a server owner may use. */
-export const OWNER_ONLY_HINT =
-  "Only the server's owner can change this — you have trader access to this server.";
+export const OWNER_ONLY_HINT = t(
+  "Only the server's owner can change this — you have trader access to this server."
+);
 
 export interface ServerPermissionState {
   /** "owner" | "trader", or null while the server list is still unresolved. */

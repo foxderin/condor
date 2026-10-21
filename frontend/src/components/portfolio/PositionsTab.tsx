@@ -141,7 +141,7 @@ export function PositionsTab({
             <h2 className="text-sm font-semibold">{t("Holds")}</h2>
             {/* Load-bearing, not decoration: this is the honest scope of the data. */}
             <span className="text-xs text-[var(--color-text-muted)]">
-              {t("Opened by Condor&apos;s executors and bots")}</span>
+              {t("Opened by Condor's executors and bots")}</span>
           </div>
 
           <div className="overflow-x-auto rounded-lg border border-[var(--color-border)]">

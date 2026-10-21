@@ -143,7 +143,7 @@ export function AgentFleet({
         {elsewhere && (
           <span className="inline-flex items-center gap-1 text-[var(--color-yellow)]">
             <Server className="h-3 w-3" />
-            {ownerRowLabel(fleet.owners, runKey)}{t("&apos;s bots run on")}{" "}
+            {ownerRowLabel(fleet.owners, runKey)}{t("'s bots run on")}{" "}
             <code className="font-mono">{serverName}</code>
             <button
               type="button"

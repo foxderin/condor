@@ -148,7 +148,7 @@ export function PersonDetail({
               className="mt-0.5 h-3.5 w-3.5 shrink-0 accent-[var(--color-red)]"
             />
             <span className="text-xs leading-relaxed text-[var(--color-text-muted)]">
-              <code className="text-[var(--color-text)]">code_run</code> {t("— arbitrary Python in the bot process: every server&apos;s credentials, the dashboard&apos;s JWT secret and the environment. Admin-equivalent in practice.")}</span>
+              <code className="text-[var(--color-text)]">code_run</code> {t("— arbitrary Python in the bot process: every server's credentials, the dashboard's JWT secret and the environment. Admin-equivalent in practice.")}</span>
           </label>
           {codeRunError && (
             <p className="mt-1.5 text-xs text-[var(--color-red)]">{codeRunError}</p>

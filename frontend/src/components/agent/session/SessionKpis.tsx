@@ -133,8 +133,8 @@ export function SessionKpis({ perf }: { perf?: AgentPerformance | null }) {
             />
           </div>
           <p className="text-[10px] leading-snug text-[var(--color-text-muted)]">
-            <strong>{t("Session")}</strong> {t("is sliced to this session&apos;s ownership window;")}{" "}
-            <strong>lifetime</strong> {t("covers every generation ever deployed under the bot names it owns, stopped and archived ones included. Neither corrects the other — a cumulative leaderboard wants lifetime, this session&apos;s own result is the session figure. &ldquo;Unavailable&rdquo; is never the other scope&apos;s total.")}</p>
+            <strong>{t("Session")}</strong> {t("is sliced to this session's ownership window;")}{" "}
+            <strong>lifetime</strong> {t("covers every generation ever deployed under the bot names it owns, stopped and archived ones included. Neither corrects the other — a cumulative leaderboard wants lifetime, this session's own result is the session figure. “Unavailable” is never the other scope's total.")}</p>
         </div>
       )}
     </div>

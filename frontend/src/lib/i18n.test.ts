@@ -30,10 +30,10 @@ function calledStrings(): Set<string> {
   // `t("…")` and `t('…')`, one line, no nesting. A component that receives the
   // translator as a prop calls it `tr(...)`, which counts too — the catalogue
   // does not care what the binding is named.
-  const call = /\b(?:t|tr)\(\s*["']((?:[^"'\\\n]|\\.)+)["']/g;
+  const call = /\b(?:t|tr)\(\s*(["\'])((?:[^\\\n]|\\.)*?)\1/g;
   for (const [path, source] of Object.entries(SOURCES)) {
     if (path.includes(".test.") || path === "lib/i18n.tsx") continue;
-    for (const m of source.matchAll(call)) found.add(m[1]);
+    for (const m of source.matchAll(call)) found.add(m[2]);
   }
   return found;
 }

@@ -473,7 +473,7 @@ function ModalShell({
       <div className="flex h-12 shrink-0 items-center justify-between border-b border-[var(--color-border)] bg-[var(--color-surface)] px-4">
         <div className="flex items-center gap-2">
           <TerminalSquare className="h-4 w-4 text-[var(--color-text-muted)]" />
-          <h2 className="text-sm font-semibold">{t("Controllers &amp; configs")}</h2>
+          <h2 className="text-sm font-semibold">{t("Controllers & configs")}</h2>
         </div>
         <button
           onClick={onClose}

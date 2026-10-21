@@ -1002,10 +1002,10 @@ export function Portfolio() {
           so it stays above the split. */}
       <div className="flex items-center gap-1 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-1 w-fit">
         {([
-          { key: "assets" as const, label: "Assets", icon: Wallet, count: null },
+          { key: "assets" as const, label: t("Assets"), icon: Wallet, count: null },
           {
             key: "positions" as const,
-            label: "Positions",
+            label: t("Positions"),
             icon: Layers,
             // A flash of `(0)` on a portfolio that has seven positions is worse
             // than a beat of no badge, so it waits for both queries.

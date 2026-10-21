@@ -406,7 +406,7 @@ export function DexPool() {
         >
           <AlertTriangle className="h-3.5 w-3.5 shrink-0 text-[var(--color-yellow)]" />
           <span className="font-medium text-[var(--color-yellow)]">
-            {unlistedTokens.length === 1 ? "A token is" : "Tokens are"} {t("not in Gateway&apos;s token list")}</span>
+            {unlistedTokens.length === 1 ? "A token is" : "Tokens are"} {t("not in Gateway's token list")}</span>
           <span className="text-[var(--color-text-muted)]">
             {t("Balances for")}{" "}
             {unlistedTokens
@@ -432,7 +432,7 @@ export function DexPool() {
           {tokenConflict && (
             <span className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[var(--color-text-muted)]">
               {tokenConflict.holder.symbol} {t("already names")}{" "}
-              {tokenConflict.holder.address.slice(0, 6)}{t("… on the list — replace it with this pool&apos;s token?")}<button
+              {tokenConflict.holder.address.slice(0, 6)}{t("… on the list — replace it with this pool's token?")}<button
                 onClick={() =>
                   addTokenMutation.mutate({
                     address: tokenConflict.address,

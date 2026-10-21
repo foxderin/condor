@@ -325,7 +325,7 @@ function ComponentCard({
               {facet.detail.length > 0 && (
                 <details className="mt-1 pl-14">
                   <summary className="cursor-pointer text-[var(--color-text-muted)] hover:text-[var(--color-text)]">
-                    {t("What&apos;s new")}</summary>
+                    {t("What's new")}</summary>
                   <ul className="mt-1 space-y-0.5 text-[var(--color-text-muted)]">
                     {facet.detail.map((line, i) => (
                       <li key={i} className="truncate font-mono">

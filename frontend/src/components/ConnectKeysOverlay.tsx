@@ -29,7 +29,7 @@ export function ConnectKeysOverlay() {
             onClick={() => navigate("/settings?tab=keys")}
             className="flex items-center gap-2 rounded-lg bg-[var(--color-primary)] px-6 py-2.5 text-sm font-semibold text-white transition-all hover:bg-[var(--color-primary-hover)] hover:shadow-lg hover:shadow-[var(--color-primary)]/20 active:scale-[0.98]"
           >
-            {t("Connect Keys &amp; Wallets")}<ArrowRight className="h-4 w-4" />
+            {t("Connect Keys & Wallets")}<ArrowRight className="h-4 w-4" />
           </button>
 
           {/* Secondary hint */}

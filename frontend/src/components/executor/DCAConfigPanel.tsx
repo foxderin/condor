@@ -111,8 +111,8 @@ export function DCAConfigPanel({ state, dispatch, validation, currentPrice, isSp
         ))}
 
         <p className="rounded bg-[var(--color-bg)] px-2.5 py-1.5 text-[10px] text-[var(--color-text-muted)]">
-          {state.amounts_quote.length} {t("levels &middot; Total: $")}{totalQuote.toFixed(2)}
-          {bep > 0 && <> {t("&middot; BEP:")}{" "}<span className="font-mono text-amber-400">{bep.toPrecision(6)}</span></>}
+          {state.amounts_quote.length} {t("levels · Total: $")}{totalQuote.toFixed(2)}
+          {bep > 0 && <> {t("· BEP:")}{" "}<span className="font-mono text-amber-400">{bep.toPrecision(6)}</span></>}
         </p>
         <LeverageField value={state.leverage} field="leverage" dispatch={dispatch} isSpot={isSpot} />
       </div>

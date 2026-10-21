@@ -520,7 +520,7 @@ function MarketDataCard({ server }: { server: string }) {
         ))}
       </div>
       <p className="mt-3 text-xs text-[var(--color-text-muted)]">
-        {t("Read-only. Set in the server&apos;s")}{" "}<code>.env</code> as <code>{t("MARKET_DATA_*")}</code>{t("; takes effect on API restart.")}</p>
+        {t("Read-only. Set in the server's")}{" "}<code>.env</code> as <code>{t("MARKET_DATA_*")}</code>{t("; takes effect on API restart.")}</p>
     </Card>
   );
 }

@@ -20,7 +20,7 @@ import { useViewFacts } from "@/lib/viewFacts";
 import { CurrencySelector } from "./CurrencySelector";
 import { NotificationBell } from "./NotificationBell";
 import { ServerSelector } from "./ServerSelector";
-import { t } from "@/lib/i18n";
+import { t, useT } from "@/lib/i18n";
 
 /**
  * Full-bleed routes that carry a parameter, so an exact match cannot find them.
@@ -55,6 +55,9 @@ function AppShellBody() {
   const { server } = useServer();
   const { pathname, search } = useLocation();
   const { theme, toggleTheme } = useTheme();
+  // Subscribed, so a language switch re-renders the nav rather than waiting for
+  // the next navigation.
+  const tr = useT();
   const navigate = useNavigate();
   const { hasKeys, isLoading: keysLoading } = useCredentials();
   const [reportOpen, setReportOpen] = useState(false);
@@ -129,7 +132,7 @@ function AppShellBody() {
                 }
               >
                 <Icon className="h-3.5 w-3.5 shrink-0" />
-                {label}
+                {tr(label)}
               </NavLink>
             ))}
           </nav>

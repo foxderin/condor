@@ -122,7 +122,7 @@ export function ServersSettings() {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <p className="text-sm text-[var(--color-text-muted)]">
-          {servers.length} server{servers.length !== 1 ? "s" : ""} configured
+          {t("{count} servers configured", { count: servers.length })}
         </p>
         {!adding && (
           <button

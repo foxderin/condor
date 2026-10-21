@@ -798,7 +798,7 @@ function BrainTab({
 
       <div className="mb-1 flex items-center justify-between gap-3">
         <p className="text-[10px] uppercase tracking-wider text-[var(--color-text-muted)]">
-          {t("AGENT.md — identity &amp; domain knowledge")}</p>
+          {t("AGENT.md — identity & domain knowledge")}</p>
         <EditButton onClick={onEdit} />
       </div>
       {prose ? (

@@ -235,7 +235,7 @@ export function StartSessionDialog({
                   <Power className="h-3.5 w-3.5" />
                   {t("Resume after Condor restarts")}</span>
                 <span className="mt-1 block text-[11px] leading-snug text-[var(--color-text-muted)]">
-                  {t("A restart otherwise leaves this loop stopped. On, Condor starts it again in a")}<strong>{t("fresh session")}</strong>{t(", from the config as it stands then — it never resumes the old session&apos;s journal.")}</span>
+                  {t("A restart otherwise leaves this loop stopped. On, Condor starts it again in a")}<strong>{t("fresh session")}</strong>{t(", from the config as it stands then — it never resumes the old session's journal.")}</span>
               </span>
             </label>
           )}
