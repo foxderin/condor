@@ -15,6 +15,7 @@ import type {
   HostLoad,
   VenueCondition,
 } from "@/lib/api";
+import { t } from "@/lib/i18n";
 
 /**
  * Which of my bots is in trouble, and why — from signals rather than from logs
@@ -141,6 +142,8 @@ export type SignalState = "ok" | "flagged" | "unknown";
 
 /** One reading: what it is, what it says, and the facts behind the verdict. */
 export interface Signal {
+  /** Stable identity for `data-signal`. Never translated; labels are. */
+  id?: string;
   label: string;
   state: SignalState;
   /** The reading itself, or `"unknown"` when there is none. */
@@ -301,7 +304,7 @@ export function hostLoadSignal(host: HostLoad): Signal {
     );
   }
   return {
-    label: "Load per vCPU",
+    label: t("Load per vCPU"),
     state: host.load_per_vcpu > LOAD_PER_VCPU_FLAG ? "flagged" : "ok",
     value: `${host.load_per_vcpu.toFixed(2)}x`,
     facts: [`load ${host.load_1m.toFixed(2)}`, `${host.vcpus} vCPU`],
@@ -465,6 +468,8 @@ export interface FleetDiagnosticsProps {
 
 /** One titled group of signals, in the order an operator triages them. */
 export interface SignalGroup {
+  /** Stable identity for `data-group`. Never translated; titles are. */
+  id?: string;
   title: string;
   signals: Signal[];
 }
@@ -522,12 +527,12 @@ export function buildSignalGroups({
   for (const row of diagnostics.api_lag) host.push(lagSignal(row));
 
   return [
-    { title: "Liveness", signals: liveness },
-    { title: "Activity", signals: activity },
-    { title: "Host", signals: host },
-    { title: "Executors", signals: hygieneSignals(hygiene) },
+    { title: t("Liveness"), signals: liveness },
+    { title: t("Activity"), signals: activity },
+    { title: t("Host"), signals: host },
+    { title: t("Executors"), signals: hygieneSignals(hygiene) },
     {
-      title: "Throttling",
+      title: t("Throttling"),
       signals: throttleSignals(diagnostics.venues, diagnostics.callers, nowMs),
     },
   ];

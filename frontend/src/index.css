@@ -192,6 +192,24 @@ body {
   box-sizing: border-box;
 }
 
+/*
+ * Chinese has no letter case, so `uppercase` does nothing to it — and the
+ * letterspacing that goes with it (tracking-wider, tracking-widest) was tuned
+ * for 10px uppercase Latin, where it reads as a label. On 10px Han characters it
+ * reads as broken text: the glyphs are dense and the gaps make them look spaced
+ * apart. Both are neutralised in Chinese only, so the English UI keeps its
+ * design language. One rule beats editing 168 class strings, and it follows the
+ * language the i18n module already sets on <html>.
+ */
+:lang(zh) .uppercase {
+  text-transform: none;
+}
+
+:lang(zh) .tracking-wider,
+:lang(zh) .tracking-widest {
+  letter-spacing: 0.02em;
+}
+
 /* Smooth theme transitions on surfaces */
 [data-theme] * {
   transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;

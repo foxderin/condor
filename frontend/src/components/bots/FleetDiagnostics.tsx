@@ -20,7 +20,7 @@ const STATE_STYLE: Record<SignalState, string> = {
 function SignalRow({ signal }: { signal: Signal }) {
   return (
     <div
-      data-signal={signal.label}
+      data-signal={signal.id ?? signal.label}
       data-state={signal.state}
       className={`rounded border px-2 py-1.5 ${STATE_STYLE[signal.state]}`}
     >
@@ -42,10 +42,10 @@ function SignalRow({ signal }: { signal: Signal }) {
   );
 }
 
-function Group({ title, signals }: { title: string; signals: Signal[] }) {
+function Group({ id, title, signals }: { id?: string; title: string; signals: Signal[] }) {
   const flagged = signals.filter((s) => s.state === "flagged").length;
   return (
-    <section data-group={title} className="flex flex-col gap-1">
+    <section data-group={id ?? title} className="flex flex-col gap-1">
       <h4 className="flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
         {title}
         {flagged > 0 && (
@@ -59,7 +59,7 @@ function Group({ title, signals }: { title: string; signals: Signal[] }) {
       ) : (
         // Keyed by position as well as label: two venues on two hosts can
         // render the same label, and a duplicate key drops a row silently.
-        signals.map((signal, i) => <SignalRow key={`${i}:${signal.label}`} signal={signal} />)
+        signals.map((signal, i) => <SignalRow key={`${i}:${signal.id ?? signal.label}`} signal={signal} />)
       )}
     </section>
   );

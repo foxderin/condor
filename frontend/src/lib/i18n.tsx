@@ -92,6 +92,7 @@ export const ZH: Record<string, string> = {
   "Activation Bounds (0 = disabled)": "激活边界（0 = 禁用）",
   "Activation Price": "激活价格",
   "Active": "活跃",
+  "Activity": "活动",
   "Add": "添加",
   "Add API Key": "添加 API 密钥",
   "Add API keys": "添加 API 密钥",
@@ -465,8 +466,10 @@ export const ZH: Record<string, string> = {
   "Live": "实时",
   "Live controllers and the executors working under them": "运行中的控制器及其下的执行器",
   "Live executors no running controller claims": "没有任何运行中控制器认领的活跃执行器",
+  "Liveness": "存活",
   "Load more": "加载更多",
   "Load older runs": "加载更早的运行",
+  "Load per vCPU": "每 vCPU 负载",
   "Loading": "加载中",
   "Loading config...": "正在加载配置…",
   "Loading connectors...": "正在加载连接器…",
@@ -954,6 +957,7 @@ export const ZH: Record<string, string> = {
   "This seat cannot restart Condor.": "此席位无法重启 Condor。",
   "This seat is signed in without the admin role, so the": "此席位未以管理员身份登录，因此",
   "This will run": "将运行",
+  "Throttling": "限流",
   "Tick #": "轮次 #",
   "Tick Timeout (sec)": "轮次超时（秒）",
   "Ticks": "轮次",
@@ -1189,9 +1193,13 @@ function readStored(): Language {
   }
   // No stored choice: follow the browser. Chinese-script locales win, which
   // also covers zh-TW and zh-HK — they read the same copy here.
-  return typeof navigator !== "undefined" && /^zh\b/i.test(navigator.language ?? "")
-    ? "zh"
-    : "en";
+  //
+  // Gated on `window`, not on `navigator`: Node 22 also defines `navigator`, and
+  // it derives from LANG. A CI box with zh_CN.UTF-8 would then answer Chinese
+  // inside vitest and turn every English assertion red — the test result would
+  // depend on the machine, which is the one thing it must never do.
+  if (typeof window === "undefined") return "en";
+  return /^zh\b/i.test(navigator.language ?? "") ? "zh" : "en";
 }
 
 // Module state, not React state, so a formatter in `lib/` can translate without

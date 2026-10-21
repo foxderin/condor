@@ -8,6 +8,30 @@
     <link rel="manifest" href="/manifest.webmanifest" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Condor</title>
+    <!--
+      Set the document language before the bundle runs (lib/i18n.tsx sets it at
+      import, which is one network hop later). The document language decides the
+      CJK font fallback, line breaking and hyphenation, so a Chinese reader
+      would otherwise see the first paint in Latin fallback fonts and then a
+      reflow. The key is duplicated here on purpose: an inline script cannot
+      import a module, and this is the only place that has to.
+    -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem("condor_language");
+          var lang =
+            stored === "zh" || stored === "en"
+              ? stored
+              : /^zh\b/i.test(navigator.language || "")
+                ? "zh"
+                : "en";
+          document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
+        } catch (e) {
+          /* storage denied: keep the "en" attribute already in the markup */
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
