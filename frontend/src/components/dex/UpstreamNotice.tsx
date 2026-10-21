@@ -1,6 +1,7 @@
 import { Gauge } from "lucide-react";
 
 import type { DexUpstreamState } from "@/hooks/useDexUpstream";
+import { t } from "@/lib/i18n";
 
 /**
  * "GeckoTerminal is throttling us", said where the missing data would have been.
@@ -27,12 +28,9 @@ export function UpstreamNotice({
     >
       <Gauge className="h-3.5 w-3.5 shrink-0 text-[var(--color-yellow)]" />
       <span className="font-medium text-[var(--color-yellow)]">
-        Market data is rate limited
-      </span>
+        {t("Market data is rate limited")}</span>
       <span className="text-[var(--color-text-muted)]">
-        GeckoTerminal is throttling Condor, so pools and prices may be missing or
-        stale.
-        {state.retryIn > 0
+        {t("GeckoTerminal is throttling Condor, so pools and prices may be missing or stale.")}{state.retryIn > 0
           ? ` Retrying in ${state.retryIn}s.`
           : " Retrying shortly."}
       </span>

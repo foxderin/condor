@@ -9,6 +9,7 @@ import { ChatInput } from "./ChatInput";
 import { ChatMessageView } from "./ChatMessage";
 import { ConversationUsage } from "./ConversationUsage";
 import { Starters, type Starter } from "./Starters";
+import { t } from "@/lib/i18n";
 
 /** How close to the end still counts as "following the answer", in pixels. */
 const NEAR_BOTTOM_PX = 80;
@@ -214,7 +215,7 @@ export function ChatThread({
         <div className="flex items-start gap-2 border-b border-red-500/30 bg-red-500/10 px-4 py-2 text-xs text-red-400">
           <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
           <span className="flex-1">{switchError}</span>
-          <button onClick={onDismissSwitchError} title="Dismiss">
+          <button onClick={onDismissSwitchError} title={t("Dismiss")}>
             <X className="h-3 w-3" />
           </button>
         </div>
@@ -264,8 +265,7 @@ export function ChatThread({
               {slot.pending && (
                 <p className="mt-3 flex items-center gap-1.5 text-[10px] text-[var(--color-text-muted)]">
                   <Loader2 className="h-3 w-3 animate-spin" />
-                  Warming up — type away, it will be sent
-                </p>
+                  {t("Warming up — type away, it will be sent")}</p>
               )}
               {/* Still offered here, not only on the hero: the session spawns
                   before the first word is typed, and the openers used to
@@ -298,8 +298,7 @@ export function ChatThread({
             // avatar that used to sit there.
             <div className="mb-3 flex items-center gap-1.5 pl-3 text-[11px] text-[var(--color-text-muted)]">
               <Loader2 className="h-3 w-3 animate-spin" />
-              Waiting its turn
-            </div>
+              {t("Waiting its turn")}</div>
           )}
           <div ref={messagesEndRef} />
         </div>

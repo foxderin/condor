@@ -5,6 +5,7 @@ import { NoServerCard } from "@/components/NoServerCard";
 import { ReportBrowser } from "@/components/routines/ReportBrowser";
 import { useServer } from "@/hooks/useServer";
 import { api } from "@/lib/api";
+import { t } from "@/lib/i18n";
 
 /**
  * The routine library, full screen.
@@ -46,7 +47,7 @@ export function Routines() {
   if (!server) {
     return (
       <div className="p-6">
-        <NoServerCard message="Select a server from the sidebar to view routines." />
+        <NoServerCard message={t("Select a server from the sidebar to view routines.")} />
       </div>
     );
   }

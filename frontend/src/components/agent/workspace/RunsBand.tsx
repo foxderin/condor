@@ -17,6 +17,7 @@ import { SessionExecutors } from "@/components/agent/session/SessionExecutors";
 import { OutsideWindow } from "@/components/agent/workspace/OutsideWindow";
 import { api, type AgentRunRow } from "@/lib/api";
 import { parseJournal } from "@/lib/parse-agent";
+import { t } from "@/lib/i18n";
 
 /**
  * The Runs band: every run this agent has had, beside what the selected one opens.
@@ -151,7 +152,7 @@ function ConversationRun({ run }: { run: AgentRunRow }) {
           to={`/?conversation=${encodeURIComponent(run.id)}`}
           className="inline-flex items-center gap-1 text-xs text-[var(--color-text-muted)] underline-offset-2 transition-colors hover:text-[var(--color-primary)] hover:underline"
         >
-          Read it in the chat <ExternalLink className="h-3 w-3" />
+          {t("Read it in the chat")}{" "}<ExternalLink className="h-3 w-3" />
         </Link>
       </div>
 
@@ -161,10 +162,7 @@ function ConversationRun({ run }: { run: AgentRunRow }) {
         </div>
       ) : data?.predates_ledger ? (
         <p className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 text-xs text-[var(--color-text-muted)]">
-          This chat ran before Condor recorded what a conversation deployed, so
-          there is nothing to show — which is not the same as it having deployed
-          nothing.
-        </p>
+          {t("This chat ran before Condor recorded what a conversation deployed, so there is nothing to show — which is not the same as it having deployed nothing.")}</p>
       ) : (
         <DeploymentLedger rows={data?.deployments ?? []} />
       )}
@@ -232,7 +230,7 @@ function SessionTicks({
     <div className="space-y-3">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <span className="text-sm font-medium">
-          Session {run.number}
+          {t("Session")}{" "}{run.number}
           <span className="ml-2 font-mono text-xs text-[var(--color-text-muted)]">
             {ticks.length} tick{ticks.length === 1 ? "" : "s"}
           </span>
@@ -242,8 +240,7 @@ function SessionTicks({
           onClick={onShowNow}
           className="text-xs text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-primary)] hover:underline"
         >
-          Vitals and last decision on Now →
-        </button>
+          {t("Vitals and last decision on Now →")}</button>
       </div>
 
       <SessionCanvasPanel slug={slug} sslug={sslug} sessionNum={sessionNum} />
@@ -264,8 +261,7 @@ function SessionTicks({
         </div>
       ) : ticks.length === 0 ? (
         <p className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 text-xs text-[var(--color-text-muted)]">
-          No ticks recorded for this run yet.
-        </p>
+          {t("No ticks recorded for this run yet.")}</p>
       ) : (
         <ol data-run-ticks className="divide-y divide-[var(--color-border)] rounded-lg border border-[var(--color-border)]">
           {ticks.map((entry) => {
@@ -291,8 +287,7 @@ function SessionTicks({
                       <span className="min-w-0 flex-1 text-sm">
                         {entry.summary || (
                           <span className="text-[var(--color-text-muted)]">
-                            No summary written
-                          </span>
+                            {t("No summary written")}</span>
                         )}
                       </span>
                       <span className="shrink-0 font-mono text-[10px] text-[var(--color-text-muted)]">
@@ -362,8 +357,7 @@ function RunBody({
   if (!run) {
     return (
       <p className="py-8 text-center text-sm text-[var(--color-text-muted)]">
-        This agent has no runs yet.
-      </p>
+        {t("This agent has no runs yet.")}</p>
     );
   }
   if (run.kind === "delegation") {

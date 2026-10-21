@@ -3,6 +3,7 @@ import {
   type SignalGroup,
   type SignalState,
 } from "./fleet-diagnostics";
+import { t } from "@/lib/i18n";
 
 // ── Rendering ──
 
@@ -54,7 +55,7 @@ function Group({ title, signals }: { title: string; signals: Signal[] }) {
         )}
       </h4>
       {signals.length === 0 ? (
-        <p className="text-[10px] text-[var(--color-text-muted)]">Nothing to read here.</p>
+        <p className="text-[10px] text-[var(--color-text-muted)]">{t("Nothing to read here.")}</p>
       ) : (
         // Keyed by position as well as label: two venues on two hosts can
         // render the same label, and a duplicate key drops a row silently.
@@ -77,9 +78,8 @@ export function FleetDiagnostics({ groups }: { groups: readonly SignalGroup[] })
   return (
     <div className="flex h-full min-h-0 flex-col gap-3 overflow-y-auto">
       <p className="text-[10px] leading-snug text-[var(--color-text-muted)]">
-        Signals, not logs. A reading this view could not take is drawn as{" "}
-        <span className="italic">unknown</span> and never as ok.
-      </p>
+        {t("Signals, not logs. A reading this view could not take is drawn as")}{" "}
+        <span className="italic">unknown</span> {t("and never as ok.")}</p>
       {groups.map((group) => (
         <Group key={group.title} title={group.title} signals={group.signals} />
       ))}

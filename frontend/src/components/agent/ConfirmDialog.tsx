@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 
 import { useEscapeKey } from "@/hooks/useEscapeKey";
+import { t } from "@/lib/i18n";
 
 /**
  * Shared destructive-confirmation modal for agent/strategy delete flows.
@@ -56,8 +57,7 @@ export function ConfirmDialog({
             onClick={onClose}
             className="rounded-lg px-4 py-2 text-sm text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)]"
           >
-            Cancel
-          </button>
+            {t("Cancel")}</button>
           <button
             onClick={onConfirm}
             disabled={isPending}

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import type { RoutineFieldInfo } from "@/lib/api";
 import { api } from "@/lib/api";
 import { useServer } from "@/hooks/useServer";
+import { t } from "@/lib/i18n";
 
 interface Props {
   fields: Record<string, RoutineFieldInfo>;
@@ -51,9 +52,9 @@ function SelectField({
         onChange={(e) => onChange(e.target.value)}
         className="w-full appearance-none rounded border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1.5 pr-8 text-sm text-[var(--color-text)] focus:border-[var(--color-primary)] focus:outline-none"
       >
-        {isLoading && <option value="">Loading...</option>}
+        {isLoading && <option value="">{t("Loading...")}</option>}
         {!isLoading && options.length === 0 && (
-          <option value="">No options available</option>
+          <option value="">{t("No options available")}</option>
         )}
         {options.map((opt) => (
           <option key={opt} value={opt}>

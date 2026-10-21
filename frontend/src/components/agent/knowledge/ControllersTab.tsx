@@ -10,6 +10,7 @@ import {
   type ControllerCard,
   type ControllerVerdict,
 } from "@/lib/api";
+import { t } from "@/lib/i18n";
 
 /**
  * The controllers an agent owns or inherits, and where each stands on the
@@ -63,18 +64,15 @@ export function ControllersTab({
   return (
     <div className="space-y-1.5">
       <p className="text-[11px] text-[var(--color-text-muted)]">
-        Hummingbot controllers this agent carries in its own folder, then the
-        shared ones every agent reads. Status is against{" "}
+        {t("Hummingbot controllers this agent carries in its own folder, then the shared ones every agent reads. Status is against")}{" "}
         {server ? (
           <strong className="text-[var(--color-text)]">{server}</strong>
         ) : (
           "the active server (none selected)"
         )}
-        . A missing one can be synced; a drifted one is only replaced after
-        you have read the diff, and the server copy is backed up first.
-      </p>
+        {t(". A missing one can be synced; a drifted one is only replaced after you have read the diff, and the server copy is backed up first.")}</p>
       {controllers.length === 0 ? (
-        <Empty>No controllers in this agent's folder.</Empty>
+        <Empty>{t("No controllers in this agent's folder.")}</Empty>
       ) : (
         controllers.map((c) => (
           <ControllerItem
@@ -194,8 +192,7 @@ function OverwritePair({
         disabled={pending}
         onClick={() => setArmed(false)}
       >
-        Cancel
-      </button>
+        {t("Cancel")}</button>
     </span>
   );
 }
@@ -214,7 +211,7 @@ function Outcome({ result }: { result: ControllerActionResult }) {
       {result.warning && <p className="text-amber-400">{result.warning}</p>}
       {result.backup && (
         <p className="text-[var(--color-text-muted)]">
-          Server copy backed up to{" "}
+          {t("Server copy backed up to")}{" "}
           <code className="break-all">{result.backup}</code>
         </p>
       )}
@@ -333,14 +330,13 @@ function ControllerItem({
                 {card.name}
               </span>
               {card.controller_type ? (
-                <Chip title="Controller type">{card.controller_type}</Chip>
+                <Chip title={t("Controller type")}>{card.controller_type}</Chip>
               ) : (
                 <Chip tone="warn" title={card.type_error}>
-                  type unknown
-                </Chip>
+                  {t("type unknown")}</Chip>
               )}
               {card.shared && (
-                <Chip title="From the shared library every agent reads">
+                <Chip title={t("From the shared library every agent reads")}>
                   shared
                 </Chip>
               )}
@@ -371,8 +367,7 @@ function ControllerItem({
                 disabled={sync.isPending}
                 onClick={() => sync.mutate(false)}
               >
-                Sync
-              </button>
+                {t("Sync")}</button>
             )}
             {badge === "drift" && canPush && !reviewed && (
               <button
@@ -381,12 +376,11 @@ function ControllerItem({
                 disabled={sync.isPending}
                 onClick={() => sync.mutate(false)}
               >
-                Review diff
-              </button>
+                {t("Review diff")}</button>
             )}
             {badge === "drift" && reviewed && (
               <OverwritePair
-                label="Overwrite server copy (backup kept)"
+                label={t("Overwrite server copy (backup kept)")}
                 confirmLabel={confirmLabelFor(result)}
                 pending={sync.isPending}
                 onConfirm={() => sync.mutate(true)}
@@ -441,12 +435,11 @@ function ControllerReader({
       {card.styles.length > 0 && (
         <div className="flex flex-wrap items-center gap-1">
           <span className="text-[10px] text-[var(--color-text-muted)]">
-            Styles:
-          </span>
+            {t("Styles:")}</span>
           <Chip
             tone={style === null ? "accent" : "muted"}
             onClick={() => setStyle(null)}
-            title="The controller's source"
+            title={t("The controller's source")}
           >
             source
           </Chip>
@@ -472,7 +465,7 @@ function ControllerReader({
               : "Could not read the source."}
           </p>
         ) : (
-          <Code text={source.data?.source ?? ""} label="controller source" />
+          <Code text={source.data?.source ?? ""} label={t("controller source")} />
         )
       ) : (
         <StyleReader
@@ -556,7 +549,7 @@ function StyleReader({
             disabled={upload.isPending}
             onClick={() => upload.mutate(false)}
           >
-            Upload as {configName}
+            {t("Upload as")}{" "}{configName}
           </button>
         ) : (
           <span className="text-[11px] text-[var(--color-text-muted)]">

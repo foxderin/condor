@@ -44,6 +44,7 @@ import { RoutineConfigForm } from "./RoutineConfigForm";
 import { RoutineHooksPanel } from "./RoutineHooksPanel";
 import { RoutineResultView } from "./RoutineResultView";
 import { ScheduleDropdown } from "./ScheduleDropdown";
+import { t } from "@/lib/i18n";
 
 /**
  * The conversation a run launched from here belongs to.
@@ -673,7 +674,7 @@ export function ReportBrowser({
                       onClick={() => stopMutation.mutate(inst.instance_id)}
                       disabled={stopMutation.isPending}
                       className="ml-0.5 rounded p-0.5 text-[var(--color-red)] hover:bg-[var(--color-red)]/10"
-                      title="Stop"
+                      title={t("Stop")}
                     >
                       <Trash2 className="h-2.5 w-2.5" />
                     </button>
@@ -693,11 +694,10 @@ export function ReportBrowser({
                 <button
                   onClick={() => setShowSourceModal(true)}
                   className="flex items-center gap-1 rounded px-2 py-1 text-[10px] font-semibold text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)]"
-                  title="View source code"
+                  title={t("View source code")}
                 >
                   <Code className="h-3.5 w-3.5" />
-                  Source
-                </button>
+                  {t("Source")}</button>
                 <button
                   onClick={() => {
                     setShowConfigPanel((v) => !v);
@@ -708,11 +708,10 @@ export function ReportBrowser({
                       ? "bg-[var(--color-primary)]/10 text-[var(--color-primary)]"
                       : "text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)]"
                   }`}
-                  title="Configure & Run"
+                  title={t("Configure & Run")}
                 >
                   <Settings2 className="h-3.5 w-3.5" />
-                  Config
-                </button>
+                  {t("Config")}</button>
                 <button
                   onClick={() => {
                     setShowNotifyPanel((v) => !v);
@@ -723,24 +722,22 @@ export function ReportBrowser({
                       ? "bg-[var(--color-primary)]/10 text-[var(--color-primary)]"
                       : "text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)]"
                   }`}
-                  title="Post-run notifications"
+                  title={t("Post-run notifications")}
                 >
                   <Bell className="h-3.5 w-3.5" />
-                  Notify
-                </button>
+                  {t("Notify")}</button>
                 <button
                   onClick={() => runMutation.mutate()}
                   disabled={runMutation.isPending || !runServer}
                   className="flex items-center gap-1 rounded bg-[var(--color-primary)] px-2.5 py-1 text-[10px] font-semibold text-white transition-colors hover:bg-[var(--color-primary)]/80 disabled:opacity-50"
-                  title="Run with current config"
+                  title={t("Run with current config")}
                 >
                   {runMutation.isPending ? (
                     <Loader2 className="h-3 w-3 animate-spin" />
                   ) : (
                     <Play className="h-3 w-3" />
                   )}
-                  Run
-                </button>
+                  {t("Run")}</button>
                 {!activeRoutine.is_continuous && (
                   <ScheduleDropdown
                     onSchedule={(sec) => scheduleMutation.mutate(sec)}
@@ -752,7 +749,7 @@ export function ReportBrowser({
                     onClick={runAll}
                     disabled={!!runAllProgress || !runServer}
                     className="flex items-center gap-1 rounded bg-[var(--color-surface-hover)] px-2.5 py-1 text-[10px] font-semibold text-[var(--color-text)] transition-colors hover:bg-[var(--color-border)] disabled:opacity-50"
-                    title="Run all filtered routines with default configs"
+                    title={t("Run all filtered routines with default configs")}
                   >
                     {runAllProgress ? (
                       <>
@@ -762,8 +759,7 @@ export function ReportBrowser({
                     ) : (
                       <>
                         <PlayCircle className="h-3 w-3" />
-                        Run All
-                      </>
+                        {t("Run All")}</>
                     )}
                   </button>
                 )}
@@ -803,7 +799,7 @@ export function ReportBrowser({
                   onClick={goPrevReport}
                   disabled={selectedReportIdx === 0}
                   className="rounded p-1.5 text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)] disabled:opacity-30"
-                  title="Previous report"
+                  title={t("Previous report")}
                 >
                   <ChevronLeft className="h-4 w-4" />
                 </button>
@@ -811,7 +807,7 @@ export function ReportBrowser({
                   onClick={goNextReport}
                   disabled={selectedReportIdx >= reports.length - 1}
                   className="rounded p-1.5 text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)] disabled:opacity-30"
-                  title="Next report"
+                  title={t("Next report")}
                 >
                   <ChevronRight className="h-4 w-4" />
                 </button>
@@ -822,7 +818,7 @@ export function ReportBrowser({
               <button
                 onClick={downloadReport}
                 className="rounded p-1.5 text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)]"
-                title="Download report"
+                title={t("Download report")}
               >
                 <Download className="h-4 w-4" />
               </button>
@@ -839,7 +835,7 @@ export function ReportBrowser({
                 onCancel={() => setConfirmDelete(false)}
                 pending={deleteMutation.isPending}
                 triggerLabel="Delete report"
-                confirmLabel="Confirm delete report"
+                confirmLabel={t("Confirm delete report")}
                 cancelLabel="Cancel delete report"
                 size="md"
               />
@@ -850,7 +846,7 @@ export function ReportBrowser({
               <button
                 onClick={onClose}
                 className="ml-1 rounded p-1.5 text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)]"
-                title="Close (Esc)"
+                title={t("Close (Esc)")}
               >
                 <X className="h-4 w-4" />
               </button>
@@ -863,7 +859,7 @@ export function ReportBrowser({
         {scheduleMutation.isError && (
           <div className="border-b border-[var(--color-border)] bg-[var(--color-red)]/5 px-4 py-2">
             <p className="text-xs text-[var(--color-red)]">
-              Could not schedule {activeSource.replace(/_/g, " ")}: {(scheduleMutation.error as Error).message}
+              {t("Could not schedule")}{" "}{activeSource.replace(/_/g, " ")}: {(scheduleMutation.error as Error).message}
             </p>
           </div>
         )}
@@ -873,8 +869,7 @@ export function ReportBrowser({
           <div className="border-b border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-3">
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-[11px] font-bold uppercase tracking-wider text-[var(--color-text-muted)]">
-                Configuration
-              </h3>
+                {t("Configuration")}</h3>
               <button
                 onClick={() => setShowConfigPanel(false)}
                 className="rounded p-1 text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)]"
@@ -895,7 +890,7 @@ export function ReportBrowser({
                 }}
               />
             ) : (
-              <p className="text-xs text-[var(--color-text-muted)]">No configurable fields</p>
+              <p className="text-xs text-[var(--color-text-muted)]">{t("No configurable fields")}</p>
             )}
             {runMutation.isError && (
               <p className="mt-2 text-xs text-[var(--color-red)]">
@@ -910,8 +905,7 @@ export function ReportBrowser({
           <div className="border-b border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-3">
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-[11px] font-bold uppercase tracking-wider text-[var(--color-text-muted)]">
-                Notifications
-              </h3>
+                {t("Notifications")}</h3>
               <button
                 onClick={() => setShowNotifyPanel(false)}
                 className="rounded p-1 text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)]"
@@ -955,8 +949,7 @@ export function ReportBrowser({
                   }`}
                 >
                   <option value="" disabled>
-                    +{reports.length - 10} older reports
-                  </option>
+                    +{reports.length - 10} {t("older reports")}</option>
                   {reports.slice(10).map((r, i) => (
                     <option key={r.id} value={i + 10}>
                       {new Date(r.created_at).toLocaleString(undefined, {
@@ -981,8 +974,7 @@ export function ReportBrowser({
             <div className="h-full overflow-auto px-4 py-3">
               {!shownRun ? (
                 <p className="text-xs text-[var(--color-text-muted)]">
-                  This routine has no run in memory.
-                </p>
+                  {t("This routine has no run in memory.")}</p>
               ) : shownRun.error ? (
                 <pre className="whitespace-pre-wrap break-words font-mono text-xs text-[var(--color-red)]">
                   {shownRun.error}
@@ -1007,7 +999,7 @@ export function ReportBrowser({
                   <div className="w-full max-w-lg rounded-lg border border-[var(--color-red)]/30 bg-[var(--color-red)]/5 p-5">
                     <div className="flex items-center gap-2 mb-3">
                       <AlertTriangle className="h-5 w-5 text-[var(--color-red)]" />
-                      <span className="text-sm font-semibold text-[var(--color-red)]">Routine Failed</span>
+                      <span className="text-sm font-semibold text-[var(--color-red)]">{t("Routine Failed")}</span>
                     </div>
                     <pre className="whitespace-pre-wrap break-words text-left font-mono text-xs text-[var(--color-text-muted)] bg-[var(--color-surface)] rounded p-3 max-h-60 overflow-y-auto">
                       {(polledInstance?.status === "failed" ? polledInstance.error : latestFailedInstance?.error) || "Unknown error"}
@@ -1023,8 +1015,7 @@ export function ReportBrowser({
                         ) : (
                           <Play className="h-3.5 w-3.5" />
                         )}
-                        Retry
-                      </button>
+                        {t("Retry")}</button>
                     )}
                   </div>
                 </>
@@ -1032,16 +1023,14 @@ export function ReportBrowser({
                 <>
                   <Zap className="mb-3 h-10 w-10 text-[var(--color-text-muted)]/20" />
                   <p className="text-sm font-medium text-[var(--color-text)]">
-                    No reports yet
-                  </p>
+                    {t("No reports yet")}</p>
                   <p className="mt-1 text-xs text-[var(--color-text-muted)]">
                     {activeRoutine?.description ?? "Run this routine to generate your first report."}
                   </p>
                   {activeRoutine && Object.keys(activeRoutine.fields).length > 0 && (
                     <div className="mt-4 w-full max-w-md rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
                       <h3 className="mb-2 text-[11px] font-bold uppercase tracking-wider text-[var(--color-text-muted)]">
-                        Configuration
-                      </h3>
+                        {t("Configuration")}</h3>
                       <RoutineConfigForm
                         fields={activeRoutine.fields}
                         values={configValues}
@@ -1066,8 +1055,7 @@ export function ReportBrowser({
                       ) : (
                         <Play className="h-4 w-4" />
                       )}
-                      Run for the first time
-                    </button>
+                      {t("Run for the first time")}</button>
                   )}
                   {runMutation.isError && (
                     <p className="mt-2 text-xs text-[var(--color-red)]">
@@ -1086,8 +1074,8 @@ export function ReportBrowser({
             <button
               onClick={goPrevReport}
               className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-black/40 p-2 text-white/60 hover:bg-black/60 hover:text-white transition-all"
-              title="Previous report"
-              aria-label="Previous report"
+              title={t("Previous report")}
+              aria-label={t("Previous report")}
             >
               <ChevronLeft className="h-5 w-5" />
             </button>
@@ -1098,8 +1086,8 @@ export function ReportBrowser({
             <button
               onClick={goNextReport}
               className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-black/40 p-2 text-white/60 hover:bg-black/60 hover:text-white transition-all"
-              title="Next report"
-              aria-label="Next report"
+              title={t("Next report")}
+              aria-label={t("Next report")}
             >
               <ChevronRight className="h-5 w-5" />
             </button>
@@ -1120,7 +1108,7 @@ export function ReportBrowser({
             <button
               onClick={() => setShowSourceModal(false)}
               className="rounded p-1.5 text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)]"
-              title="Close (Esc)"
+              title={t("Close (Esc)")}
             >
               <X className="h-4 w-4" />
             </button>

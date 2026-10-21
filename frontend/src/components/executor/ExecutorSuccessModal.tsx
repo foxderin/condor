@@ -2,6 +2,7 @@ import { Check, CheckCircle, Copy, X } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 
 import { copyText } from "@/lib/clipboard";
+import { t } from "@/lib/i18n";
 
 interface ExecutorSuccessModalProps {
   executorId: string;
@@ -69,7 +70,7 @@ export function ExecutorSuccessModal({
         {/* Details */}
         <div className="mb-4 space-y-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-3">
           <div className="flex items-center justify-between text-[11px]">
-            <span className="text-[var(--color-text-muted)]">Executor ID</span>
+            <span className="text-[var(--color-text-muted)]">{t("Executor ID")}</span>
             <div className="flex items-center gap-1.5">
               <span className="font-mono text-[var(--color-text)]">
                 {executorId.slice(0, 12)}…
@@ -79,7 +80,7 @@ export function ExecutorSuccessModal({
                   void copyText(executorId).then((ok) => setCopied(ok));
                 }}
                 className="rounded p-0.5 text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
-                title="Copy full ID"
+                title={t("Copy full ID")}
               >
                 {copied ? (
                   <Check className="h-3 w-3 text-[var(--color-green)]" />

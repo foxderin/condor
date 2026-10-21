@@ -5,6 +5,7 @@ import { useState } from "react";
 import { InlineConfirm } from "@/components/ui/InlineConfirm";
 import { api } from "@/lib/api";
 import type { CustomProvider } from "@/lib/api";
+import { t } from "@/lib/i18n";
 
 /**
  * Manage OpenAI-compatible LLM endpoints (Venice AI, Together, Fireworks, a
@@ -56,18 +57,13 @@ export function CustomProvidersSettings() {
       <section>
         <h3 className="mb-1 text-sm font-semibold text-[var(--color-text)]">
           <Server className="mr-1.5 inline h-4 w-4" />
-          Custom LLM Endpoints
-        </h3>
+          {t("Custom LLM Endpoints")}</h3>
         <p className="mb-3 text-xs text-[var(--color-text-muted)]">
-          Connect any OpenAI-compatible API — Venice AI, Together, Fireworks, or
-          your own vLLM / LM Studio server. Saved endpoints appear in the chat
-          model picker and in the Telegram bot.
-        </p>
+          {t("Connect any OpenAI-compatible API — Venice AI, Together, Fireworks, or your own vLLM / LM Studio server. Saved endpoints appear in the chat model picker and in the Telegram bot.")}</p>
 
         {providers.length === 0 && !adding && (
           <p className="rounded-lg border border-dashed border-[var(--color-border)] px-3 py-6 text-center text-xs text-[var(--color-text-muted)]">
-            No endpoints yet.
-          </p>
+            {t("No endpoints yet.")}</p>
         )}
 
         <div className="space-y-2">
@@ -86,7 +82,7 @@ export function CustomProvidersSettings() {
 
         {remove.isError && (
           <p className="mt-2 text-xs text-[var(--color-red)]">
-            Failed to remove: {(remove.error as Error).message}
+            {t("Failed to remove:")}{" "}{(remove.error as Error).message}
           </p>
         )}
       </section>
@@ -105,8 +101,7 @@ export function CustomProvidersSettings() {
           className="flex w-full items-center justify-center gap-2 rounded-lg border border-[var(--color-border)] px-4 py-2 text-sm font-medium text-[var(--color-text)] transition-colors hover:bg-[var(--color-surface-hover)]"
         >
           <Plus className="h-4 w-4" />
-          Add endpoint
-        </button>
+          {t("Add endpoint")}</button>
       )}
     </div>
   );
@@ -183,18 +178,15 @@ function AddProviderForm({
       <section className="space-y-3 rounded-lg border border-[var(--color-primary)]/40 bg-[var(--color-primary)]/5 px-3 py-3">
         <p className="flex items-center gap-2 text-sm text-[var(--color-text)]">
           <Check className="h-4 w-4 text-[var(--color-primary)]" />
-          Saved <span className="font-medium">{result.name}</span> — {result.count}{" "}
-          chat models available.
-        </p>
+          {t("Saved")}{" "}<span className="font-medium">{result.name}</span> — {result.count}{" "}
+          {t("chat models available.")}</p>
         <p className="text-xs text-[var(--color-text-muted)]">
-          Pick one from the model dropdown when you start a new chat.
-        </p>
+          {t("Pick one from the model dropdown when you start a new chat.")}</p>
         <button
           onClick={onDone}
           className="rounded-lg bg-[var(--color-primary)] px-3 py-1.5 text-sm font-medium text-white transition-opacity hover:opacity-90"
         >
-          Done
-        </button>
+          {t("Done")}</button>
       </section>
     );
   }
@@ -203,8 +195,7 @@ function AddProviderForm({
     <section className="space-y-3 rounded-lg border border-[var(--color-border)] px-3 py-3">
       <div>
         <label className="text-xs font-medium text-[var(--color-text-muted)]">
-          Base URL
-        </label>
+          {t("Base URL")}</label>
         <input
           value={baseUrl}
           onChange={(e) => setBaseUrl(e.target.value)}
@@ -216,7 +207,7 @@ function AddProviderForm({
 
       <div>
         <label className="text-xs font-medium text-[var(--color-text-muted)]">
-          API key <span className="font-normal">(leave blank if not required)</span>
+          {t("API key")}{" "}<span className="font-normal">{t("(leave blank if not required)")}</span>
         </label>
         <input
           type="password"
@@ -230,12 +221,12 @@ function AddProviderForm({
 
       <div>
         <label className="text-xs font-medium text-[var(--color-text-muted)]">
-          Name <span className="font-normal">(optional — derived from the URL)</span>
+          {t("Name")}{" "}<span className="font-normal">{t("(optional — derived from the URL)")}</span>
         </label>
         <input
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Venice"
+          placeholder={t("Venice")}
           className="mt-1 w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2 text-sm text-[var(--color-text)] focus:border-[var(--color-primary)] focus:outline-none"
         />
       </div>
@@ -255,8 +246,7 @@ function AddProviderForm({
           {add.isPending ? (
             <>
               <Loader2 className="h-4 w-4 animate-spin" />
-              Checking endpoint
-            </>
+              {t("Checking endpoint")}</>
           ) : (
             "Validate & save"
           )}
@@ -265,8 +255,7 @@ function AddProviderForm({
           onClick={onCancel}
           className="rounded-lg border border-[var(--color-border)] px-4 py-2 text-sm text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-surface-hover)]"
         >
-          Cancel
-        </button>
+          {t("Cancel")}</button>
       </div>
     </section>
   );

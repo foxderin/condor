@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { AnchoredMenu } from "@/components/ui/AnchoredMenu";
 import { useServer } from "@/hooks/useServer";
 import { api, type ServerInfo } from "@/lib/api";
+import { t } from "@/lib/i18n";
 
 export function ServerSelector() {
   const { server, setServer } = useServer();
@@ -76,7 +77,7 @@ export function ServerSelector() {
           {servers ? `API Servers (${onlineServers.length}/${totalCount} online)` : "API Servers"}
         </div>
         {!servers && (
-          <div className="px-3 py-2 text-xs text-[var(--color-text-muted)]">Loading…</div>
+          <div className="px-3 py-2 text-xs text-[var(--color-text-muted)]">{t("Loading…")}</div>
         )}
         {onlineServers.map((s: ServerInfo) => (
           <button
@@ -96,11 +97,11 @@ export function ServerSelector() {
             {s.is_default && (
               <Star
                 className="h-2.5 w-2.5 shrink-0 fill-current text-amber-400"
-                aria-label="Default server"
+                aria-label={t("Default server")}
               />
             )}
             {s.name === server && (
-              <span className="ml-auto text-[10px] font-medium uppercase text-[var(--color-primary)]">Active</span>
+              <span className="ml-auto text-[10px] font-medium uppercase text-[var(--color-primary)]">{t("Active")}</span>
             )}
           </button>
         ))}
@@ -109,8 +110,7 @@ export function ServerSelector() {
         )}
         {offlineServers.length > 0 && (
           <div className="px-3 py-1.5 text-[10px] font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
-            Offline
-          </div>
+            {t("Offline")}</div>
         )}
         {offlineServers.map((s: ServerInfo) => (
           <div

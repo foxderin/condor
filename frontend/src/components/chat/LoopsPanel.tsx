@@ -14,6 +14,7 @@ import { countdown } from "@/lib/agent-attribution";
 import type { AgentSummary } from "@/lib/api";
 import { formatCurrencyPnl, formatRelativeTime, pnlColor } from "@/lib/formatters";
 import { unavailableLabel } from "@/lib/strategy-unavailable";
+import { t } from "@/lib/i18n";
 
 /**
  * Every loop, from every agent, one click from the rail (FEAT-123) — grouped by
@@ -42,8 +43,8 @@ export function LoopsPanel({
 }) {
   return (
     <WorkspaceSheet
-      title="Loops"
-      subtitle="Every live tick loop, across every agent"
+      title={t("Loops")}
+      subtitle={t("Every live tick loop, across every agent")}
       onClose={onClose}
       fullscreen={false}
     >
@@ -217,9 +218,9 @@ function LoopCard({
       )}
 
       <div className="grid grid-cols-4 gap-2 border-t border-[var(--color-border)]/50 pt-2">
-        <Fact label="Ticks" value={String(live.tickCount)} />
+        <Fact label={t("Ticks")} value={String(live.tickCount)} />
         <Fact
-          label="Next tick"
+          label={t("Next tick")}
           value={
             due === null ? (
               "—"
@@ -235,11 +236,11 @@ function LoopCard({
           sub={`every ${countdown(live.frequencySec)}`}
         />
         <Fact
-          label="Last tick"
+          label={t("Last tick")}
           value={live.lastTickAt > 0 ? formatRelativeTime(live.lastTickAt) : "—"}
         />
         <Fact
-          label="Runs"
+          label={t("Runs")}
           // FEAT-123's own honest wording when the roster join misses: a
           // session number, not a fabricated run count.
           value={stats ? String(stats.sessionCount) : `Session ${live.sessionNum}`}

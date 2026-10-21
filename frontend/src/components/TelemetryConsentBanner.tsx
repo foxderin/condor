@@ -8,6 +8,7 @@ import {
   useSetTelemetryLevel,
   useTelemetry,
 } from "@/hooks/useTelemetry";
+import { t } from "@/lib/i18n";
 
 /**
  * The dashboard's half of the telemetry notice.
@@ -57,8 +58,7 @@ export function TelemetryConsentBanner() {
           to="/settings?tab=privacy"
           className="whitespace-nowrap underline underline-offset-2 hover:text-[var(--color-primary)]"
         >
-          Turn off or see details
-        </Link>
+          {t("Turn off or see details")}</Link>
       </p>
 
       <div className="flex shrink-0 items-center gap-2">
@@ -76,7 +76,7 @@ export function TelemetryConsentBanner() {
 
       {setLevel.isError && (
         <p className="w-full text-xs text-[var(--color-red)]">
-          Could not save that. {(setLevel.error as Error).message}
+          {t("Could not save that.")}{" "}{(setLevel.error as Error).message}
         </p>
       )}
     </div>

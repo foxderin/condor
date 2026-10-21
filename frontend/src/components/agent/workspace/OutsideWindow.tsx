@@ -1,3 +1,5 @@
+
+import { t } from "@/lib/i18n";
 /**
  * The empty state for a strategy that has run, but whose runs are not in the
  * loaded window (CORR-376).
@@ -14,15 +16,14 @@ export function OutsideWindow({
 }) {
   return (
     <p className="text-xs text-[var(--color-text-muted)]">
-      This loop&apos;s runs are older than the runs loaded here.{" "}
+      {t("This loop&apos;s runs are older than the runs loaded here.")}{" "}
       <button
         type="button"
         data-show-older-runs
         onClick={onShowOlderRuns}
         className="underline underline-offset-2 transition-colors hover:text-[var(--color-primary)]"
       >
-        Load older runs
-      </button>
+        {t("Load older runs")}</button>
     </p>
   );
 }

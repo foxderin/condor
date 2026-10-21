@@ -10,6 +10,7 @@ import {
 } from "@/components/agent/delegationStatus";
 import { WorkspaceSheet } from "@/components/chat/WorkspaceSheet";
 import { api, type Delegation, type DelegationSummary } from "@/lib/api";
+import { t } from "@/lib/i18n";
 
 /** A consult has no transcript to fetch, and the sheet says why rather than
  *  showing an empty one — the record is a ledger entry, not a tape (FEAT-058). */
@@ -102,8 +103,7 @@ export function DelegationSheet({
       ) : (
         <div className="flex items-center gap-2 text-xs text-[var(--color-text-muted)]">
           <Loader2 className="h-3 w-3 animate-spin" />
-          Loading result…
-        </div>
+          {t("Loading result…")}</div>
       )}
     </WorkspaceSheet>
   );

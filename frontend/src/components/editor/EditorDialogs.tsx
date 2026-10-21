@@ -7,6 +7,7 @@ import { CodeEditor } from "@/components/editor/CodeEditor";
 import { useEscapeKey } from "@/hooks/useEscapeKey";
 import { api, type ControllerConfigSummary } from "@/lib/api";
 import { configToYaml, parseYamlMapping, validateYamlMapping } from "@/lib/configYaml";
+import { t } from "@/lib/i18n";
 
 // ── Delete Confirm Dialog ──
 
@@ -46,14 +47,13 @@ export function DeleteConfirmDialog({
     <>
       <div className="fixed inset-0 bg-black/40 z-40" onClick={onClose} />
       <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] bg-[var(--color-bg)] border border-[var(--color-border)] rounded-xl shadow-xl z-50 p-5">
-        <h2 className="text-sm font-semibold mb-2">Delete {typeLabel}</h2>
+        <h2 className="text-sm font-semibold mb-2">{t("Delete")}{" "}{typeLabel}</h2>
         <p className="text-xs text-[var(--color-text-muted)] mb-4">
-          Are you sure you want to delete{" "}
+          {t("Are you sure you want to delete")}{" "}
           <span className="font-mono font-medium text-[var(--color-text)]">
             {displayName}
           </span>
-          ? This cannot be undone.
-        </p>
+          {t("? This cannot be undone.")}</p>
         {deleteMutation.isError && (
           <div className="mb-3 rounded-md border border-[var(--color-red)]/40 bg-[var(--color-red)]/10 px-3 py-2 text-xs text-[var(--color-red)]">
             {deleteMutation.error instanceof Error
@@ -66,8 +66,7 @@ export function DeleteConfirmDialog({
             onClick={onClose}
             className="rounded-md px-3 py-1.5 text-sm text-[var(--color-text-muted)]"
           >
-            Cancel
-          </button>
+            {t("Cancel")}</button>
           <button
             onClick={() => deleteMutation.mutate()}
             disabled={deleteMutation.isPending}
@@ -76,8 +75,7 @@ export function DeleteConfirmDialog({
             {deleteMutation.isPending && (
               <Loader2 className="h-3 w-3 animate-spin" />
             )}
-            Delete
-          </button>
+            {t("Delete")}</button>
         </div>
       </div>
     </>
@@ -101,26 +99,23 @@ export function DiscardChangesDialog({
     <>
       <div className="fixed inset-0 bg-black/40 z-40" onClick={onClose} />
       <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] bg-[var(--color-bg)] border border-[var(--color-border)] rounded-xl shadow-xl z-50 p-5">
-        <h2 className="text-sm font-semibold mb-2">Unsaved Changes</h2>
+        <h2 className="text-sm font-semibold mb-2">{t("Unsaved Changes")}</h2>
         <p className="text-xs text-[var(--color-text-muted)] mb-4">
           <span className="font-mono font-medium text-[var(--color-text)]">
             {fileName}
           </span>{" "}
-          has unsaved changes. Closing will discard them.
-        </p>
+          {t("has unsaved changes. Closing will discard them.")}</p>
         <div className="flex items-center justify-end gap-3">
           <button
             onClick={onClose}
             className="rounded-md px-3 py-1.5 text-sm text-[var(--color-text-muted)]"
           >
-            Keep editing
-          </button>
+            {t("Keep editing")}</button>
           <button
             onClick={onDiscard}
             className="rounded-md bg-[var(--color-red)] px-4 py-1.5 text-sm font-medium text-white"
           >
-            Discard changes
-          </button>
+            {t("Discard changes")}</button>
         </div>
       </div>
     </>
@@ -243,12 +238,12 @@ export function UploadDialog({
       <div className="fixed inset-0 bg-black/40 z-40" onClick={onClose} />
       <div className="fixed inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-[560px] md:max-h-[80vh] bg-[var(--color-bg)] border border-[var(--color-border)] rounded-xl shadow-xl z-50 flex flex-col">
         <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--color-border)]">
-          <h2 className="text-sm font-semibold">Upload</h2>
+          <h2 className="text-sm font-semibold">{t("Upload")}</h2>
           <button
             onClick={onClose}
             className="p-1 rounded hover:bg-[var(--color-surface-hover)]"
-            title="Close"
-            aria-label="Close"
+            title={t("Close")}
+            aria-label={t("Close")}
           >
             <X className="h-4 w-4" />
           </button>
@@ -266,8 +261,7 @@ export function UploadDialog({
               }`}
             >
               <FileText className="h-3 w-3" />
-              Config (.yml)
-            </button>
+              {t("Config (.yml)")}</button>
             <button
               onClick={() => handleModeChange("controller")}
               className={`flex items-center gap-1.5 rounded-md px-3 py-1 text-xs font-medium transition-colors ${
@@ -277,8 +271,7 @@ export function UploadDialog({
               }`}
             >
               <Code2 className="h-3 w-3" />
-              Controller (.py)
-            </button>
+              {t("Controller (.py)")}</button>
           </div>
 
           {/* Controller metadata fields */}
@@ -286,8 +279,7 @@ export function UploadDialog({
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-medium text-[var(--color-text-muted)] mb-1 uppercase tracking-wide">
-                  Type *
-                </label>
+                  {t("Type *")}</label>
                 <select
                   value={controllerType}
                   onChange={(e) => setControllerType(e.target.value)}
@@ -302,13 +294,12 @@ export function UploadDialog({
               </div>
               <div>
                 <label className="block text-xs font-medium text-[var(--color-text-muted)] mb-1 uppercase tracking-wide">
-                  Name *
-                </label>
+                  {t("Name *")}</label>
                 <input
                   type="text"
                   value={controllerName}
                   onChange={(e) => setControllerName(e.target.value)}
-                  placeholder="e.g. my_strategy"
+                  placeholder={t("e.g. my_strategy")}
                   className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2 text-sm focus:border-[var(--color-primary)] focus:outline-none"
                 />
               </div>
@@ -331,7 +322,7 @@ export function UploadDialog({
           >
             <Upload className="h-6 w-6 mx-auto mb-2 text-[var(--color-text-muted)]" />
             <p className="text-xs text-[var(--color-text-muted)]">
-              Drop a {mode === "config" ? ".yml" : ".py"} file here, or paste{" "}
+              {t("Drop a")}{" "}{mode === "config" ? ".yml" : ".py"} {t("file here, or paste")}{" "}
               {mode === "config" ? "YAML" : "Python"} below
             </p>
           </div>
@@ -363,8 +354,7 @@ export function UploadDialog({
             onClick={onClose}
             className="rounded-md px-3 py-1.5 text-sm text-[var(--color-text-muted)]"
           >
-            Cancel
-          </button>
+            {t("Cancel")}</button>
           <button
             onClick={() => uploadMutation.mutate()}
             disabled={!canUpload}
@@ -373,8 +363,7 @@ export function UploadDialog({
             {uploadMutation.isPending && (
               <Loader2 className="h-3 w-3 animate-spin" />
             )}
-            Upload
-          </button>
+            {t("Upload")}</button>
         </div>
       </div>
     </>
@@ -430,16 +419,16 @@ export function CloneConfigDialog({
       <div className="fixed inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-[560px] md:max-h-[80vh] bg-[var(--color-bg)] border border-[var(--color-border)] rounded-xl shadow-xl z-50 flex flex-col">
         <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--color-border)]">
           <div>
-            <h2 className="text-sm font-semibold">Clone Config</h2>
+            <h2 className="text-sm font-semibold">{t("Clone Config")}</h2>
             <p className="text-xs text-[var(--color-text-muted)] mt-0.5">
-              From: {sourceConfig.id}
+              {t("From:")}{" "}{sourceConfig.id}
             </p>
           </div>
           <button
             onClick={onClose}
             className="p-1 rounded hover:bg-[var(--color-surface-hover)]"
-            title="Close"
-            aria-label="Close"
+            title={t("Close")}
+            aria-label={t("Close")}
           >
             <X className="h-4 w-4" />
           </button>
@@ -448,8 +437,7 @@ export function CloneConfigDialog({
         <div className="flex-1 overflow-y-auto p-5 space-y-4">
           <div>
             <label className="block text-xs font-medium text-[var(--color-text-muted)] mb-1.5 uppercase tracking-wide">
-              New Config ID
-            </label>
+              {t("New Config ID")}</label>
             <input
               type="text"
               value={newId}
@@ -461,8 +449,7 @@ export function CloneConfigDialog({
           {isLoading ? (
             <div className="flex items-center gap-2 py-8 justify-center text-sm text-[var(--color-text-muted)]">
               <Loader2 className="h-4 w-4 animate-spin" />
-              Loading config...
-            </div>
+              {t("Loading config...")}</div>
           ) : (
             <CodeEditor
               value={yamlContent}
@@ -492,8 +479,7 @@ export function CloneConfigDialog({
             onClick={onClose}
             className="rounded-md px-3 py-1.5 text-sm text-[var(--color-text-muted)]"
           >
-            Cancel
-          </button>
+            {t("Cancel")}</button>
           <button
             onClick={() => createMutation.mutate()}
             disabled={!newId.trim() || !!yamlError || createMutation.isPending}
@@ -502,8 +488,7 @@ export function CloneConfigDialog({
             {createMutation.isPending && (
               <Loader2 className="h-3 w-3 animate-spin" />
             )}
-            Clone
-          </button>
+            {t("Clone")}</button>
         </div>
       </div>
     </>
@@ -629,12 +614,12 @@ export function NewConfigDialog({
       <div className="fixed inset-0 bg-black/40 z-40" onClick={onClose} />
       <div className="fixed inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-[680px] md:max-h-[80vh] bg-[var(--color-bg)] border border-[var(--color-border)] rounded-xl shadow-xl z-50 flex flex-col">
         <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--color-border)]">
-          <h2 className="text-sm font-semibold">New Config</h2>
+          <h2 className="text-sm font-semibold">{t("New Config")}</h2>
           <button
             onClick={onClose}
             className="p-1 rounded hover:bg-[var(--color-surface-hover)]"
-            title="Close"
-            aria-label="Close"
+            title={t("Close")}
+            aria-label={t("Close")}
           >
             <X className="h-4 w-4" />
           </button>
@@ -645,8 +630,7 @@ export function NewConfigDialog({
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-medium text-[var(--color-text-muted)] mb-1 uppercase tracking-wide">
-                Controller Type
-              </label>
+                {t("Controller Type")}</label>
               <select
                 value={selectedType}
                 onChange={(e) => handleTypeChange(e.target.value)}
@@ -659,8 +643,7 @@ export function NewConfigDialog({
             </div>
             <div>
               <label className="block text-xs font-medium text-[var(--color-text-muted)] mb-1 uppercase tracking-wide">
-                Controller
-              </label>
+                {t("Controller")}</label>
               <select
                 value={selectedName}
                 onChange={(e) => { setSelectedName(e.target.value); setFieldValues({}); }}
@@ -676,13 +659,12 @@ export function NewConfigDialog({
           {/* Config ID */}
           <div>
             <label className="block text-xs font-medium text-[var(--color-text-muted)] mb-1.5 uppercase tracking-wide">
-              Config ID *
-            </label>
+              {t("Config ID *")}</label>
             <input
               type="text"
               value={configId}
               onChange={(e) => setConfigId(e.target.value)}
-              placeholder="e.g. my_strategy_v1"
+              placeholder={t("e.g. my_strategy_v1")}
               className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2 text-sm focus:border-[var(--color-primary)] focus:outline-none"
             />
           </div>
@@ -690,12 +672,10 @@ export function NewConfigDialog({
           {isLoading ? (
             <div className="flex items-center gap-2 py-8 justify-center text-sm text-[var(--color-text-muted)]">
               <Loader2 className="h-4 w-4 animate-spin" />
-              Loading template...
-            </div>
+              {t("Loading template...")}</div>
           ) : visibleFields.length === 0 ? (
             <p className="text-xs text-[var(--color-text-muted)] py-4">
-              No template fields available. The config will be created with basic fields only.
-            </p>
+              {t("No template fields available. The config will be created with basic fields only.")}</p>
           ) : (
             <div className="grid grid-cols-2 gap-x-4 gap-y-3">
               {visibleFields.map((field) => (
@@ -756,8 +736,7 @@ export function NewConfigDialog({
             onClick={onClose}
             className="rounded-md px-3 py-1.5 text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
           >
-            Cancel
-          </button>
+            {t("Cancel")}</button>
           <button
             onClick={() => createMutation.mutate()}
             disabled={!configId.trim() || !selectedName || createMutation.isPending}
@@ -766,8 +745,7 @@ export function NewConfigDialog({
             {createMutation.isPending && (
               <Loader2 className="h-3 w-3 animate-spin" />
             )}
-            Create Config
-          </button>
+            {t("Create Config")}</button>
         </div>
       </div>
     </>

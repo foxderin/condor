@@ -26,6 +26,7 @@ import { api, type StrategyDetail } from "@/lib/api";
 import { formatCurrency } from "@/lib/formatters";
 
 import { StrategyConfigEditor } from "./StrategyConfigEditor";
+import { t } from "@/lib/i18n";
 
 /**
  * The Playbook disclosure's body: what the strategy is *told*, not what it did.
@@ -111,8 +112,7 @@ export function PlaybookView({
             </p>
           ) : (
             <p className="text-sm italic text-[var(--color-text-muted)]">
-              This loop has no description.
-            </p>
+              {t("This loop has no description.")}</p>
           )}
           <div className="mt-2 flex flex-wrap items-center gap-1.5 text-[11px] text-[var(--color-text-muted)]">
             {/* Both counts are doors to the newest run of their kind. Only the
@@ -137,7 +137,7 @@ export function PlaybookView({
                 {sessions} session{sessions === 1 ? "" : "s"}
               </button>
             ) : (
-              <Chip>0 sessions</Chip>
+              <Chip>{t("0 sessions")}</Chip>
             )}
             {/* A strategy whose whole history is one dry run used to read as
                 one that had never run, so the count is a door and not a note. */}
@@ -156,7 +156,7 @@ export function PlaybookView({
                 className="flex items-center gap-1 rounded border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-amber-500 transition-colors hover:bg-amber-500/20"
               >
                 <FlaskConical className="h-3 w-3" />
-                {dryRuns} dry run{dryRuns === 1 ? "" : "s"}
+                {dryRuns} {t("dry run")}{dryRuns === 1 ? "" : "s"}
               </button>
             )}
             <Chip mono>{strategy.slug}</Chip>
@@ -170,8 +170,7 @@ export function PlaybookView({
             onClick={() => setShowRoutines(true)}
             className="flex items-center gap-1.5 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-2.5 py-1.5 text-xs font-semibold text-[var(--color-text-muted)] transition-all hover:border-[var(--color-primary)]/50 hover:text-[var(--color-primary)]"
           >
-            <ScrollText className="h-3.5 w-3.5" /> Routines &amp; reports
-          </button>
+            <ScrollText className="h-3.5 w-3.5" /> {t("Routines &amp; reports")}</button>
           <button
             type="button"
             onClick={() => setShowDeleteConfirm(true)}
@@ -183,8 +182,7 @@ export function PlaybookView({
             }
             className="flex items-center gap-1.5 rounded-lg border border-red-500/30 bg-red-500/10 px-2.5 py-1.5 text-xs font-semibold text-red-400 transition-all hover:bg-red-500/20 disabled:cursor-not-allowed disabled:opacity-30"
           >
-            <Trash2 className="h-3.5 w-3.5" /> Delete
-          </button>
+            <Trash2 className="h-3.5 w-3.5" /> {t("Delete")}</button>
         </div>
       </div>
 
@@ -193,7 +191,7 @@ export function PlaybookView({
           written back — so they are one row rather than one above the other. */}
       <div className="grid items-start gap-4 @3xl:grid-cols-2">
         <DocCard
-          title="Playbook"
+          title={t("Playbook")}
           file="loop.md"
           Icon={BookOpen}
           content={strategy.strategy_md}
@@ -202,7 +200,7 @@ export function PlaybookView({
           invalidateKey={["strategy", slug, sslug]}
         />
         <DocCard
-          title="Learnings"
+          title={t("Learnings")}
           file="persists across sessions"
           Icon={GraduationCap}
           content={strategy.learnings}
@@ -228,7 +226,7 @@ export function PlaybookView({
 
       <ConfirmDialog
         open={showDeleteConfirm}
-        title="Delete Loop"
+        title={t("Delete Loop")}
         isPending={deleteMutation.isPending}
         isError={deleteMutation.isError}
         errorText={
@@ -239,9 +237,7 @@ export function PlaybookView({
         onConfirm={() => deleteMutation.mutate()}
         onClose={() => setShowDeleteConfirm(false)}
       >
-        Delete <strong className="text-[var(--color-text)]">{strategy.name}</strong>?
-        This cannot be undone.
-      </ConfirmDialog>
+        {t("Delete")}{" "}<strong className="text-[var(--color-text)]">{strategy.name}</strong>{t("? This cannot be undone.")}</ConfirmDialog>
     </div>
   );
 }
@@ -320,12 +316,10 @@ function DocCard({
         >
           {editing ? (
             <>
-              <X className="h-3 w-3" /> Done
-            </>
+              <X className="h-3 w-3" /> {t("Done")}</>
           ) : (
             <>
-              <Pencil className="h-3 w-3" /> Edit
-            </>
+              <Pencil className="h-3 w-3" /> {t("Edit")}</>
           )}
         </button>
       </header>
@@ -539,11 +533,9 @@ function ConfigCard({
       <header className="flex flex-wrap items-center gap-2 border-b border-[var(--color-border)] px-3 py-2">
         <Sliders className="h-3.5 w-3.5 shrink-0 text-[var(--color-text-muted)]" />
         <h3 className="text-xs font-bold uppercase tracking-widest text-[var(--color-text)]">
-          Configuration
-        </h3>
+          {t("Configuration")}</h3>
         <span className="text-[10px] text-[var(--color-text-muted)]">
-          what every session of this loop runs under
-        </span>
+          {t("what every session of this loop runs under")}</span>
         <button
           type="button"
           role="switch"
@@ -577,12 +569,10 @@ function ConfigCard({
         >
           {editing ? (
             <>
-              <X className="h-3 w-3" /> Done
-            </>
+              <X className="h-3 w-3" /> {t("Done")}</>
           ) : (
             <>
-              <Pencil className="h-3 w-3" /> Edit
-            </>
+              <Pencil className="h-3 w-3" /> {t("Edit")}</>
           )}
         </button>
         {restartMutation.isError && (
@@ -646,8 +636,7 @@ function ConfigCard({
       {context && (
         <div className="border-t border-[var(--color-border)] px-3 py-2">
           <h4 className="mb-1 text-[10px] font-bold uppercase tracking-widest text-[var(--color-text-muted)]">
-            Trading context
-          </h4>
+            {t("Trading context")}</h4>
           <p className="whitespace-pre-wrap text-xs leading-relaxed text-[var(--color-text-muted)]">
             {context}
           </p>

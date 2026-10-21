@@ -28,6 +28,7 @@ import { paneReturnHref, writePane } from "@/components/chat/paneUrl";
 import type { PaneReturnState } from "@/components/chat/StrategySheet";
 import { api } from "@/lib/api";
 import { agentQuery, agentsQuery, hasRunningLoop } from "@/lib/queryClient";
+import { t } from "@/lib/i18n";
 
 /**
  * One agent, one screen, one route (FEAT-103).
@@ -144,7 +145,7 @@ export function AgentWorkspace() {
       <div className="flex min-h-[60vh] items-center justify-center">
         <div className="max-w-sm rounded-lg border border-red-500/30 bg-[var(--color-surface)] p-8 text-center">
           <AlertCircle className="mx-auto mb-3 h-10 w-10 text-[var(--color-red)]" />
-          <h2 className="mb-1 text-lg font-semibold">Failed to Load Agent</h2>
+          <h2 className="mb-1 text-lg font-semibold">{t("Failed to Load Agent")}</h2>
           <p className="text-sm text-[var(--color-text-muted)]">
             {error instanceof Error ? error.message : "An unexpected error occurred."}
           </p>
@@ -152,8 +153,7 @@ export function AgentWorkspace() {
             to="/"
             className="mt-4 inline-flex items-center gap-1 text-xs text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text)]"
           >
-            <ArrowLeft className="h-3.5 w-3.5" /> Back to Agents
-          </Link>
+            <ArrowLeft className="h-3.5 w-3.5" /> {t("Back to Agents")}</Link>
         </div>
       </div>
     );
@@ -218,16 +218,14 @@ export function AgentWorkspace() {
 
       <ConfirmDialog
         open={showDeleteConfirm}
-        title="Delete Agent"
+        title={t("Delete Agent")}
         isPending={deleteAgentMutation.isPending}
         isError={deleteAgentMutation.isError}
         errorText="Failed to delete agent. It may have running loops."
         onConfirm={() => deleteAgentMutation.mutate()}
         onClose={() => setShowDeleteConfirm(false)}
       >
-        Delete <strong className="text-[var(--color-text)]">{agent.name}</strong> and
-        all its loops? This cannot be undone.
-      </ConfirmDialog>
+        {t("Delete")}{" "}<strong className="text-[var(--color-text)]">{agent.name}</strong> {t("and all its loops? This cannot be undone.")}</ConfirmDialog>
     </>
   );
 }

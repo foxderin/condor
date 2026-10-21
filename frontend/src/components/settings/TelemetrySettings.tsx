@@ -2,6 +2,7 @@ import { BarChart3, Check, Loader2, Lock, ShieldCheck, ShieldOff } from "lucide-
 
 import { useSetTelemetryLevel, useTelemetry } from "@/hooks/useTelemetry";
 import type { TelemetryLevel } from "@/lib/api";
+import { t } from "@/lib/i18n";
 
 /**
  * What this install shares, and — for the admin — the switch that changes it.
@@ -44,8 +45,7 @@ export function TelemetrySettings() {
 
       <section>
         <h4 className="mb-2 text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
-          Never sent
-        </h4>
+          {t("Never sent")}</h4>
         <ul className="flex flex-wrap gap-1.5">
           {disclosure.never.map((item) => (
             <li
@@ -60,8 +60,7 @@ export function TelemetrySettings() {
 
       <section>
         <h4 className="mb-2 text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
-          This install
-        </h4>
+          {t("This install")}</h4>
         <div className="space-y-1">
           {disclosure.options.map((option) => {
             const active = chosen === option.level;
@@ -111,25 +110,20 @@ export function TelemetrySettings() {
               }`}
             />
             <span className="flex-1 text-sm text-[var(--color-text)]">
-              Nothing at all — stop reporting this install
-            </span>
+              {t("Nothing at all — stop reporting this install")}</span>
             {offChosen && <Check className="h-4 w-4 shrink-0 text-[var(--color-primary)]" />}
           </button>
         </div>
 
         {offChosen && !env_overridden && (
           <p className="mt-2 text-xs text-[var(--color-text-muted)]">
-            This install reports nothing, and stays that way across upgrades.
-            Anything already collected was deleted. Pick a level above to turn
-            reporting back on.
-          </p>
+            {t("This install reports nothing, and stays that way across upgrades. Anything already collected was deleted. Pick a level above to turn reporting back on.")}</p>
         )}
         {env_overridden && (
           <p className="mt-2 flex items-start gap-1.5 text-xs text-[var(--color-text-muted)]">
             <Lock className="mt-0.5 h-3 w-3 shrink-0" />
             <span>
-              <code>CONDOR_TELEMETRY</code> is set in this install's environment
-              and overrides anything chosen here. Effective level:{" "}
+              <code>CONDOR_TELEMETRY</code> {t("is set in this install's environment and overrides anything chosen here. Effective level:")}{" "}
               <strong>{level}</strong>.
             </span>
           </p>
@@ -138,14 +132,13 @@ export function TelemetrySettings() {
           <p className="mt-2 flex items-start gap-1.5 text-xs text-[var(--color-text-muted)]">
             <Lock className="mt-0.5 h-3 w-3 shrink-0" />
             <span>
-              Telemetry is install-wide, so only the admin can change it.
-              Effective level: <strong>{level}</strong>.
+              {t("Telemetry is install-wide, so only the admin can change it. Effective level:")}<strong>{level}</strong>.
             </span>
           </p>
         )}
         {mutation.isError && (
           <p className="mt-2 text-xs text-[var(--color-red)]">
-            Could not save that. {(mutation.error as Error).message}
+            {t("Could not save that.")}{" "}{(mutation.error as Error).message}
           </p>
         )}
       </section>

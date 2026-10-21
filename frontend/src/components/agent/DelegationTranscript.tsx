@@ -7,6 +7,7 @@ import remarkGfm from "remark-gfm";
 import { ToolCallStatusIcon } from "@/components/chat/ToolCallStatus";
 import { type DelegationEvent, api } from "@/lib/api";
 import { formatToolName } from "@/lib/formatters";
+import { t } from "@/lib/i18n";
 
 /** Reasoning, collapsed by default — it is context, not the answer. */
 function ThoughtRow({ text }: { text: string }) {
@@ -23,8 +24,7 @@ function ThoughtRow({ text }: { text: string }) {
         ) : (
           <ChevronRight className="h-3 w-3" />
         )}
-        Reasoning
-      </button>
+        {t("Reasoning")}</button>
       {expanded && (
         <div className="ml-4 mt-1 whitespace-pre-wrap text-xs italic text-[var(--color-text-muted)]">
           {text}
@@ -67,8 +67,7 @@ function ToolRow({
           {event.input !== null && (
             <div>
               <p className="mb-0.5 text-[10px] uppercase tracking-wider text-[var(--color-text-muted)]">
-                Input
-              </p>
+                {t("Input")}</p>
               <pre className="max-h-48 overflow-auto whitespace-pre-wrap break-words rounded border border-[var(--color-border)] bg-[var(--color-surface)] p-2 font-mono text-[11px] text-[var(--color-text-muted)]">
                 {JSON.stringify(event.input, null, 2)}
               </pre>
@@ -77,8 +76,7 @@ function ToolRow({
           {event.output !== null && (
             <div>
               <p className="mb-0.5 text-[10px] uppercase tracking-wider text-[var(--color-text-muted)]">
-                Output
-              </p>
+                {t("Output")}</p>
               <pre className="max-h-64 overflow-auto whitespace-pre-wrap break-words rounded border border-[var(--color-border)] bg-[var(--color-surface)] p-2 font-mono text-[11px] text-[var(--color-text-muted)]">
                 {event.output}
               </pre>
@@ -113,14 +111,13 @@ export function DelegationTranscript({ taskId }: { taskId: string }) {
     return (
       <div className="flex items-center gap-2 text-xs text-[var(--color-text-muted)]">
         <Loader2 className="h-3 w-3 animate-spin" />
-        Loading transcript…
-      </div>
+        {t("Loading transcript…")}</div>
     );
   }
 
   if (error) {
     return (
-      <p className="text-xs text-red-400">Could not load the transcript.</p>
+      <p className="text-xs text-red-400">{t("Could not load the transcript.")}</p>
     );
   }
 

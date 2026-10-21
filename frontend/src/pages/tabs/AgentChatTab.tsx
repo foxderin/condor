@@ -73,6 +73,7 @@ import {
   type ConversationMeta,
   type Delegation,
 } from "@/lib/api";
+import { t } from "@/lib/i18n";
 
 /** Openers offered when nothing is bound, and when something is. */
 const CONDOR_STARTERS: Starter[] = [
@@ -956,7 +957,7 @@ function Hero({
     <div className="flex flex-1 flex-col items-center justify-center px-2">
       <div className="w-full max-w-xl">
         <h2 className="text-center text-xl font-semibold text-[var(--color-text)]">
-          Ask {agent?.name || "Condor"}
+          {t("Ask")}{" "}{agent?.name || "Condor"}
         </h2>
         <p className="mt-1 text-center text-sm text-[var(--color-text-muted)]">
           {agent?.description ||

@@ -7,6 +7,7 @@ import {
   Field,
 } from "@/components/agent/knowledge/KnowledgeChrome";
 import { api, type MemoryCard } from "@/lib/api";
+import { t } from "@/lib/i18n";
 
 /** The taxonomy `MemoryStore` validates against — anything else falls back to `fact`. */
 const MEMORY_TYPES = ["preference", "fact", "feedback", "reference"] as const;
@@ -71,24 +72,23 @@ export function MemoryEditor({
     >
       {!existing && (
         <Field
-          label="Name"
+          label={t("Name")}
           value={name}
           onChange={touch(setName)}
-          placeholder="e.g. favourite-pair"
-          hint="Slugified — writing an existing name overwrites that memory."
+          placeholder={t("e.g. favourite-pair")}
+          hint={t("Slugified — writing an existing name overwrites that memory.")}
           mono
         />
       )}
       <Field
-        label="Description"
+        label={t("Description")}
         value={description}
         onChange={touch(setDescription)}
-        placeholder="One line — this is what the agent scans to decide it is relevant"
+        placeholder={t("One line — this is what the agent scans to decide it is relevant")}
       />
       <div>
         <label className="mb-1 block text-[10px] uppercase tracking-wider text-[var(--color-text-muted)]">
-          Type
-        </label>
+          {t("Type")}</label>
         <select
           value={type}
           onChange={(e) => touch(setType)(e.target.value)}
@@ -103,12 +103,11 @@ export function MemoryEditor({
       </div>
       <div>
         <label className="mb-1 block text-[10px] uppercase tracking-wider text-[var(--color-text-muted)]">
-          Body
-        </label>
+          {t("Body")}</label>
         <BodyArea
           value={body}
           onChange={touch(setBody)}
-          placeholder="The fact itself."
+          placeholder={t("The fact itself.")}
         />
       </div>
     </EditorShell>

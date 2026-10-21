@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 
 import { api, type SharingState } from "@/lib/api";
+import { t } from "@/lib/i18n";
 
 const SHARES_KEY = ["shared-conversations"] as const;
 const SETTINGS_KEY = ["sharing-settings"] as const;
@@ -137,29 +138,18 @@ export function SharingSettings() {
       <section>
         <h3 className="mb-1 text-sm font-semibold text-[var(--color-text)]">
           <Share2 className="mr-1.5 inline h-4 w-4" />
-          Conversations you have shared
-        </h3>
+          {t("Conversations you have shared")}</h3>
         <div className="space-y-2 text-xs leading-relaxed text-[var(--color-text-muted)]">
           <p>
-            Separate from usage telemetry above, and it works differently.
-            Telemetry is anonymous counts the admin turns on once for this whole
-            install. A shared conversation is <strong>content</strong>: only you
-            can share one of yours, and by default only after reading the
-            transcript we would send, with its sensitive content redacted first.
-            You choose below whether that stays one button press at a time.
-          </p>
+            {t("Separate from usage telemetry above, and it works differently. Telemetry is anonymous counts the admin turns on once for this whole install. A shared conversation is")}<strong>content</strong>{t(": only you can share one of yours, and by default only after reading the transcript we would send, with its sensitive content redacted first. You choose below whether that stays one button press at a time.")}</p>
           <p>
-            Keys, wallet addresses, server names, accounts and file paths are
-            replaced before anything leaves. Amounts and prices are kept — a
-            transcript without them cannot show whether the agent was right.
-          </p>
+            {t("Keys, wallet addresses, server names, accounts and file paths are replaced before anything leaves. Amounts and prices are kept — a transcript without them cannot show whether the agent was right.")}</p>
         </div>
       </section>
 
       <section>
         <h4 className="mb-2 text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
-          Share my conversations with Condor
-        </h4>
+          {t("Share my conversations with Condor")}</h4>
 
         <div className="space-y-1">
           {CHOICES.map((choice) => {
@@ -203,40 +193,31 @@ export function SharingSettings() {
 
         {state === "always" && preference?.sweeping && (
           <p className="mt-2 text-xs text-[var(--color-text-muted)]">
-            Every conversation this covers says so in its own header, with one
-            click to leave it out. Turning this off deletes anything queued but
-            not yet sent.
-          </p>
+            {t("Every conversation this covers says so in its own header, with one click to leave it out. Turning this off deletes anything queued but not yet sent.")}</p>
         )}
         {state === "always" && preference?.allowed === false && (
           <p className="mt-2 text-xs text-[var(--color-yellow)]">
-            Your answer is Always, but sharing is turned off for this install,
-            so nothing is going out.
-          </p>
+            {t("Your answer is Always, but sharing is turned off for this install, so nothing is going out.")}</p>
         )}
         {choose.isError && (
           <p className="mt-2 text-xs text-[var(--color-red)]">
-            Could not save that. {(choose.error as Error).message}
+            {t("Could not save that.")}{" "}{(choose.error as Error).message}
           </p>
         )}
       </section>
 
       <section>
         <h4 className="mb-2 text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
-          Currently shared
-        </h4>
+          {t("Currently shared")}</h4>
 
         {isLoading && (
           <div className="flex items-center gap-2 py-4 text-xs text-[var(--color-text-muted)]">
-            <Loader2 className="h-3 w-3 animate-spin" /> Loading…
-          </div>
+            <Loader2 className="h-3 w-3 animate-spin" /> {t("Loading…")}</div>
         )}
 
         {!isLoading && shares.length === 0 && (
           <p className="rounded-lg border border-dashed border-[var(--color-border)] px-3 py-6 text-center text-xs text-[var(--color-text-muted)]">
-            Nothing shared. Use the share button on a conversation in the chat
-            rail to hand one over.
-          </p>
+            {t("Nothing shared. Use the share button on a conversation in the chat rail to hand one over.")}</p>
         )}
 
         <div className="space-y-1">
@@ -251,7 +232,7 @@ export function SharingSettings() {
                   {item.title || "Untitled chat"}
                 </p>
                 <p className="text-[11px] text-[var(--color-text-muted)]">
-                  {item.turn_count} turns · shared {when(item.shared_at)}
+                  {item.turn_count} {t("turns · shared")}{" "}{when(item.shared_at)}
                   {item.revision > 1 ? ` · revision ${item.revision}` : ""}
                 </p>
               </div>
@@ -261,26 +242,19 @@ export function SharingSettings() {
                 className="flex shrink-0 items-center gap-1.5 rounded-md border border-[var(--color-border)] px-2 py-1 text-xs text-[var(--color-red)] hover:bg-[var(--color-surface-hover)] disabled:opacity-60"
               >
                 <Trash2 className="h-3 w-3" />
-                Unshare
-              </button>
+                {t("Unshare")}</button>
             </div>
           ))}
         </div>
 
         {shares.length > 0 && (
           <p className="mt-2 text-xs text-[var(--color-text-muted)]">
-            Unsharing deletes the copy on our side, and takes that chat out of
-            automatic sharing for good — it will not be sent again on its own,
-            however much it grows. To put one back, open its share dialog from
-            the conversation list and use{" "}
-            <span className="text-[var(--color-text)]">Include it</span>.
-            Deleting a conversation here unshares it first, so it never outlives
-            the chat it came from.
-          </p>
+            {t("Unsharing deletes the copy on our side, and takes that chat out of automatic sharing for good — it will not be sent again on its own, however much it grows. To put one back, open its share dialog from the conversation list and use")}{" "}
+            <span className="text-[var(--color-text)]">{t("Include it")}</span>{t(". Deleting a conversation here unshares it first, so it never outlives the chat it came from.")}</p>
         )}
         {unshare.isError && (
           <p className="mt-2 text-xs text-[var(--color-red)]">
-            Could not unshare that. {(unshare.error as Error).message}
+            {t("Could not unshare that.")}{" "}{(unshare.error as Error).message}
           </p>
         )}
 
@@ -292,9 +266,7 @@ export function SharingSettings() {
           (confirmingPurge ? (
             <div className="mt-3 rounded-lg border border-[var(--color-red)]/40 bg-[var(--color-red)]/5 px-3 py-2">
               <p className="text-xs text-[var(--color-text)]">
-                Unshare all {shares.length} conversations? Every copy we hold is
-                deleted. The chats themselves stay here, untouched.
-              </p>
+                {t("Unshare all")}{" "}{shares.length} {t("conversations? Every copy we hold is deleted. The chats themselves stay here, untouched.")}</p>
               {/* The caveat this button earns: each one is also excluded from
                   automatic sharing, and there is no bulk way back. Somebody who
                   later wants Always to cover their archive again has to include
@@ -313,14 +285,12 @@ export function SharingSettings() {
                   {purge.isPending && (
                     <Loader2 className="h-3 w-3 animate-spin" />
                   )}
-                  Yes, delete everything I've shared
-                </button>
+                  {t("Yes, delete everything I've shared")}</button>
                 <button
                   onClick={() => setConfirmingPurge(false)}
                   className="rounded-md px-3 py-1 text-xs text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)]"
                 >
-                  Cancel
-                </button>
+                  {t("Cancel")}</button>
               </div>
             </div>
           ) : (
@@ -329,12 +299,11 @@ export function SharingSettings() {
               className="mt-3 flex items-center gap-1.5 rounded-md border border-[var(--color-border)] px-3 py-1.5 text-xs text-[var(--color-red)] hover:bg-[var(--color-surface-hover)]"
             >
               <Trash2 className="h-3.5 w-3.5" />
-              Delete everything I've shared
-            </button>
+              {t("Delete everything I've shared")}</button>
           ))}
         {purge.isError && (
           <p className="mt-2 text-xs text-[var(--color-red)]">
-            Could not unshare everything. {(purge.error as Error).message}
+            {t("Could not unshare everything.")}{" "}{(purge.error as Error).message}
           </p>
         )}
       </section>
@@ -342,8 +311,7 @@ export function SharingSettings() {
       {settings?.can_change && (
         <section>
           <h4 className="mb-2 text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
-            This install
-          </h4>
+            {t("This install")}</h4>
           <button
             disabled={settings.env_overridden || toggle.isPending}
             onClick={() => toggle.mutate(!settings.enabled)}
@@ -367,10 +335,7 @@ export function SharingSettings() {
             </span>
           </button>
           <p className="mt-2 text-xs text-[var(--color-text-muted)]">
-            An install-wide veto, so only you can set it. Turning it off hides
-            the share button for every user here; anything already shared can
-            still be unshared.
-          </p>
+            {t("An install-wide veto, so only you can set it. Turning it off hides the share button for every user here; anything already shared can still be unshared.")}</p>
         </section>
       )}
 
@@ -378,9 +343,7 @@ export function SharingSettings() {
         <p className="flex items-start gap-1.5 text-xs text-[var(--color-text-muted)]">
           <Lock className="mt-0.5 h-3 w-3 shrink-0" />
           <span>
-            <code>CONDOR_SHARING</code> is set in this install's environment and
-            overrides anything chosen here. Nothing can be shared.
-          </span>
+            <code>CONDOR_SHARING</code> {t("is set in this install's environment and overrides anything chosen here. Nothing can be shared.")}</span>
         </p>
       )}
     </div>

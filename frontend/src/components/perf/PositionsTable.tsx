@@ -7,6 +7,7 @@ import {
   positionExtraColumns,
   type PositionRow,
 } from "@/lib/perf-positions";
+import { t } from "@/lib/i18n";
 
 function SideTag({ side }: { side: string }) {
   if (!side) return <span className="text-[var(--color-text-muted)]">—</span>;
@@ -49,21 +50,20 @@ export function PositionsTable({
         <table className="w-full text-[11px]">
           <thead>
             <tr className="border-y border-[var(--color-border)]/60 bg-[var(--color-bg)] text-[10px] uppercase tracking-wider text-[var(--color-text-muted)]">
-              {showController && <th className="px-3 py-1.5 text-left font-medium">Controller</th>}
-              <th className="px-3 py-1.5 text-left font-medium">Connector</th>
-              <th className="px-3 py-1.5 text-left font-medium">Pair</th>
-              <th className="px-3 py-1.5 text-left font-medium">Side</th>
-              <th className="px-3 py-1.5 text-right font-medium">Amount</th>
-              <th className="px-3 py-1.5 text-right font-medium">Breakeven</th>
-              <th className="px-3 py-1.5 text-right font-medium" title="Amount x breakeven price">
-                Notional
-              </th>
+              {showController && <th className="px-3 py-1.5 text-left font-medium">{t("Controller")}</th>}
+              <th className="px-3 py-1.5 text-left font-medium">{t("Connector")}</th>
+              <th className="px-3 py-1.5 text-left font-medium">{t("Pair")}</th>
+              <th className="px-3 py-1.5 text-left font-medium">{t("Side")}</th>
+              <th className="px-3 py-1.5 text-right font-medium">{t("Amount")}</th>
+              <th className="px-3 py-1.5 text-right font-medium">{t("Breakeven")}</th>
+              <th className="px-3 py-1.5 text-right font-medium" title={t("Amount x breakeven price")}>
+                {t("Notional")}</th>
               {extraColumns.map((k) => (
                 <th key={k} className="px-3 py-1.5 text-right font-medium">{k}</th>
               ))}
-              <th className="px-3 py-1.5 text-right font-medium">Realized</th>
-              <th className="px-3 py-1.5 text-right font-medium">Unrealized</th>
-              <th className="px-3 py-1.5 text-right font-medium">Volume</th>
+              <th className="px-3 py-1.5 text-right font-medium">{t("Realized")}</th>
+              <th className="px-3 py-1.5 text-right font-medium">{t("Unrealized")}</th>
+              <th className="px-3 py-1.5 text-right font-medium">{t("Volume")}</th>
             </tr>
           </thead>
           <tbody>

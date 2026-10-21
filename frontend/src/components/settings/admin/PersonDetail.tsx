@@ -5,6 +5,7 @@ import { formatRelativeTime } from "@/lib/formatters";
 
 import { formatDate } from "./identity";
 import { ServerAccessGrid } from "./ServerAccessGrid";
+import { t } from "@/lib/i18n";
 
 /**
  * One person, expanded in place: who they are, what they may be, what they reach.
@@ -72,10 +73,7 @@ export function PersonDetail({
         <div className="flex items-start gap-2 rounded-md border border-[var(--color-amber,var(--color-border))] bg-[var(--color-surface-hover)] p-3">
           <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-amber-400" />
           <p className="text-xs leading-relaxed text-[var(--color-text-muted)]">
-            This id holds access to a server but has no user record — the
-            registration it was granted to is gone. The access is still live. The
-            only thing to do with it is take it away.
-          </p>
+            {t("This id holds access to a server but has no user record — the registration it was granted to is gone. The access is still live. The only thing to do with it is take it away.")}</p>
         </div>
       )}
 
@@ -83,12 +81,10 @@ export function PersonDetail({
       {person.known && (
         <section>
           <h4 className="mb-1.5 text-xs font-semibold uppercase tracking-wider text-[var(--color-text-muted)]">
-            Access
-          </h4>
+            {t("Access")}</h4>
           {person.is_admin ? (
             <p className="text-xs text-[var(--color-text-muted)]">
-              Admin — set by <code>ADMIN_USER_ID</code>, not from here.
-            </p>
+              {t("Admin — set by")}{" "}<code>ADMIN_USER_ID</code>{t(", not from here.")}</p>
           ) : (
             <div className="flex flex-wrap items-center gap-1">
               {ACCESS_STATES.map(({ target, label }) => (
@@ -114,8 +110,7 @@ export function PersonDetail({
                   disabled={rolePending}
                   className="rounded-md px-3 py-1.5 text-xs font-medium text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-red)] disabled:opacity-40"
                 >
-                  Reject
-                </button>
+                  {t("Reject")}</button>
               )}
               {rolePending && (
                 <Loader2 className="h-3 w-3 animate-spin text-[var(--color-text-muted)]" />
@@ -131,8 +126,7 @@ export function PersonDetail({
       {/* Servers */}
       <section>
         <h4 className="mb-1.5 text-xs font-semibold uppercase tracking-wider text-[var(--color-text-muted)]">
-          Servers
-        </h4>
+          {t("Servers")}</h4>
         <ServerAccessGrid
           person={person}
           onSet={onSetServerAccess}
@@ -145,8 +139,7 @@ export function PersonDetail({
       {person.known && !person.is_admin && (
         <section>
           <h4 className="mb-1.5 text-xs font-semibold uppercase tracking-wider text-[var(--color-text-muted)]">
-            Capabilities
-          </h4>
+            {t("Capabilities")}</h4>
           <label className="flex cursor-pointer items-start gap-2">
             <input
               type="checkbox"
@@ -155,11 +148,7 @@ export function PersonDetail({
               className="mt-0.5 h-3.5 w-3.5 shrink-0 accent-[var(--color-red)]"
             />
             <span className="text-xs leading-relaxed text-[var(--color-text-muted)]">
-              <code className="text-[var(--color-text)]">code_run</code> — arbitrary
-              Python in the bot process: every server&apos;s credentials, the
-              dashboard&apos;s JWT secret and the environment. Admin-equivalent in
-              practice.
-            </span>
+              <code className="text-[var(--color-text)]">code_run</code> {t("— arbitrary Python in the bot process: every server&apos;s credentials, the dashboard&apos;s JWT secret and the environment. Admin-equivalent in practice.")}</span>
           </label>
           {codeRunError && (
             <p className="mt-1.5 text-xs text-[var(--color-red)]">{codeRunError}</p>

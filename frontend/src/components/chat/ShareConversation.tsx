@@ -12,6 +12,7 @@ import {
 
 import { useEscapeKey } from "@/hooks/useEscapeKey";
 import { api, type RedactionCounts, type SharePreview } from "@/lib/api";
+import { t } from "@/lib/i18n";
 
 /** Human names for the scrubber's categories, in the order a sentence wants
  *  them. Anything the backend adds later that is not listed falls back to its
@@ -263,19 +264,14 @@ export function ShareConversation({
         <div className="border-b border-[var(--color-border)] p-5">
           <h2 className="flex items-center gap-2 text-lg font-semibold text-[var(--color-text)]">
             <Share2 className="h-4 w-4" />
-            Share this chat with Condor
-          </h2>
+            {t("Share this chat with Condor")}</h2>
           <p className="mt-1 text-xs leading-relaxed text-[var(--color-text-muted)]">
-            Real conversations are what make the agents better. Below is exactly
-            what would be sent — read it first. Nothing leaves this install
-            unless you press Share.
-          </p>
+            {t("Real conversations are what make the agents better. Below is exactly what would be sent — read it first. Nothing leaves this install unless you press Share.")}</p>
         </div>
 
         {isLoading && (
           <div className="flex items-center justify-center gap-2 p-12 text-sm text-[var(--color-text-muted)]">
-            <Loader2 className="h-4 w-4 animate-spin" /> Redacting…
-          </div>
+            <Loader2 className="h-4 w-4 animate-spin" /> {t("Redacting…")}</div>
         )}
 
         {error && (
@@ -323,24 +319,16 @@ export function ShareConversation({
               <p className="flex items-start gap-2 text-xs text-[var(--color-text-muted)]">
                 <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
                 <span>
-                  Amounts, prices and PnL are <strong>kept</strong> — without
-                  them nobody can tell whether the agent got the answer right.
-                  Redaction is best-effort on free text, so if you pasted
-                  something sensitive into the chat, check for it below.
-                </span>
+                  {t("Amounts, prices and PnL are")}{" "}<strong>kept</strong> {t("— without them nobody can tell whether the agent got the answer right. Redaction is best-effort on free text, so if you pasted something sensitive into the chat, check for it below.")}</span>
               </p>
               {data.truncated && (
                 <p className="text-xs text-[var(--color-text-muted)]">
-                  This chat is over the size limit, so {data.turns_omitted}{" "}
-                  turns from the middle were dropped. The start and the end are
-                  intact.
-                </p>
+                  {t("This chat is over the size limit, so")}{" "}{data.turns_omitted}{" "}
+                  {t("turns from the middle were dropped. The start and the end are intact.")}</p>
               )}
               {data.shared && (
                 <p className="text-xs text-[var(--color-text-muted)]">
-                  Already shared (revision {data.revision}). Sharing again
-                  replaces that copy rather than adding a second one.
-                </p>
+                  {t("Already shared (revision")}{" "}{data.revision}{t("). Sharing again replaces that copy rather than adding a second one.")}</p>
               )}
             </div>
 
@@ -356,10 +344,7 @@ export function ShareConversation({
                   the Include it button above. */}
               {data.shared && (
                 <p className="mb-3 text-xs leading-relaxed text-[var(--color-text-muted)]">
-                  Unsharing deletes our copy and stops this chat being shared
-                  automatically — it will not be sent again unless you press
-                  Include it above, or Share here yourself.
-                </p>
+                  {t("Unsharing deletes our copy and stops this chat being shared automatically — it will not be sent again unless you press Include it above, or Share here yourself.")}</p>
               )}
               <div className="flex items-center justify-between gap-2">
                 <div className="flex gap-2">
@@ -368,8 +353,7 @@ export function ShareConversation({
                     className="flex items-center gap-1.5 rounded-md border border-[var(--color-border)] px-3 py-1.5 text-xs text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)]"
                   >
                     <Download className="h-3.5 w-3.5" />
-                    Download instead
-                  </button>
+                    {t("Download instead")}</button>
                   {data.shared && (
                     <button
                       onClick={() => unshareMutation.mutate()}
@@ -377,8 +361,7 @@ export function ShareConversation({
                       className="flex items-center gap-1.5 rounded-md border border-[var(--color-border)] px-3 py-1.5 text-xs text-[var(--color-red)] hover:bg-[var(--color-surface-hover)]"
                     >
                       <Trash2 className="h-3.5 w-3.5" />
-                      Unshare
-                    </button>
+                      {t("Unshare")}</button>
                   )}
                 </div>
 
@@ -387,8 +370,7 @@ export function ShareConversation({
                     onClick={onClose}
                     className="rounded-md px-3 py-1.5 text-xs text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)]"
                   >
-                    Cancel
-                  </button>
+                    {t("Cancel")}</button>
                   {confirming ? (
                     <button
                       onClick={() => shareMutation.mutate()}
@@ -400,8 +382,7 @@ export function ShareConversation({
                       ) : (
                         <Send className="h-3.5 w-3.5" />
                       )}
-                      Yes, send this
-                    </button>
+                      {t("Yes, send this")}</button>
                   ) : (
                     <button
                       onClick={() => setConfirming(true)}

@@ -11,6 +11,7 @@ import {
   formatCurrencyPnl,
   pnlColor,
 } from "@/lib/formatters";
+import { t } from "@/lib/i18n";
 
 /**
  * The window the change beside the total is measured over.
@@ -221,8 +222,7 @@ export function DockPortfolio({ server }: { server: string }) {
       onClick={() => navigate("/portfolio")}
       className="flex w-full items-center gap-1 px-3 py-1.5 text-left text-[11px] text-[var(--color-primary)] transition-colors hover:bg-[var(--color-surface-hover)]"
     >
-      Open portfolio
-      <ArrowRight className="h-3 w-3" />
+      {t("Open portfolio")}<ArrowRight className="h-3 w-3" />
     </button>
   );
 
@@ -230,8 +230,7 @@ export function DockPortfolio({ server }: { server: string }) {
     return (
       <div className="flex flex-col">
         <p className="px-3 py-2 text-[11px] text-[var(--color-red)]">
-          Could not read {server}&apos;s portfolio.
-        </p>
+          {t("Could not read")}{" "}{server}{t("&apos;s portfolio.")}</p>
         {footer}
       </div>
     );
@@ -240,7 +239,7 @@ export function DockPortfolio({ server }: { server: string }) {
   if (isLoading && !data) {
     return (
       <p className="px-3 py-2 text-[11px] text-[var(--color-text-muted)]">
-        Reading {server}…
+        {t("Reading")}{" "}{server}…
       </p>
     );
   }
@@ -251,8 +250,7 @@ export function DockPortfolio({ server }: { server: string }) {
     return (
       <div className="flex flex-col">
         <p className="px-3 py-2 text-[11px] text-[var(--color-text-muted)]">
-          No balances on {server}. Add exchange credentials and they appear here.
-        </p>
+          {t("No balances on")}{" "}{server}{t(". Add exchange credentials and they appear here.")}</p>
         {footer}
       </div>
     );
@@ -271,7 +269,7 @@ export function DockPortfolio({ server }: { server: string }) {
           <span
             className="font-mono text-[11px] tabular-nums"
             style={{ color: pnlColor(change.abs) }}
-            title="Change over the last 24 hours"
+            title={t("Change over the last 24 hours")}
           >
             {formatCurrencyPnl(fromUsd(change.abs), currencySymbol)}
             {change.pct !== null &&
@@ -280,10 +278,9 @@ export function DockPortfolio({ server }: { server: string }) {
         ) : (
           <span
             className="text-[11px] text-[var(--color-text-muted)]"
-            title="Not enough history on this server to measure a day's change"
+            title={t("Not enough history on this server to measure a day's change")}
           >
-            24h unknown
-          </span>
+            {t("24h unknown")}</span>
         )}
       </div>
 

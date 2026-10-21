@@ -15,6 +15,7 @@ import { useServer } from "@/hooks/useServer";
 import { api, type PoolSummary } from "@/lib/api";
 import { useDexFavorites } from "@/lib/dexFavorites";
 import { DEX_NETWORK_KEY } from "@/lib/sessionState";
+import { t } from "@/lib/i18n";
 
 /** GeckoTerminal rate-limits per IP across every viewer and every polling chart. */
 const POOL_STALE_MS = 30_000;
@@ -310,7 +311,7 @@ export function Dex() {
 
   if (!server) {
     return (
-      <NoServerCard message="Select a server from the sidebar to browse DEX pools." />
+      <NoServerCard message={t("Select a server from the sidebar to browse DEX pools.")} />
     );
   }
 
@@ -342,9 +343,7 @@ export function Dex() {
       <div>
         <h1 className="text-lg font-semibold">DEX</h1>
         <p className="text-sm text-[var(--color-text-muted)]">
-          Pools Condor trades through Gateway. Open one to chart it, swap in it
-          and provide liquidity to it.
-        </p>
+          {t("Pools Condor trades through Gateway. Open one to chart it, swap in it and provide liquidity to it.")}</p>
       </div>
 
       {/* Above the browser, because getting back to a pool you are already in is
@@ -389,8 +388,7 @@ export function Dex() {
               </span>
             </span>
             <span className="flex items-center gap-1 text-xs text-[var(--color-primary)]">
-              Open pool
-              <ArrowRight className="h-3 w-3" />
+              {t("Open pool")}<ArrowRight className="h-3 w-3" />
             </span>
           </button>
         )}

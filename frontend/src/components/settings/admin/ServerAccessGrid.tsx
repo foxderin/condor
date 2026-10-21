@@ -1,6 +1,7 @@
 import { Loader2 } from "lucide-react";
 
 import type { AdminPerson } from "@/lib/admin-api";
+import { t } from "@/lib/i18n";
 
 /**
  * One person's access to every registered server (FEAT-088).
@@ -36,8 +37,7 @@ export function ServerAccessGrid({
   if (person.servers.length === 0) {
     return (
       <p className="text-xs text-[var(--color-text-muted)]">
-        No servers are registered yet.
-      </p>
+        {t("No servers are registered yet.")}</p>
     );
   }
 
@@ -65,8 +65,7 @@ export function ServerAccessGrid({
 
             {grant.implicit ? (
               <span className="shrink-0 text-xs text-[var(--color-text-muted)]">
-                all servers · by role
-              </span>
+                {t("all servers · by role")}</span>
             ) : owned ? (
               <span className="shrink-0 text-xs text-[var(--color-text-muted)]">
                 owner

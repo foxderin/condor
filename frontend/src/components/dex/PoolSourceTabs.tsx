@@ -11,6 +11,7 @@ import {
   type PoolSource,
   sameSource,
 } from "./pool-source";
+import { t } from "@/lib/i18n";
 
 
 /**
@@ -60,7 +61,7 @@ function ChainSelect({
         ref={setAnchor}
         onClick={() => setOpen(!open)}
         aria-expanded={open}
-        title="Chain to browse pools on"
+        title={t("Chain to browse pools on")}
         className="flex items-center gap-1.5 rounded-md border border-[var(--color-border)] px-2 py-1 text-xs text-[var(--color-text)] transition-colors hover:bg-[var(--color-surface-hover)]"
       >
         {current?.label ?? network}
@@ -180,7 +181,7 @@ function DexFilter({
           <input
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
-            placeholder="Filter venues…"
+            placeholder={t("Filter venues…")}
             autoFocus
             spellCheck={false}
             className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-2 py-1 text-xs text-[var(--color-text)] placeholder:text-[var(--color-text-muted)]"
@@ -216,8 +217,7 @@ function DexFilter({
           })}
           {!shown.length && (
             <div className="px-3 py-2 text-xs text-[var(--color-text-muted)]">
-              No venue matches.
-            </div>
+              {t("No venue matches.")}</div>
           )}
         </div>
       </AnchoredMenu>
@@ -307,13 +307,12 @@ export function PoolSourceTabs({
         <button
           onClick={() => onSourceChange({ kind: "favorites" })}
           className={`${tabClass(source.kind === "favorites")} flex items-center gap-1`}
-          title="Pools you starred"
+          title={t("Pools you starred")}
         >
           <Star
             className={`h-3 w-3 ${source.kind === "favorites" ? "fill-[var(--color-primary)] text-[var(--color-primary)]" : ""}`}
           />
-          Favorites
-          {favoriteCount > 0 && (
+          {t("Favorites")}{favoriteCount > 0 && (
             <span className="text-[10px] text-[var(--color-text-muted)]">
               {favoriteCount}
             </span>

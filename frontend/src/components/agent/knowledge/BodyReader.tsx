@@ -15,6 +15,7 @@ import {
   type SkillBody,
   type SkillCard,
 } from "@/lib/api";
+import { t } from "@/lib/i18n";
 
 /** What the reader drilled into, if anything — a playbook or a memory. */
 export type Reading =
@@ -72,7 +73,7 @@ export function BodyReader({
       className="mb-3 flex items-center gap-1 text-[11px] text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text)]"
     >
       <ArrowLeft className="h-3 w-3" />
-      Back to {reading.kind === "skill" ? "skills" : "memories"}
+      {t("Back to")}{" "}{reading.kind === "skill" ? "skills" : "memories"}
     </button>
   );
 
@@ -83,8 +84,7 @@ export function BodyReader({
         <div>
           {back}
           <div className="flex items-center gap-2 text-xs text-[var(--color-text-muted)]">
-            <Loader2 className="h-3.5 w-3.5 animate-spin" /> Loading…
-          </div>
+            <Loader2 className="h-3.5 w-3.5 animate-spin" /> {t("Loading…")}</div>
         </div>
       );
     return (
@@ -131,14 +131,12 @@ export function BodyReader({
       )}
       {reading.kind === "skill" && reading.card.inherited && (
         <p className="mt-1 text-[11px] text-amber-400">
-          From the shared library — read-only here. Create a playbook with the
-          same name to specialize it.
-        </p>
+          {t("From the shared library — read-only here. Create a playbook with the same name to specialize it.")}</p>
       )}
       {skill?.files && skill.files.length > 0 && (
         <div className="mt-2 flex flex-wrap gap-1.5">
           {skill.files.map((f) => (
-            <Chip key={f} title="Companion file the agent can pull on demand">
+            <Chip key={f} title={t("Companion file the agent can pull on demand")}>
               {f}
             </Chip>
           ))}
@@ -148,8 +146,7 @@ export function BodyReader({
       <div className="mt-3">
         {isLoading && (
           <div className="flex items-center gap-2 text-xs text-[var(--color-text-muted)]">
-            <Loader2 className="h-3.5 w-3.5 animate-spin" /> Loading…
-          </div>
+            <Loader2 className="h-3.5 w-3.5 animate-spin" /> {t("Loading…")}</div>
         )}
         {error && (
           <p className="text-xs text-[var(--color-red)]">

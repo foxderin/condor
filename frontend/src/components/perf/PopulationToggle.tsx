@@ -2,6 +2,7 @@ import { Activity, History } from "lucide-react";
 import type { ComponentType } from "react";
 
 import type { Population } from "@/lib/perf-tree";
+import { t } from "@/lib/i18n";
 
 /** One segment of a two-way control: an icon, a word, and which one is on. */
 function Segment<T extends string>({
@@ -58,18 +59,18 @@ export function PopulationToggle({
       <Segment
         value="running"
         current={population}
-        label="Running"
+        label={t("Running")}
         icon={Activity}
         onSelect={onChange}
-        title="Live controllers and the executors working under them"
+        title={t("Live controllers and the executors working under them")}
       />
       <Segment
         value="terminated"
         current={population}
-        label="Terminated"
+        label={t("Terminated")}
         icon={History}
         onSelect={onChange}
-        title="Executors that have closed, and the bot runs that have finished"
+        title={t("Executors that have closed, and the bot runs that have finished")}
       />
     </div>
   );

@@ -8,6 +8,7 @@ import {
 import { WorkspaceSheet } from "@/components/chat/WorkspaceSheet";
 import { api, type DelegationSummary } from "@/lib/api";
 import { formatDuration } from "@/lib/formatters";
+import { t } from "@/lib/i18n";
 
 /** One labelled block of a run's output, absent when there is nothing to show. */
 function Block({
@@ -70,13 +71,10 @@ export function CodeRunSheet({
       {isLoading ? (
         <div className="flex items-center gap-2 text-xs text-[var(--color-text-muted)]">
           <Loader2 className="h-3 w-3 animate-spin" />
-          Loading the run…
-        </div>
+          {t("Loading the run…")}</div>
       ) : error || !data ? (
         <p className="text-xs text-red-400">
-          Could not load this run — it may have aged out of the store, or it may
-          not be yours to read.
-        </p>
+          {t("Could not load this run — it may have aged out of the store, or it may not be yours to read.")}</p>
       ) : (
         <>
           <div className="mb-3 flex flex-wrap items-center gap-2 text-[10px] text-[var(--color-text-muted)]">
@@ -85,17 +83,16 @@ export function CodeRunSheet({
             {/* The run's own status word, not the feed's translation of it. */}
             <span>· {data.status}</span>
           </div>
-          <Block title="Code" body={data.code} />
-          <Block title="Output" body={data.stdout} />
-          <Block title="Result" body={data.result} />
-          <Block title="Traceback" body={data.traceback || data.error} tone="error" />
+          <Block title={t("Code")} body={data.code} />
+          <Block title={t("Output")} body={data.stdout} />
+          <Block title={t("Result")} body={data.result} />
+          <Block title={t("Traceback")} body={data.traceback || data.error} tone="error" />
           {!data.stdout.trim() &&
             !data.result.trim() &&
             !data.traceback.trim() &&
             !data.error.trim() && (
               <p className="text-xs text-[var(--color-text-muted)]">
-                The snippet ran and produced no output.
-              </p>
+                {t("The snippet ran and produced no output.")}</p>
             )}
         </>
       )}

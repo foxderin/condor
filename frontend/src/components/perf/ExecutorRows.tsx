@@ -11,6 +11,7 @@ import { useEscapeKey } from "@/hooks/useEscapeKey";
 import { type ExecutorInfo } from "@/lib/api";
 import { stopKeepCopy } from "@/lib/executorStopCopy";
 import { isExecutorActive } from "@/lib/formatters";
+import { t } from "@/lib/i18n";
 
 /**
  * The choice that makes stopping an executor two different actions.
@@ -56,7 +57,7 @@ export function StopConfirmDialog({
         onClick={(e) => e.stopPropagation()}
       >
         <h3 className="text-sm font-semibold">
-          Stop {count === 1 ? "Executor" : `${count} Executors`}?
+          {t("Stop")}{" "}{count === 1 ? "Executor" : `${count} Executors`}?
         </h3>
         <p className="text-xs text-[var(--color-text-muted)]">
           {count === 1
@@ -84,14 +85,12 @@ export function StopConfirmDialog({
               onClick={onCancel}
               className="rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1.5 text-xs font-medium hover:bg-[var(--color-surface-hover)] transition-colors"
             >
-              Cancel
-            </button>
+              {t("Cancel")}</button>
             <button
               type="submit"
               className="rounded-md bg-[var(--color-red)] px-3 py-1.5 text-xs font-medium text-white hover:opacity-90 transition-colors"
             >
-              Confirm Stop
-            </button>
+              {t("Confirm Stop")}</button>
           </div>
         </form>
       </div>
@@ -123,8 +122,7 @@ function BulkActionBar({
         className="flex items-center gap-1.5 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-2.5 py-1 text-[11px] font-medium hover:bg-[var(--color-surface-hover)] transition-colors"
       >
         <Download className="h-3 w-3" />
-        Export CSV
-      </button>
+        {t("Export CSV")}</button>
       <button
         onClick={onStop}
         disabled={stopping}
@@ -136,8 +134,8 @@ function BulkActionBar({
       <button
         onClick={onClear}
         className="rounded p-1 hover:bg-[var(--color-surface-hover)] transition-colors"
-        title="Clear selection"
-        aria-label="Clear selection"
+        title={t("Clear selection")}
+        aria-label={t("Clear selection")}
       >
         <X className="h-3.5 w-3.5" />
       </button>

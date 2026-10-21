@@ -10,6 +10,7 @@ import { workspaceHref } from "@/components/agent/workspace/workspaceUrl";
 import { useEscapeKey } from "@/hooks/useEscapeKey";
 import { api, type StrategySummary } from "@/lib/api";
 import { agentQuery } from "@/lib/queryClient";
+import { t } from "@/lib/i18n";
 
 /**
  * The loops this agent owns — read, created, opened and deleted.
@@ -125,13 +126,9 @@ export function AgentStrategies({
         <div className="flex h-56 flex-col items-center justify-center rounded-xl border border-dashed border-[var(--color-border)] bg-[var(--color-surface)]/50">
           <CircleDot className="mb-3 h-9 w-9 text-[var(--color-text-muted)]/30" />
           <p className="mb-1 text-sm font-medium text-[var(--color-text)]">
-            No loops yet
-          </p>
+            {t("No loops yet")}</p>
           <p className="mb-4 max-w-md text-center text-xs text-[var(--color-text-muted)]">
-            This agent can already be delegated to. To let it run on a
-            loop, start from its default playbook — its own brain drives each tick —
-            or write a dedicated one.
-          </p>
+            {t("This agent can already be delegated to. To let it run on a loop, start from its default playbook — its own brain drives each tick — or write a dedicated one.")}</p>
           <div className="flex flex-wrap items-center justify-center gap-2">
             <button
               onClick={() => createDefaultLoop.mutate()}
@@ -146,13 +143,11 @@ export function AgentStrategies({
               className="flex items-center gap-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-2 text-sm font-medium text-[var(--color-text)]"
             >
               <Plus className="h-4 w-4" />
-              New Loop
-            </button>
+              {t("New Loop")}</button>
           </div>
           {createDefaultLoop.isError && (
             <p className="mt-3 text-xs text-[var(--color-red)]">
-              Could not create the default loop.
-            </p>
+              {t("Could not create the default loop.")}</p>
           )}
         </div>
       ) : (
@@ -163,8 +158,7 @@ export function AgentStrategies({
               className="flex items-center gap-1.5 rounded-lg bg-[var(--color-primary)] px-3 py-1.5 text-xs font-medium text-white transition-all hover:shadow-lg hover:shadow-[var(--color-primary)]/20"
             >
               <Plus className="h-3.5 w-3.5" />
-              New Loop
-            </button>
+              {t("New Loop")}</button>
           </div>
           {/* Up to three across on the page, one down the pane. Driven by the
               host's own `layout` rather than by a media query, because the
@@ -197,7 +191,7 @@ export function AgentStrategies({
 
       <ConfirmDialog
         open={!!deleteStrategy}
-        title="Delete Loop"
+        title={t("Delete Loop")}
         isPending={deleteMut.isPending}
         isError={deleteMut.isError}
         errorText={
@@ -208,12 +202,11 @@ export function AgentStrategies({
         onConfirm={() => deleteStrategy && deleteMut.mutate(deleteStrategy)}
         onClose={() => setDeleteStrategy(null)}
       >
-        Delete{" "}
+        {t("Delete")}{" "}
         <strong className="text-[var(--color-text)]">
           {deleteStrategy?.name}
         </strong>
-        ? This cannot be undone.
-      </ConfirmDialog>
+        {t("? This cannot be undone.")}</ConfirmDialog>
     </>
   );
 }
@@ -259,48 +252,44 @@ function CreateStrategyDialog({
         className="w-full max-w-md rounded-xl border border-[var(--color-border)] bg-[var(--color-bg)] p-6 shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className="mb-4 text-lg font-semibold text-[var(--color-text)]">New Loop</h2>
+        <h2 className="mb-4 text-lg font-semibold text-[var(--color-text)]">{t("New Loop")}</h2>
 
         <div className="space-y-4">
           <div>
             <label className="mb-1 block text-xs font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
-              Name
-            </label>
+              {t("Name")}</label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="e.g. BRL Market Maker"
+              placeholder={t("e.g. BRL Market Maker")}
               className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2 text-sm text-[var(--color-text)] placeholder-[var(--color-text-muted)]/50 outline-none transition-colors focus:border-[var(--color-primary)]"
               autoFocus
             />
           </div>
           <div>
             <label className="mb-1 block text-xs font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
-              Description
-            </label>
+              {t("Description")}</label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="What does this loop do?"
+              placeholder={t("What does this loop do?")}
               rows={2}
               className="w-full resize-none rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2 text-sm text-[var(--color-text)] placeholder-[var(--color-text-muted)]/50 outline-none transition-colors focus:border-[var(--color-primary)]"
             />
           </div>
           <div>
             <label className="mb-1 block text-xs font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
-              Default Trading Context
-            </label>
+              {t("Default Trading Context")}</label>
             <textarea
               value={defaultContext}
               onChange={(e) => setDefaultContext(e.target.value)}
-              placeholder="e.g. Provide liquidity on BRL pairs, tight spreads, rebalance hourly..."
+              placeholder={t("e.g. Provide liquidity on BRL pairs, tight spreads, rebalance hourly...")}
               rows={3}
               className="w-full resize-none rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2 text-sm text-[var(--color-text)] placeholder-[var(--color-text-muted)]/50 outline-none transition-colors focus:border-[var(--color-primary)]"
             />
             <p className="mt-1 text-[11px] text-[var(--color-text-muted)]">
-              Tactic that guides this playbook's tick decisions. Can be overridden per session.
-            </p>
+              {t("Tactic that guides this playbook's tick decisions. Can be overridden per session.")}</p>
           </div>
         </div>
 
@@ -309,8 +298,7 @@ function CreateStrategyDialog({
             onClick={onClose}
             className="rounded-lg px-4 py-2 text-sm text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)]"
           >
-            Cancel
-          </button>
+            {t("Cancel")}</button>
           <button
             onClick={() => createMutation.mutate()}
             disabled={!name.trim() || createMutation.isPending}
@@ -320,7 +308,7 @@ function CreateStrategyDialog({
           </button>
         </div>
         {createMutation.isError && (
-          <p className="mt-3 text-xs text-red-400">Failed to create loop.</p>
+          <p className="mt-3 text-xs text-red-400">{t("Failed to create loop.")}</p>
         )}
       </div>
     </div>

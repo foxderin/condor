@@ -14,6 +14,7 @@ import { useMarketFavorites } from "@/lib/marketFavorites";
 import { useTickers } from "./useTickers";
 import { useTradingRules } from "./useTradingRules";
 import { VenueRail } from "./VenueRail";
+import { t } from "@/lib/i18n";
 
 export interface MarketPick {
   connector: string;
@@ -257,7 +258,7 @@ export function MarketBrowser({
   return (
     <div
       role="dialog"
-      aria-label="Browse markets"
+      aria-label={t("Browse markets")}
       onKeyDown={handleKeyDown}
       className="absolute left-0 top-0 z-40 flex w-full max-w-3xl max-h-[min(34rem,70vh)] rounded-br-lg border-b border-r border-[var(--color-border)] bg-[var(--color-bg)] shadow-lg"
     >
@@ -305,11 +306,11 @@ export function MarketBrowser({
                 setQuote(e.target.value);
                 setActiveIndex(0);
               }}
-              aria-label="Filter by quote asset"
-              title="Filter by quote asset"
+              aria-label={t("Filter by quote asset")}
+              title={t("Filter by quote asset")}
               className="shrink-0 rounded border border-[var(--color-border)] bg-[var(--color-bg)] px-1.5 py-1 text-[11px] text-[var(--color-text)] focus:outline-none"
             >
-              <option value={ALL_QUOTES}>All quotes</option>
+              <option value={ALL_QUOTES}>{t("All quotes")}</option>
               {quotes.map((q) => (
                 <option key={q} value={q}>
                   {q}
@@ -324,7 +325,7 @@ export function MarketBrowser({
               setActiveIndex(0);
             }}
             aria-pressed={favoritesOnly}
-            title="Show starred markets only"
+            title={t("Show starred markets only")}
             className={`flex shrink-0 items-center gap-1 rounded border px-2 py-1 text-[11px] transition-colors ${
               favoritesOnly
                 ? "border-[var(--color-yellow)] text-[var(--color-yellow)]"
@@ -332,8 +333,7 @@ export function MarketBrowser({
             }`}
           >
             <Star className={`h-3 w-3 ${favoritesOnly ? "fill-current" : ""}`} />
-            Starred
-          </button>
+            {t("Starred")}</button>
 
           {isFetching && (
             <Loader2 className="h-3.5 w-3.5 shrink-0 animate-spin text-[var(--color-text-muted)]" />
@@ -341,8 +341,8 @@ export function MarketBrowser({
 
           <button
             onClick={onClose}
-            title="Close (Esc)"
-            aria-label="Close market browser"
+            title={t("Close (Esc)")}
+            aria-label={t("Close market browser")}
             className="shrink-0 rounded p-1.5 text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)]"
           >
             <X className="h-4 w-4" />
@@ -356,19 +356,19 @@ export function MarketBrowser({
             onClick={() => toggleSort("trading_pair")}
             className="flex items-center gap-1 hover:text-[var(--color-text)]"
           >
-            Pair {sortIcon("trading_pair")}
+            {t("Pair")}{" "}{sortIcon("trading_pair")}
           </button>
           <button
             onClick={() => toggleSort("price")}
             className="flex items-center justify-end gap-1 hover:text-[var(--color-text)]"
           >
-            Price {sortIcon("price")}
+            {t("Price")}{" "}{sortIcon("price")}
           </button>
           <button
             onClick={() => toggleSort("usd_volume")}
             className="flex items-center justify-end gap-1 hover:text-[var(--color-text)]"
           >
-            24h Vol {sortIcon("usd_volume")}
+            {t("24h Vol")}{" "}{sortIcon("usd_volume")}
           </button>
           <button
             onClick={() => toggleSort("change_pct")}
@@ -383,8 +383,7 @@ export function MarketBrowser({
         <div ref={listRef} className="min-h-0 flex-1 overflow-y-auto">
           {isLoading ? (
             <p className="px-3 py-8 text-center text-xs text-[var(--color-text-muted)]">
-              Loading markets...
-            </p>
+              {t("Loading markets...")}</p>
           ) : visible.length === 0 ? (
             <p className="px-3 py-8 text-center text-xs text-[var(--color-text-muted)]">
               {tickers.length === 0
@@ -470,7 +469,7 @@ export function MarketBrowser({
 
         {/* Footer: how many of how many */}
         <div className="border-t border-[var(--color-border)] px-3 py-1.5 text-center text-[10px] text-[var(--color-text-muted)]">
-          Showing {visible.length.toLocaleString()} of {rows.length.toLocaleString()}
+          {t("Showing")}{" "}{visible.length.toLocaleString()} of {rows.length.toLocaleString()}
           {rows.length > MAX_ROWS && " — refine your search"}
         </div>
       </div>

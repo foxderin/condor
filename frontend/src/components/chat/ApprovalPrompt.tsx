@@ -3,6 +3,7 @@ import { Hand } from "lucide-react";
 
 import type { PermissionRequest } from "@/hooks/useChatSocket";
 import { formatToolName } from "@/lib/formatters";
+import { t } from "@/lib/i18n";
 
 /**
  * Whole seconds until `deadline`, ticking once a second; null when the
@@ -61,7 +62,7 @@ export function ApprovalPrompt({
   return (
     <section
       role="region"
-      aria-label="Approval needed"
+      aria-label={t("Approval needed")}
       aria-live="assertive"
       className="mb-2 overflow-hidden rounded-lg border-2 border-[var(--color-primary)] bg-[var(--color-surface)] shadow-lg"
     >
@@ -79,7 +80,7 @@ export function ApprovalPrompt({
         {secondsLeft !== null && !expired && (
           <span
             className="shrink-0 font-mono text-xs tabular-nums text-[var(--color-text-muted)]"
-            title="Denied automatically when this runs out"
+            title={t("Denied automatically when this runs out")}
           >
             {mmss(secondsLeft)}
           </span>
@@ -117,14 +118,12 @@ export function ApprovalPrompt({
         {expired ? (
           <>
             <p className="min-w-0 flex-1 text-xs text-[var(--color-text-muted)]">
-              Nobody answered in time, so it was not run.
-            </p>
+              {t("Nobody answered in time, so it was not run.")}</p>
             <button
               onClick={() => onResolve(request.request_id, false)}
               className="rounded-md border border-[var(--color-border)] px-3 py-1.5 text-sm font-medium text-[var(--color-text)] hover:bg-[var(--color-surface-hover)]"
             >
-              Dismiss
-            </button>
+              {t("Dismiss")}</button>
           </>
         ) : (
           <>
@@ -132,18 +131,14 @@ export function ApprovalPrompt({
               onClick={() => onResolve(request.request_id, true)}
               className="rounded-md bg-[var(--color-primary)] px-4 py-1.5 text-sm font-semibold text-[var(--on-primary)] hover:bg-[var(--color-primary-hover)]"
             >
-              Allow
-            </button>
+              {t("Allow")}</button>
             <button
               onClick={() => onResolve(request.request_id, false)}
               className="rounded-md border border-[var(--color-border)] px-4 py-1.5 text-sm font-medium text-[var(--color-text)] hover:border-[var(--color-red)] hover:text-[var(--color-red)]"
             >
-              Deny
-            </button>
+              {t("Deny")}</button>
             <p className="min-w-0 flex-1 text-[11px] leading-snug text-[var(--color-text-muted)]">
-              Nothing runs until you choose. A chat reply is not an answer —
-              sending one cancels this call.
-            </p>
+              {t("Nothing runs until you choose. A chat reply is not an answer — sending one cancels this call.")}</p>
           </>
         )}
       </footer>

@@ -12,6 +12,7 @@ import { InlineConfirm } from "@/components/ui/InlineConfirm";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
 import { useServer } from "@/hooks/useServer";
 import { type ServerInfo, api } from "@/lib/api";
+import { t } from "@/lib/i18n";
 
 interface ServerForm {
   name: string;
@@ -128,8 +129,7 @@ export function ServersSettings() {
             onClick={() => { setAdding(true); setEditing(null); setForm(EMPTY_FORM); }}
             className="flex items-center gap-1.5 rounded-md bg-[var(--color-primary)] px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-[var(--color-primary)]/80"
           >
-            <Plus className="h-3.5 w-3.5" /> Add Server
-          </button>
+            <Plus className="h-3.5 w-3.5" /> {t("Add Server")}</button>
         )}
       </div>
 
@@ -145,7 +145,7 @@ export function ServersSettings() {
           <div className="grid grid-cols-2 gap-3">
             {!editing && (
               <div className="col-span-2">
-                <label className="mb-1 block text-xs text-[var(--color-text-muted)]">Name</label>
+                <label className="mb-1 block text-xs text-[var(--color-text-muted)]">{t("Name")}</label>
                 <input
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
@@ -155,7 +155,7 @@ export function ServersSettings() {
               </div>
             )}
             <div>
-              <label className="mb-1 block text-xs text-[var(--color-text-muted)]">Host</label>
+              <label className="mb-1 block text-xs text-[var(--color-text-muted)]">{t("Host")}</label>
               <input
                 value={form.host}
                 onChange={(e) => setForm({ ...form, host: e.target.value })}
@@ -164,7 +164,7 @@ export function ServersSettings() {
               />
             </div>
             <div>
-              <label className="mb-1 block text-xs text-[var(--color-text-muted)]">Port</label>
+              <label className="mb-1 block text-xs text-[var(--color-text-muted)]">{t("Port")}</label>
               <input
                 type="number"
                 value={form.port}
@@ -173,7 +173,7 @@ export function ServersSettings() {
               />
             </div>
             <div>
-              <label className="mb-1 block text-xs text-[var(--color-text-muted)]">Username</label>
+              <label className="mb-1 block text-xs text-[var(--color-text-muted)]">{t("Username")}</label>
               <input
                 value={form.username}
                 onChange={(e) => setForm({ ...form, username: e.target.value })}
@@ -182,7 +182,7 @@ export function ServersSettings() {
               />
             </div>
             <div>
-              <label className="mb-1 block text-xs text-[var(--color-text-muted)]">Password</label>
+              <label className="mb-1 block text-xs text-[var(--color-text-muted)]">{t("Password")}</label>
               <input
                 type="password"
                 value={form.password}
@@ -206,8 +206,7 @@ export function ServersSettings() {
               onClick={() => { setAdding(false); setEditing(null); setForm(EMPTY_FORM); }}
               className="rounded-md px-3 py-1.5 text-xs text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)]"
             >
-              Cancel
-            </button>
+              {t("Cancel")}</button>
           </div>
           {(addMut.error || updateMut.error) && (
             <p className="mt-2 text-xs text-[var(--color-red)]">
@@ -241,8 +240,7 @@ export function ServersSettings() {
                   </span>
                   {s.is_default && (
                     <span className="rounded bg-amber-400/15 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-amber-400">
-                      Default
-                    </span>
+                      {t("Default")}</span>
                   )}
                 </div>
                 <span className="text-xs text-[var(--color-text-muted)]">
@@ -254,7 +252,7 @@ export function ServersSettings() {
                     step. The backend only fills this for the owner. */}
                 {isOwner(s) && (s.shared_with?.length ?? 0) > 0 && (
                   <span className="mt-0.5 block text-xs text-[var(--color-text-muted)]">
-                    Shared with{" "}
+                    {t("Shared with")}{" "}
                     {s.shared_with?.map((m, i) => (
                       <span key={m.user_id}>
                         {i > 0 && ", "}
@@ -302,7 +300,7 @@ export function ServersSettings() {
                   <button
                     onClick={() => startEdit(s)}
                     className="rounded p-1.5 text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-primary)]"
-                    title="Edit"
+                    title={t("Edit")}
                   >
                     <Edit2 className="h-3.5 w-3.5" />
                   </button>
@@ -322,8 +320,7 @@ export function ServersSettings() {
 
         {servers.length === 0 && (
           <p className="py-8 text-center text-sm text-[var(--color-text-muted)]">
-            No servers configured. Add one to get started.
-          </p>
+            {t("No servers configured. Add one to get started.")}</p>
         )}
 
         {(deleteMut.error || defaultMut.error) && (

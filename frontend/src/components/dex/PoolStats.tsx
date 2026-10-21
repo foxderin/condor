@@ -5,6 +5,7 @@ import type { PoolSummary } from "@/lib/api";
 import { copyText } from "@/lib/clipboard";
 
 import { num, pct, usdCompact } from "./format";
+import { t } from "@/lib/i18n";
 
 /** GeckoTerminal chain ids → the slugs the DEX web apps route on. */
 const UNISWAP_CHAINS: Record<string, string> = {
@@ -69,7 +70,7 @@ export function PoolAddress({ pool }: { pool: PoolSummary }) {
       </span>
       <button
         onClick={copy}
-        title="Copy pool address"
+        title={t("Copy pool address")}
         className="rounded p-0.5 hover:text-[var(--color-text)]"
       >
         {copied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
@@ -78,7 +79,7 @@ export function PoolAddress({ pool }: { pool: PoolSummary }) {
         href={poolUrl(pool)}
         target="_blank"
         rel="noreferrer"
-        title="Open on the DEX"
+        title={t("Open on the DEX")}
         className="rounded p-0.5 hover:text-[var(--color-text)]"
       >
         <ExternalLink className="h-3 w-3" />
@@ -93,10 +94,10 @@ export function PoolStats({ pool, network }: { pool: PoolSummary; network?: stri
 
   return (
     <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-      {network && <Stat label="Network" value={network} />}
+      {network && <Stat label={t("Network")} value={network} />}
       <Stat label="DEX" value={pool.dex_id} />
       <Stat label="TVL" value={usdCompact(pool.reserve_usd)} />
-      <Stat label="Vol 24h" value={usdCompact(pool.volume_24h)} />
+      <Stat label={t("Vol 24h")} value={usdCompact(pool.volume_24h)} />
       <Stat
         label="24h"
         value={pct(pool.price_change_24h)}
@@ -112,11 +113,11 @@ export function PoolStats({ pool, network }: { pool: PoolSummary; network?: stri
         <Stat label="APR" value={pct(pool.apr)} />
       )}
       {pool.bin_step !== null && pool.bin_step !== undefined && (
-        <Stat label="Bin step" value={String(pool.bin_step)} />
+        <Stat label={t("Bin step")} value={String(pool.bin_step)} />
       )}
       {pool.base_fee_percentage !== null &&
         pool.base_fee_percentage !== undefined && (
-          <Stat label="Fee" value={`${pool.base_fee_percentage}%`} />
+          <Stat label={t("Fee")} value={`${pool.base_fee_percentage}%`} />
         )}
     </div>
   );

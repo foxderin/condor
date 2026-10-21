@@ -3,6 +3,7 @@ import { Component, type ErrorInfo, type ReactNode } from "react";
 import { SERVER_KEY } from "@/lib/auth";
 import { areaForRoute, buildDiagnostics } from "@/lib/diagnostics";
 import { openIssueDraft } from "@/lib/github-issue";
+import { t } from "@/lib/i18n";
 
 function isChunkLoadError(error: Error): boolean {
   const msg = error.message || "";
@@ -96,8 +97,7 @@ export class ErrorBoundary extends Component<Props, State> {
         <div className="flex h-full items-center justify-center">
           <div className="w-full max-w-md rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-6 text-center">
             <h2 className="mb-2 text-lg font-semibold text-[var(--color-red)]">
-              Something went wrong
-            </h2>
+              {t("Something went wrong")}</h2>
             <p className="mb-4 text-sm text-[var(--color-text-muted)]">
               {this.state.error?.message || "An unexpected error occurred."}
             </p>
@@ -118,8 +118,7 @@ export class ErrorBoundary extends Component<Props, State> {
                 onClick={this.reportCrash}
                 className="ml-2 rounded-md border border-[var(--color-border)] px-4 py-2 text-sm text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)]"
               >
-                Report this
-              </button>
+                {t("Report this")}</button>
             )}
           </div>
         </div>

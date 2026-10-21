@@ -20,6 +20,7 @@ import {
   hasHyperliquidReferrer,
   setHyperliquidReferrer,
 } from "@/lib/wallet/hyperliquid";
+import { t } from "@/lib/i18n";
 
 type Phase =
   | "select-wallet"
@@ -208,14 +209,12 @@ export function ConnectHyperliquid({
         disabled={busy}
         className="flex items-center gap-1.5 text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text)] disabled:opacity-40"
       >
-        <ArrowLeft className="h-3.5 w-3.5" /> Back
-      </button>
+        <ArrowLeft className="h-3.5 w-3.5" /> {t("Back")}</button>
 
       <div>
-        <h2 className="text-lg font-semibold text-[var(--color-text)]">Connect Hyperliquid</h2>
+        <h2 className="text-lg font-semibold text-[var(--color-text)]">{t("Connect Hyperliquid")}</h2>
         <p className="mt-1 text-xs text-[var(--color-text-muted)]">
-          Authorize a trade-only agent wallet — your private key never leaves your wallet.
-          Registers both <span className="text-[var(--color-text)]">hyperliquid_perpetual</span> and{" "}
+          {t("Authorize a trade-only agent wallet — your private key never leaves your wallet. Registers both")}<span className="text-[var(--color-text)]">hyperliquid_perpetual</span> and{" "}
           <span className="text-[var(--color-text)]">hyperliquid</span>.
         </p>
       </div>
@@ -223,7 +222,7 @@ export function ConnectHyperliquid({
       {/* Account name (used as the on-chain agent wallet name) */}
       <div>
         <label className="mb-1 block text-xs text-[var(--color-text-muted)]">
-          Agent name <span className="text-[var(--color-text-muted)]/60">(max 16 chars)</span>
+          {t("Agent name")}{" "}<span className="text-[var(--color-text-muted)]/60">{t("(max 16 chars)")}</span>
         </label>
         <input
           value={accountName}
@@ -234,9 +233,7 @@ export function ConnectHyperliquid({
           className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-1.5 font-mono text-sm text-[var(--color-text)] focus:border-[var(--color-primary)] focus:outline-none disabled:opacity-50"
         />
         <p className="mt-1 text-xs text-[var(--color-text-muted)]">
-          Authorized for {AGENT_VALIDITY_DAYS} days (Hyperliquid's maximum) — reconnect before it
-          expires to keep trading.
-        </p>
+          {t("Authorized for")}{" "}{AGENT_VALIDITY_DAYS} {t("days (Hyperliquid's maximum) — reconnect before it expires to keep trading.")}</p>
       </div>
 
       {/* Done state */}
@@ -256,7 +253,7 @@ export function ConnectHyperliquid({
                 <>
                   {" "}
                   <span className="text-[var(--color-text-muted)]">
-                    Agent wallet valid until {formatExpiry(conn.validUntil)}.
+                    {t("Agent wallet valid until")}{" "}{formatExpiry(conn.validUntil)}.
                   </span>
                 </>
               )}
@@ -268,8 +265,7 @@ export function ConnectHyperliquid({
             <div className="flex items-start gap-2 rounded-lg border border-[var(--color-primary)]/30 bg-[var(--color-primary)]/5 p-3 text-sm text-[var(--color-text)]">
               <Check className="mt-0.5 h-4 w-4 shrink-0 text-[var(--color-primary)]" />
               <span>
-                Hummingbot referral linked — {REFERRAL_FEE_DISCOUNT} off fees.
-              </span>
+                {t("Hummingbot referral linked —")}{" "}{REFERRAL_FEE_DISCOUNT} {t("off fees.")}</span>
             </div>
           ) : referral === "available" || referral === "linking" ? (
             <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-3">
@@ -277,13 +273,9 @@ export function ConnectHyperliquid({
                 <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-[var(--color-primary)]" />
                 <div className="space-y-0.5">
                   <p className="text-sm font-medium text-[var(--color-text)]">
-                    Earn {REFERRAL_FEE_DISCOUNT} off fees
-                  </p>
+                    {t("Earn")}{" "}{REFERRAL_FEE_DISCOUNT} {t("off fees")}</p>
                   <p className="text-xs text-[var(--color-text-muted)]">
-                    Link the Hummingbot referral code (
-                    <span className="text-[var(--color-text)]">{REFERRAL_CODE}</span>) to your
-                    Hyperliquid account. One-time, signed by your agent wallet.
-                  </p>
+                    {t("Link the Hummingbot referral code (")}<span className="text-[var(--color-text)]">{REFERRAL_CODE}</span>{t(") to your Hyperliquid account. One-time, signed by your agent wallet.")}</p>
                 </div>
               </div>
               {referralError && (
@@ -300,8 +292,7 @@ export function ConnectHyperliquid({
                 >
                   {referral === "linking" ? (
                     <>
-                      <Loader2 className="h-3.5 w-3.5 animate-spin" /> Linking…
-                    </>
+                      <Loader2 className="h-3.5 w-3.5 animate-spin" /> {t("Linking…")}</>
                   ) : (
                     "Link code"
                   )}
@@ -311,8 +302,7 @@ export function ConnectHyperliquid({
                   disabled={referral === "linking"}
                   className="rounded-md px-3 py-1.5 text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text)] disabled:opacity-50"
                 >
-                  Skip
-                </button>
+                  {t("Skip")}</button>
               </div>
             </div>
           ) : null}
@@ -320,8 +310,7 @@ export function ConnectHyperliquid({
       ) : phase === "saving" ? (
         <div className="space-y-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-3 text-sm text-[var(--color-text)]">
           <div className="text-xs text-[var(--color-text-muted)]">
-            Saving credentials — registering both connectors…
-          </div>
+            {t("Saving credentials — registering both connectors…")}</div>
           {SAVE_CONNECTORS.map(({ name, label }) => {
             const st = saveStatus[name];
             return (
@@ -351,15 +340,13 @@ export function ConnectHyperliquid({
         </div>
       ) : (
         <div className="space-y-2">
-          <label className="block text-xs text-[var(--color-text-muted)]">Connect wallet</label>
+          <label className="block text-xs text-[var(--color-text-muted)]">{t("Connect wallet")}</label>
           {scanning ? (
             <div className="flex items-center gap-2 py-3 text-xs text-[var(--color-text-muted)]">
-              <Loader2 className="h-4 w-4 animate-spin" /> Detecting wallets…
-            </div>
+              <Loader2 className="h-4 w-4 animate-spin" /> {t("Detecting wallets…")}</div>
           ) : wallets.length === 0 ? (
             <p className="rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] p-3 text-xs text-[var(--color-text-muted)]">
-              No browser wallet detected. Install Rabby or MetaMask, then reload.
-            </p>
+              {t("No browser wallet detected. Install Rabby or MetaMask, then reload.")}</p>
           ) : (
             <div className="space-y-2">
               {wallets.map((w) => (
@@ -391,34 +378,30 @@ export function ConnectHyperliquid({
             {/funded on Hyperliquid/i.test(error) && (
               <>
                 {" "}
-                New to Hyperliquid?{" "}
+                {t("New to Hyperliquid?")}{" "}
                 <a
                   href={HYPERLIQUID_SIGNUP_URL}
                   target="_blank"
                   rel="noreferrer"
                   className="font-medium text-[var(--color-primary)] underline"
                 >
-                  Sign up here
-                </a>{" "}
-                to get {REFERRAL_FEE_DISCOUNT} off fees.
-              </>
+                  {t("Sign up here")}</a>{" "}
+                {t("to get")}{" "}{REFERRAL_FEE_DISCOUNT} {t("off fees.")}</>
             )}
           </span>
         </div>
       )}
 
       <p className="text-xs text-[var(--color-text-muted)]">
-        Don't have a Hyperliquid account?{" "}
+        {t("Don't have a Hyperliquid account?")}{" "}
         <a
           href={HYPERLIQUID_SIGNUP_URL}
           target="_blank"
           rel="noreferrer"
           className="text-[var(--color-primary)] hover:underline"
         >
-          Sign up here
-        </a>{" "}
-        to get {REFERRAL_FEE_DISCOUNT} off trading fees.
-      </p>
+          {t("Sign up here")}</a>{" "}
+        {t("to get")}{" "}{REFERRAL_FEE_DISCOUNT} {t("off trading fees.")}</p>
     </div>
   );
 }

@@ -27,9 +27,10 @@ const SOURCES: Record<string, string> = import.meta.glob("../**/*.{ts,tsx}", {
 
 function calledStrings(): Set<string> {
   const found = new Set<string>();
-  // `t("…")` and `t('…')`, one line, no nesting. The translator writes calls in
-  // this shape; a multi-line call is a signal to keep it simple instead.
-  const call = /\bt\(\s*["']((?:[^"'\\\n]|\\.)+)["']/g;
+  // `t("…")` and `t('…')`, one line, no nesting. A component that receives the
+  // translator as a prop calls it `tr(...)`, which counts too — the catalogue
+  // does not care what the binding is named.
+  const call = /\b(?:t|tr)\(\s*["']((?:[^"'\\\n]|\\.)+)["']/g;
   for (const [path, source] of Object.entries(SOURCES)) {
     if (path.includes(".test.") || path === "lib/i18n.tsx") continue;
     for (const m of source.matchAll(call)) found.add(m[1]);

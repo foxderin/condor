@@ -1,4 +1,5 @@
 import { GROUPING_PRESETS, formatGrouping, type GroupAxis } from "@/lib/perf-grouping";
+import { t } from "@/lib/i18n";
 
 /**
  * Which question the scope tree is answering (FEAT-107).
@@ -31,7 +32,7 @@ export function GroupByPicker({
   return (
     <div
       role="group"
-      aria-label="Group by"
+      aria-label={t("Group by")}
       className="flex gap-0.5 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] p-0.5"
     >
       {GROUPING_PRESETS.map((preset) => {

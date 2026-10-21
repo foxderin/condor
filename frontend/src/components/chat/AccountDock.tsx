@@ -9,6 +9,7 @@ import { PANELS, type PanelId } from "@/components/chat/accountPanels";
 import { WorkspaceSheet } from "@/components/chat/WorkspaceSheet";
 import { useDockSplit } from "@/hooks/useDockSplit";
 import { DESK_SPLIT_KEY } from "@/lib/sessionState";
+import { t } from "@/lib/i18n";
 
 /**
  * The desk you trade, beside the conversation you are having about it.
@@ -111,7 +112,7 @@ export function AccountDock({
       // a number nobody can act on, and saying it on every section header
       // spent the width the tables now use.
       title={server}
-      subtitle="Portfolio and execution"
+      subtitle={t("Portfolio and execution")}
       onClose={onClose}
       // No full screen, for the reason the agent panel has none: this is read
       // against the conversation beside it, and the only outcome of the
@@ -138,7 +139,7 @@ export function AccountDock({
                 frac={frac}
                 setFrac={setFrac}
                 defaultFrac={defaultFrac}
-                label="Resize portfolio and execution"
+                label={t("Resize portfolio and execution")}
               />
             )}
             <DockSection

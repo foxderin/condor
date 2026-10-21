@@ -2,6 +2,7 @@ import { quoteOf } from "@/components/agent/session/positionFormat";
 import { PairLabel } from "@/components/executor/PairLabel";
 import type { PositionHeld } from "@/lib/api";
 import { pnlTextClass } from "@/lib/formatters";
+import { t } from "@/lib/i18n";
 
 /** A money formatter bound to the display currency: `(value, quoteCurrency)`. */
 type QuoteFormatter = (val: number, quote: string) => string;
@@ -29,19 +30,19 @@ export function SessionPositions({
   return (
     <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
       <h3 className="mb-3 text-xs font-bold uppercase tracking-widest text-[var(--color-text-muted)]">
-        Positions Held ({positions.length})
+        {t("Positions Held (")}{positions.length})
       </h3>
       <div className="overflow-x-auto">
         <table className="w-full text-left text-xs">
           <thead>
             <tr className="border-b border-[var(--color-border)] text-[10px] font-bold uppercase tracking-widest text-[var(--color-text-muted)]">
-              <th className="pb-2 pr-3">Pair</th>
-              <th className="pb-2 pr-3">Side</th>
-              <th className="pb-2 pr-3 text-right">Amount</th>
-              <th className="pb-2 pr-3 text-right">Entry</th>
-              <th className="pb-2 pr-3 text-right">Current</th>
-              <th className="pb-2 pr-3 text-right">Unreal. PnL</th>
-              <th className="pb-2 text-right">Leverage</th>
+              <th className="pb-2 pr-3">{t("Pair")}</th>
+              <th className="pb-2 pr-3">{t("Side")}</th>
+              <th className="pb-2 pr-3 text-right">{t("Amount")}</th>
+              <th className="pb-2 pr-3 text-right">{t("Entry")}</th>
+              <th className="pb-2 pr-3 text-right">{t("Current")}</th>
+              <th className="pb-2 pr-3 text-right">{t("Unreal. PnL")}</th>
+              <th className="pb-2 text-right">{t("Leverage")}</th>
             </tr>
           </thead>
           <tbody>

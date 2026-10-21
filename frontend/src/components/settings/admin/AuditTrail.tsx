@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import { ADMIN_AUDIT_KEY, type AuditEntry, adminApi } from "@/lib/admin-api";
 import { formatRelativeTime } from "@/lib/formatters";
+import { t } from "@/lib/i18n";
 
 /**
  * The audit log, read in the panel that writes it (FEAT-088).
@@ -65,11 +66,9 @@ export function AuditTrail() {
           <ChevronRight className="h-3.5 w-3.5 text-[var(--color-text-muted)]" />
         )}
         <span className="text-sm font-semibold text-[var(--color-text)]">
-          Audit log
-        </span>
+          {t("Audit log")}</span>
         <span className="text-xs text-[var(--color-text-muted)]">
-          who granted what to whom
-        </span>
+          {t("who granted what to whom")}</span>
       </button>
 
       {open && (
@@ -80,8 +79,7 @@ export function AuditTrail() {
             </div>
           ) : entries.length === 0 ? (
             <p className="py-2 text-xs text-[var(--color-text-muted)]">
-              Nothing recorded yet.
-            </p>
+              {t("Nothing recorded yet.")}</p>
           ) : (
             <ul className="space-y-1.5">
               {entries.map((entry, i) => (

@@ -23,6 +23,7 @@ import { routeFacts } from "@/lib/pageFacts";
 import { agentsQuery } from "@/lib/queryClient";
 import { BUBBLE_OPEN_KEY } from "@/lib/sessionState";
 import { collectViewFacts, renderViewBlock } from "@/lib/viewFacts";
+import { t } from "@/lib/i18n";
 
 /**
  * A quick chat over whatever page the user is on (FEAT-059).
@@ -136,8 +137,8 @@ export function ChatBubble() {
       <button
         onClick={() => toggle(true)}
         className="fixed bottom-4 right-4 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-primary)] text-[var(--on-primary)] shadow-lg transition-opacity hover:opacity-90"
-        title="Ask about this page"
-        aria-label="Open quick chat"
+        title={t("Ask about this page")}
+        aria-label={t("Open quick chat")}
       >
         <MessageSquare className="h-5 w-5" />
         {unread && (
@@ -200,16 +201,15 @@ export function ChatBubble() {
           <button
             onClick={openInWorkspace}
             className="flex items-center gap-1 whitespace-nowrap rounded px-1.5 py-1 text-[11px] font-medium text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)]"
-            title="Continue this conversation in the full chat workspace"
+            title={t("Continue this conversation in the full chat workspace")}
           >
             <ArrowUpRight className="h-3.5 w-3.5 shrink-0" />
-            Back to chat
-          </button>
+            {t("Back to chat")}</button>
           <button
             onClick={() => toggle(false)}
             className="rounded p-1 text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)]"
-            title="Minimize"
-            aria-label="Minimize quick chat"
+            title={t("Minimize")}
+            aria-label={t("Minimize quick chat")}
           >
             <Minus className="h-4 w-4" />
           </button>
@@ -366,8 +366,7 @@ function BubbleHero({
     <div className="flex flex-1 flex-col items-center px-3 pt-6 text-center">
       <MessageSquare className="mb-3 h-8 w-8 text-[var(--color-text-muted)] opacity-30" />
       <p className="text-sm font-medium text-[var(--color-text)]">
-        Ask {name} about this page
-      </p>
+        {t("Ask")}{" "}{name} {t("about this page")}</p>
       {routeLabel && (
         <div className="mt-2">
           <ContextChip label={routeLabel} />

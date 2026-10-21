@@ -8,6 +8,7 @@ import { useServer } from "@/hooks/useServer";
 import { attributionIndex, ownerRowLabel } from "@/lib/agent-attribution";
 import type { AgentRunRow } from "@/lib/api";
 import { parsePopulation } from "@/lib/perf-tree";
+import { t } from "@/lib/i18n";
 
 /**
  * Which query parameter the workspace's fleet scope lives in.
@@ -110,9 +111,7 @@ export function AgentFleet({
   if (!server) {
     return (
       <p className="py-8 text-center text-sm text-[var(--color-text-muted)]">
-        This agent has no server pinned, and no server is selected — so there is no
-        fleet to read. Pin one from the header above.
-      </p>
+        {t("This agent has no server pinned, and no server is selected — so there is no fleet to read. Pin one from the header above.")}</p>
     );
   }
 
@@ -128,24 +127,23 @@ export function AgentFleet({
     <div className="flex min-h-0 flex-1 flex-col">
       <div className="flex shrink-0 flex-wrap items-center gap-x-3 gap-y-1 border-b border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1.5 text-[11px] text-[var(--color-text-muted)]">
         <span className="tabular-nums">
-          Showing {counts.mine.toLocaleString()} of {counts.total.toLocaleString()}{" "}
+          {t("Showing")}{" "}{counts.mine.toLocaleString()} of {counts.total.toLocaleString()}{" "}
           {counts.total === 1 ? "controller" : "controllers"} — {ownerRowLabel(fleet.owners, runKey)}
           &apos;s
         </span>
         <Link
           to={`/bots?scope=${encodeURIComponent(rootScope)}`}
           className="inline-flex items-center gap-1 text-[var(--color-text-muted)] underline-offset-2 transition-colors hover:text-[var(--color-primary)] hover:underline"
-          title="The same records, beside everything else that is trading"
+          title={t("The same records, beside everything else that is trading")}
         >
-          <Layers className="h-3 w-3" /> the whole fleet
-        </Link>
+          <Layers className="h-3 w-3" /> {t("the whole fleet")}</Link>
         {/* An agent whose bots run somewhere else has a fleet — it is just not
             on the server the rest of the app is pointed at. Say which, and
             offer to move, rather than drawing an empty tree. */}
         {elsewhere && (
           <span className="inline-flex items-center gap-1 text-[var(--color-yellow)]">
             <Server className="h-3 w-3" />
-            {ownerRowLabel(fleet.owners, runKey)}&apos;s bots run on{" "}
+            {ownerRowLabel(fleet.owners, runKey)}{t("&apos;s bots run on")}{" "}
             <code className="font-mono">{serverName}</code>
             <button
               type="button"

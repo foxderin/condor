@@ -17,6 +17,7 @@ import {
   formatDateTime,
   pnlTextClass,
 } from "@/lib/formatters";
+import { t } from "@/lib/i18n";
 
 // A bot row's figures are the run's slice of that bot's history; a controller's
 // are lifetime (the history is per instance, never per controller), so the two
@@ -59,8 +60,7 @@ export function DeploymentLedger({
   return (
     <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
       <h3 className="mb-3 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[var(--color-text-muted)]">
-        <Package className="h-3.5 w-3.5" /> Deployed
-        {ordered.length > 0 && ` (${ordered.length})`}
+        <Package className="h-3.5 w-3.5" /> {t("Deployed")}{ordered.length > 0 && ` (${ordered.length})`}
         {runHref && ordered.length > 0 && (
           // The gesture the strategy page used to make, now aimed at the run
           // the reader is actually reading rather than at the strategy's
@@ -69,36 +69,32 @@ export function DeploymentLedger({
             to={runHref}
             className="ml-auto inline-flex items-center gap-1 text-[10px] font-medium normal-case tracking-normal text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-primary)]"
           >
-            See this run in the fleet
-            <ExternalLink className="h-3 w-3" />
+            {t("See this run in the fleet")}<ExternalLink className="h-3 w-3" />
           </Link>
         )}
       </h3>
       {ordered.length === 0 ? (
         <p className="text-[11px] text-[var(--color-text-muted)]">
-          This run deployed nothing.
-        </p>
+          {t("This run deployed nothing.")}</p>
       ) : (
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
               <tr className="text-[9px] uppercase tracking-widest text-[var(--color-text-muted)]">
-                <th className="px-2 py-1.5 font-bold">What</th>
-                <th className="px-2 py-1.5 font-bold">Created at</th>
-                <th className="px-2 py-1.5 font-bold">Since</th>
-                <th className="px-2 py-1.5 font-bold">Live</th>
+                <th className="px-2 py-1.5 font-bold">{t("What")}</th>
+                <th className="px-2 py-1.5 font-bold">{t("Created at")}</th>
+                <th className="px-2 py-1.5 font-bold">{t("Since")}</th>
+                <th className="px-2 py-1.5 font-bold">{t("Live")}</th>
                 <th
                   className="px-2 py-1.5 text-right font-bold"
                   title={FIGURE_BASIS_HINT}
                 >
-                  PnL
-                </th>
+                  {t("PnL")}</th>
                 <th
                   className="px-2 py-1.5 text-right font-bold"
                   title={FIGURE_BASIS_HINT}
                 >
-                  Volume
-                </th>
+                  {t("Volume")}</th>
                 <th className="px-2 py-1.5" />
               </tr>
             </thead>

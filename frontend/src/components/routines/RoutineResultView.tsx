@@ -2,6 +2,7 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { useAuthedImage } from "@/hooks/useAuthedImage";
 import type { RoutineInstance } from "@/lib/api";
+import { t } from "@/lib/i18n";
 
 interface Props {
   instance: RoutineInstance;
@@ -94,7 +95,7 @@ export function RoutineResultView({ instance }: Props) {
         <div className="overflow-hidden rounded-lg border border-[var(--color-border)]">
           <AuthImage
             src={`/api/v1/routines/instances/${instance.instance_id}/image`}
-            alt="Chart"
+            alt={t("Chart")}
             className="w-full"
           />
         </div>
@@ -144,8 +145,7 @@ export function RoutineResultView({ instance }: Props) {
               className="flex w-full items-center gap-1.5 px-3 py-2 text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
             >
               {rawOpen ? <ChevronDown className="h-3 w-3" /> : <ChevronRight className="h-3 w-3" />}
-              Raw Output
-            </button>
+              {t("Raw Output")}</button>
             {rawOpen && (
               <pre className="max-h-60 overflow-auto border-t border-[var(--color-border)] bg-[var(--color-surface)] p-3 text-xs text-[var(--color-text)] font-mono whitespace-pre-wrap">
                 {instance.result_text}

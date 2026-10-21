@@ -14,6 +14,7 @@ import {
 } from "./fields";
 import type { ExecutorValidation } from "./types";
 import { usesLimitPrice, type OrderAction, type OrderState } from "./order-config";
+import { t } from "@/lib/i18n";
 
 // ── Execution strategy options ──
 
@@ -26,7 +27,7 @@ const STRATEGY_OPTIONS = [
 
 const POSITION_ACTION_OPTIONS = [
   { value: "OPEN", label: "Open" },
-  { value: "CLOSE", label: "Close" },
+  { value: "CLOSE", label: t("Close (position)") },
 ];
 
 // ── Panel Component ──
@@ -120,7 +121,7 @@ export function OrderConfigPanel({
 
       {/* Order Config */}
       <div className="space-y-2.5">
-        <SectionHeader>Order</SectionHeader>
+        <SectionHeader>{t("Order")}</SectionHeader>
         <div>
           <AmountField
             value={state.amount}
@@ -139,7 +140,7 @@ export function OrderConfigPanel({
           />
         </div>
         <SelectField
-          label="Execution Strategy"
+          label={t("Execution Strategy")}
           value={state.execution_strategy}
           field="execution_strategy"
           dispatch={dispatch}
@@ -150,7 +151,7 @@ export function OrderConfigPanel({
         <LeverageField value={state.leverage} field="leverage" dispatch={dispatch} isSpot={isSpot} />
         {!isSpot && (
           <SelectField
-            label="Position Action"
+            label={t("Position Action")}
             value={state.position_action}
             field="position_action"
             dispatch={dispatch}
@@ -163,19 +164,18 @@ export function OrderConfigPanel({
       {needsPrice && (
         <div className="space-y-2.5">
           <div className="flex items-center justify-between">
-            <SectionHeader>Price</SectionHeader>
+            <SectionHeader>{t("Price")}</SectionHeader>
             {currentPrice && currentPrice > 0 && (
               <button
                 onClick={() => dispatch({ type: "SET_FIELD", field: "price", value: currentPrice })}
                 className="flex items-center gap-1 rounded border border-[var(--color-border)] bg-[var(--color-surface)] px-2 py-1 text-[10px] text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-surface-hover)]"
               >
                 <Sparkles className="h-3 w-3" />
-                Use current
-              </button>
+                {t("Use current")}</button>
             )}
           </div>
           <PriceField
-            label="Order Price"
+            label={t("Order Price")}
             value={state.price}
             field="price"
             activePickField={state.activePickField}
@@ -188,9 +188,9 @@ export function OrderConfigPanel({
       {/* Chaser config */}
       {isChaser && (
         <div className="space-y-2.5">
-          <SectionHeader>Chaser Config</SectionHeader>
+          <SectionHeader>{t("Chaser Config")}</SectionHeader>
           <NumberField
-            label="Distance"
+            label={t("Distance")}
             value={state.chaser_distance}
             field="chaser_distance"
             dispatch={dispatch}
@@ -199,7 +199,7 @@ export function OrderConfigPanel({
             suffix="%"
           />
           <NumberField
-            label="Refresh Threshold"
+            label={t("Refresh Threshold")}
             value={state.chaser_refresh_threshold}
             field="chaser_refresh_threshold"
             dispatch={dispatch}
@@ -208,8 +208,7 @@ export function OrderConfigPanel({
             suffix="%"
           />
           <p className="text-[10px] text-[var(--color-text-muted)]">
-            Chaser continuously adjusts limit order to chase the best price.
-          </p>
+            {t("Chaser continuously adjusts limit order to chase the best price.")}</p>
         </div>
       )}
 

@@ -75,6 +75,7 @@ import { useActivityPane } from "@/lib/pnl-chart-pane";
 import { getThemeColors } from "@/lib/theme-colors";
 import { PnlEvolutionTooltip } from "./PnlChartTooltips";
 import { PnlRangeStrip } from "./PnlRangeStrip";
+import { t } from "@/lib/i18n";
 
 /**
  * The hover card floats over whichever pane it escaped into, so it needs to
@@ -730,7 +731,7 @@ export function PnlEvolutionChart({ data, title, pnlHeight, volumeHeight, curren
                   onClick={() => setRange({ start: null, end: null, trailing: preset.ms })}
                 />
               ))}
-              <RangeChip label="All" active={range === null} onClick={() => setRange(null)} />
+              <RangeChip label={t("All")} active={range === null} onClick={() => setRange(null)} />
             </div>
           )}
           {notice && (

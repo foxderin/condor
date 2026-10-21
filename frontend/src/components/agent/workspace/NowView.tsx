@@ -15,6 +15,7 @@ import { ReportViewer } from "@/components/routines/ReportViewer";
 import { api, type AgentPerformance, type StrategyUnavailable } from "@/lib/api";
 import type { Decision, ParsedJournal } from "@/lib/parse-agent";
 import { unavailableLabel } from "@/lib/strategy-unavailable";
+import { t } from "@/lib/i18n";
 
 /**
  * What this run is and what it did, with nothing to click first (FEAT-119).
@@ -110,8 +111,7 @@ export function NowView({
       onClick={() => setShowReport(true)}
       className="flex shrink-0 items-center gap-1.5 rounded-md border border-[var(--color-border)] px-2.5 py-1 text-[11px] font-medium normal-case tracking-normal text-[var(--color-text-muted)] transition-colors hover:border-[var(--color-primary)]/50 hover:text-[var(--color-primary)]"
     >
-      <FileText className="h-3 w-3" /> Session report
-    </button>
+      <FileText className="h-3 w-3" /> {t("Session report")}</button>
   );
 
   return (
@@ -178,13 +178,12 @@ export function NowView({
         className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4"
       >
         <h3 className="mb-3 flex flex-wrap items-center gap-2 text-xs font-bold uppercase tracking-widest text-[var(--color-text-muted)]">
-          <MessageSquareQuote className="h-3.5 w-3.5" /> Last decision
-          {last && last.tick > 0 && (
+          <MessageSquareQuote className="h-3.5 w-3.5" /> {t("Last decision")}{last && last.tick > 0 && (
             <button
               type="button"
               onClick={() => onOpenTick(last.tick)}
               className="rounded bg-[var(--color-surface-hover)] px-1.5 py-0.5 font-mono text-[10px] normal-case tracking-normal text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-primary)]"
-              title="Read the whole tick this came from"
+              title={t("Read the whole tick this came from")}
             >
               #{last.tick}
             </button>
@@ -282,7 +281,7 @@ function Alert({
           onClick={() => onOpenTick(tick)}
           className="shrink-0 rounded border border-[currentColor]/30 px-1.5 py-0.5 font-mono text-[10px] transition-opacity hover:opacity-80"
         >
-          Open #{tick}
+          {t("Open #")}{tick}
         </button>
       )}
     </div>

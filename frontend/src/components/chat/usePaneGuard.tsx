@@ -12,6 +12,7 @@ import {
   readPane,
   type PaneView,
 } from "@/components/chat/paneUrl";
+import { t } from "@/lib/i18n";
 
 /** The router's position of a history entry, off the state it writes there. */
 function entryIndex(state: unknown): number | null {
@@ -157,8 +158,8 @@ export function usePaneGuard({
     // from — so the text an editor is holding gets a question first.
     <ConfirmDialog
       open={pending !== null}
-      title="Discard changes?"
-      confirmLabel="Discard"
+      title={t("Discard changes?")}
+      confirmLabel={t("Discard")}
       pendingLabel="Discarding..."
       onConfirm={() => {
         const request = pending;
@@ -174,9 +175,7 @@ export function usePaneGuard({
       }}
       onClose={() => setPending(null)}
     >
-      This panel has an editor with unsaved text. Leaving it drops what you
-      wrote.
-    </ConfirmDialog>
+      {t("This panel has an editor with unsaved text. Leaving it drops what you wrote.")}</ConfirmDialog>
   );
 
   return { openPane, onPanelDirtyChange: setPanelDirty, dialog };

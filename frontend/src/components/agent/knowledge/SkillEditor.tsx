@@ -7,6 +7,7 @@ import {
   Field,
 } from "@/components/agent/knowledge/KnowledgeChrome";
 import { api, type SkillBody } from "@/lib/api";
+import { t } from "@/lib/i18n";
 
 /**
  * A playbook, written.
@@ -83,43 +84,42 @@ export function SkillEditor({
     >
       {!existing && (
         <Field
-          label="Name"
+          label={t("Name")}
           value={name}
           onChange={touch(setName)}
-          placeholder="e.g. Rebalance an LP position"
-          hint="Slugified into the library — this becomes the playbook's id."
+          placeholder={t("e.g. Rebalance an LP position")}
+          hint={t("Slugified into the library — this becomes the playbook's id.")}
           mono
         />
       )}
       <Field
-        label="Description"
+        label={t("Description")}
         value={description}
         onChange={touch(setDescription)}
-        placeholder="What this playbook does, in one line"
+        placeholder={t("What this playbook does, in one line")}
       />
       <Field
-        label="When to use"
+        label={t("When to use")}
         value={whenToUse}
         onChange={touch(setWhenToUse)}
-        placeholder="The situation that should make the agent reach for it"
-        hint="This line is what the agent sees in its index — it decides whether the playbook gets read at all."
+        placeholder={t("The situation that should make the agent reach for it")}
+        hint={t("This line is what the agent sees in its index — it decides whether the playbook gets read at all.")}
       />
       <Field
-        label="Runs routine"
+        label={t("Runs routine")}
         value={routine}
         onChange={touch(setRoutine)}
-        placeholder="optional — a routine name"
-        hint="Named here, the agent runs that routine instead of improvising the flow. Empty unlinks it."
+        placeholder={t("optional — a routine name")}
+        hint={t("Named here, the agent runs that routine instead of improvising the flow. Empty unlinks it.")}
         mono
       />
       <div>
         <label className="mb-1 block text-[10px] uppercase tracking-wider text-[var(--color-text-muted)]">
-          Body
-        </label>
+          {t("Body")}</label>
         <BodyArea
           value={body}
           onChange={touch(setBody)}
-          placeholder="The steps, in markdown — written for the agent to follow."
+          placeholder={t("The steps, in markdown — written for the agent to follow.")}
         />
       </div>
     </EditorShell>

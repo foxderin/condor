@@ -10,6 +10,7 @@ import {
 import { AnchoredMenu } from "@/components/ui/AnchoredMenu";
 
 import { PERCENT_PRESETS, SIDE_OPTIONS } from "./field-options";
+import { t } from "@/lib/i18n";
 
 // ── Generic dispatch type ──
 
@@ -88,7 +89,7 @@ export function PriceField({
               ? "border-[var(--color-primary)] bg-[var(--color-primary)]/20 text-[var(--color-primary)]"
               : "border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)]"
           }`}
-          title="Pick from chart"
+          title={t("Pick from chart")}
         >
           <Crosshair className="h-3.5 w-3.5" />
         </button>
@@ -368,8 +369,7 @@ export function AdvancedSection({
         onClick={onToggle}
         className="flex w-full items-center justify-between rounded px-1 py-1.5 text-xs font-medium uppercase tracking-wider text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
       >
-        Advanced
-        {open ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
+        {t("Advanced")}{open ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
       </button>
       {open && <div className="mt-2 space-y-2.5">{children}</div>}
     </div>
@@ -471,7 +471,7 @@ export function AmountField({
   return (
     <div>
       <label htmlFor={id} className="mb-1 block text-xs text-[var(--color-text-muted)]">
-        Amount ({inQuote ? quoteAsset : baseAsset})
+        {t("Amount (")}{inQuote ? quoteAsset : baseAsset})
       </label>
       <div className="flex items-center gap-1">
         <input
@@ -516,7 +516,7 @@ export function LeverageField({
   if (isSpot) {
     return (
       <div>
-        <label htmlFor={id} className="mb-1 block text-xs text-[var(--color-text-muted)]">Leverage</label>
+        <label htmlFor={id} className="mb-1 block text-xs text-[var(--color-text-muted)]">{t("Leverage")}</label>
         <div className="flex items-center gap-1">
           <input
             id={id}
@@ -525,12 +525,12 @@ export function LeverageField({
             disabled
             className="flex-1 rounded border border-[var(--color-border)] bg-[var(--color-bg)] px-2.5 py-1.5 font-mono text-xs text-[var(--color-text-muted)] opacity-60"
           />
-          <span className="text-[10px] text-[var(--color-text-muted)]">x (spot)</span>
+          <span className="text-[10px] text-[var(--color-text-muted)]">{t("x (spot)")}</span>
         </div>
       </div>
     );
   }
-  return <NumberField label="Leverage" value={value} field={field} dispatch={dispatch} step={1} min={1} suffix="x" />;
+  return <NumberField label={t("Leverage")} value={value} field={field} dispatch={dispatch} step={1} min={1} suffix="x" />;
 }
 
 // ── Shared constants ──
@@ -549,7 +549,7 @@ export function SideSelector({
 }) {
   return (
     <div>
-      <SectionHeader>Direction</SectionHeader>
+      <SectionHeader>{t("Direction")}</SectionHeader>
       <div className="mt-1.5 flex gap-1">
         {SIDE_OPTIONS.map((opt) => (
           <button

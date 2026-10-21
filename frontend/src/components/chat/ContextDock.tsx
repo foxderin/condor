@@ -15,6 +15,7 @@ import { WORKSPACE_BAR } from "@/components/chat/workspaceBar";
 import type { Delegation } from "@/lib/api";
 import { inScope, resolveRoutine, type RoutineScope } from "@/lib/routineUtils";
 import { DOCK_WIDTH_KEY } from "@/lib/sessionState";
+import { t } from "@/lib/i18n";
 
 const DEFAULT_WIDTH = 300;
 /** Narrower than this and the rows are ellipses; the column stops being readable. */
@@ -230,17 +231,16 @@ export const ContextDock = memo(function ContextDock({
             min={MIN_WIDTH}
             max={() => Math.max(MIN_WIDTH, window.innerWidth - MIN_CHAT_PX)}
             reset={DEFAULT_WIDTH}
-            label="Resize dock"
+            label={t("Resize dock")}
           />
           <div className="flex min-w-0 flex-1 flex-col overflow-y-auto">
             <div className={`${WORKSPACE_BAR} gap-2 px-3`}>
               <span className="min-w-0 flex-1 truncate text-[10px] font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
-                This conversation
-              </span>
+                {t("This conversation")}</span>
               <button
                 onClick={closeAll}
                 className="rounded p-1 text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)]"
-                title="Close"
+                title={t("Close")}
               >
                 <PanelRightClose className="h-3.5 w-3.5" />
               </button>
@@ -248,8 +248,8 @@ export const ContextDock = memo(function ContextDock({
 
             <DockSection
               icon={<Radio className="h-3 w-3 shrink-0" />}
-              label="Tasks"
-              hint="Work handed to other agents from this conversation"
+              label={t("Tasks")}
+              hint={t("Work handed to other agents from this conversation")}
               open={shown.includes("tasks")}
               onToggle={() => toggle("tasks")}
             >
@@ -262,8 +262,8 @@ export const ContextDock = memo(function ContextDock({
 
             <DockSection
               icon={<Zap className="h-3 w-3 shrink-0" />}
-              label="Routines"
-              hint="Scripts this agent runs, on demand or on a schedule"
+              label={t("Routines")}
+              hint={t("Scripts this agent runs, on demand or on a schedule")}
               open={shown.includes("routines")}
               onToggle={() => toggle("routines")}
             >

@@ -40,6 +40,7 @@ import { connectorCapabilities } from "@/lib/connector-capabilities";
 import { LOOKBACK_OPTIONS } from "@/lib/gridExecutor";
 import { executorsQuery } from "@/lib/queryClient";
 import { DEX_DEPTH_COLLAPSED_KEY } from "@/lib/sessionState";
+import { t } from "@/lib/i18n";
 
 type Tab = "order" | "lp";
 
@@ -340,14 +341,13 @@ export function DexPool() {
   });
 
   if (!server) {
-    return <NoServerCard message="Select a server from the sidebar to open a pool." />;
+    return <NoServerCard message={t("Select a server from the sidebar to open a pool.")} />;
   }
 
   if (poolLoading) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center text-sm text-[var(--color-text-muted)]">
-        Loading pool…
-      </div>
+        {t("Loading pool…")}</div>
     );
   }
 
@@ -381,8 +381,7 @@ export function DexPool() {
             onClick={() => navigate("/dex")}
             className="rounded-md border border-[var(--color-border)] px-3 py-1.5 text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
           >
-            Back to pools
-          </button>
+            {t("Back to pools")}</button>
         </div>
       </div>
     );
@@ -407,15 +406,13 @@ export function DexPool() {
         >
           <AlertTriangle className="h-3.5 w-3.5 shrink-0 text-[var(--color-yellow)]" />
           <span className="font-medium text-[var(--color-yellow)]">
-            {unlistedTokens.length === 1 ? "A token is" : "Tokens are"} not in
-            Gateway&apos;s token list
-          </span>
+            {unlistedTokens.length === 1 ? "A token is" : "Tokens are"} {t("not in Gateway&apos;s token list")}</span>
           <span className="text-[var(--color-text-muted)]">
-            Balances for{" "}
+            {t("Balances for")}{" "}
             {unlistedTokens
               .map((t) => t.symbol ?? `${t.address.slice(0, 6)}…`)
               .join(", ")}{" "}
-            will read 0 until {unlistedTokens.length === 1 ? "it is" : "they are"}{" "}
+            {t("will read 0 until")}{" "}{unlistedTokens.length === 1 ? "it is" : "they are"}{" "}
             added.
           </span>
           {unlistedTokens.map((t) => (
@@ -434,10 +431,8 @@ export function DexPool() {
           ))}
           {tokenConflict && (
             <span className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[var(--color-text-muted)]">
-              {tokenConflict.holder.symbol} already names{" "}
-              {tokenConflict.holder.address.slice(0, 6)}… on the list — replace
-              it with this pool&apos;s token?
-              <button
+              {tokenConflict.holder.symbol} {t("already names")}{" "}
+              {tokenConflict.holder.address.slice(0, 6)}{t("… on the list — replace it with this pool&apos;s token?")}<button
                 onClick={() =>
                   addTokenMutation.mutate({
                     address: tokenConflict.address,
@@ -449,17 +444,14 @@ export function DexPool() {
                 title={isOwner ? undefined : OWNER_ONLY_HINT}
                 className="rounded border border-amber-500/40 px-2 py-0.5 font-medium text-[var(--color-yellow)] hover:bg-amber-500/20 disabled:cursor-not-allowed disabled:opacity-50"
               >
-                Replace
-              </button>
+                {t("Replace")}</button>
             </span>
           )}
           {!tokenConflict &&
             addTokenMutation.data?.verdict === "symbol_taken" &&
             !addTokenMutation.data.conflict && (
               <span className="text-[var(--color-text-muted)]">
-                Its ticker is already used by another token on the list — resolve
-                it under Gateway tokens.
-              </span>
+                {t("Its ticker is already used by another token on the list — resolve it under Gateway tokens.")}</span>
             )}
           {addTokenMutation.isError && (
             <span className="text-[var(--color-red)]">
@@ -476,7 +468,7 @@ export function DexPool() {
         <button
           onClick={() => navigate("/dex")}
           className="rounded p-1 text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)]"
-          title="Back to pools"
+          title={t("Back to pools")}
         >
           <ArrowLeft className="h-4 w-4" />
         </button>
@@ -494,7 +486,7 @@ export function DexPool() {
       {/* Interval / lookback */}
       <div className="flex shrink-0 items-center gap-4 border-b border-[var(--color-border)] px-3 py-1.5">
         <div className="flex items-center gap-1">
-          <span className="text-[11px] text-[var(--color-text-muted)]">Interval</span>
+          <span className="text-[11px] text-[var(--color-text-muted)]">{t("Interval")}</span>
           {DEX_INTERVALS.map((iv) => (
             <button
               key={iv}
@@ -511,7 +503,7 @@ export function DexPool() {
         </div>
         <div className="h-4 w-px bg-[var(--color-border)]" />
         <div className="flex items-center gap-1">
-          <span className="text-[11px] text-[var(--color-text-muted)]">Window</span>
+          <span className="text-[11px] text-[var(--color-text-muted)]">{t("Window")}</span>
           {LOOKBACK_OPTIONS.map((o) => (
             <button
               key={o.label}
@@ -573,7 +565,7 @@ export function DexPool() {
               (depthCollapsed ? (
                 <button
                   onClick={() => setDepthCollapsed(false)}
-                  title="Show liquidity depth"
+                  title={t("Show liquidity depth")}
                   className="flex w-5 shrink-0 items-center justify-center border-l border-[var(--color-border)] text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)]"
                 >
                   <ChevronLeft className="h-3.5 w-3.5" />
@@ -595,7 +587,7 @@ export function DexPool() {
                   )}
                   <button
                     onClick={() => setDepthCollapsed(true)}
-                    title="Hide liquidity depth"
+                    title={t("Hide liquidity depth")}
                     className="absolute right-0 top-0 z-10 rounded-bl bg-[var(--color-bg)]/80 p-0.5 text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
                   >
                     <ChevronRight className="h-3 w-3" />
@@ -647,8 +639,7 @@ export function DexPool() {
                   : "text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
               }`}
             >
-              Order
-            </button>
+              {t("Order")}</button>
             {lpAvailable && (
               <button
                 onClick={() => setTab("lp")}
@@ -667,12 +658,11 @@ export function DexPool() {
               a plain AMM or a Uniswap v4 pool can still be swapped in. */}
           {!lpAvailable && (
             <p className="border-b border-[var(--color-border)] px-3 py-2 text-[10px] leading-relaxed text-[var(--color-text-muted)]">
-              No liquidity position available here —{" "}
+              {t("No liquidity position available here —")}{" "}
               {caps.supportsLp
                 ? `${pool.dex_id} is not a concentrated-liquidity venue Condor can add to.`
                 : `${network} takes no CLMM position.`}{" "}
-              Market swaps still work.
-            </p>
+              {t("Market swaps still work.")}</p>
           )}
 
           <div className="flex-1 overflow-y-auto">

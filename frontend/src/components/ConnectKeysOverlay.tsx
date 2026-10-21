@@ -1,5 +1,6 @@
 import { KeyRound, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { t } from "@/lib/i18n";
 
 export function ConnectKeysOverlay() {
   const navigate = useNavigate();
@@ -19,26 +20,21 @@ export function ConnectKeysOverlay() {
 
           {/* Copy */}
           <h2 className="mb-2 text-xl font-bold text-[var(--color-text)]">
-            Connect an Exchange or Wallet
-          </h2>
+            {t("Connect an Exchange or Wallet")}</h2>
           <p className="mb-6 max-w-xs text-sm leading-relaxed text-[var(--color-text-muted)]">
-            Add exchange API keys or a DEX wallet to unlock portfolio tracking, trading, and bot
-            management.
-          </p>
+            {t("Add exchange API keys or a DEX wallet to unlock portfolio tracking, trading, and bot management.")}</p>
 
           {/* CTA */}
           <button
             onClick={() => navigate("/settings?tab=keys")}
             className="flex items-center gap-2 rounded-lg bg-[var(--color-primary)] px-6 py-2.5 text-sm font-semibold text-white transition-all hover:bg-[var(--color-primary-hover)] hover:shadow-lg hover:shadow-[var(--color-primary)]/20 active:scale-[0.98]"
           >
-            Connect Keys &amp; Wallets
-            <ArrowRight className="h-4 w-4" />
+            {t("Connect Keys &amp; Wallets")}<ArrowRight className="h-4 w-4" />
           </button>
 
           {/* Secondary hint */}
           <p className="mt-4 text-xs text-[var(--color-text-muted)]/60">
-            You can also run routines without connecting keys
-          </p>
+            {t("You can also run routines without connecting keys")}</p>
         </div>
       </div>
     </div>

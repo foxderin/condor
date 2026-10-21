@@ -28,8 +28,10 @@ import { TelemetrySettings } from "@/components/settings/TelemetrySettings";
 import { UpdatesSettings } from "@/components/settings/UpdatesSettings";
 import { VoiceSettings } from "@/components/settings/VoiceSettings";
 import { useIsAdmin } from "@/hooks/useIsAdmin";
+import { LANGUAGE_LABELS, useLanguage, useT, type Language } from "@/lib/i18n";
 import { useServer } from "@/hooks/useServer";
 import { useAuth } from "@/lib/auth";
+import { t } from "@/lib/i18n";
 
 type TabKey =
   | "agents"
@@ -60,30 +62,34 @@ interface TabGroup {
  * is titled with that server — there is no second picker in here. Everything
  * after it belongs to this Condor install or to the signed-in person.
  */
-function buildGroups(server: string | null, isAdmin: boolean): TabGroup[] {
+function buildGroups(
+  server: string | null,
+  isAdmin: boolean,
+  tr: (english: string, vars?: Record<string, string | number>) => string
+): TabGroup[] {
   const groups: TabGroup[] = [
     {
-      label: server ? `Server · ${server}` : "Server",
+      label: server ? tr("Server · {name}", { name: server }) : tr("Server"),
       tabs: [
-        { key: "api", label: "Hummingbot API", icon: ServerCog },
-        { key: "gateway", label: "Gateway", icon: Network },
-        { key: "keys", label: "Keys and Wallets", icon: KeyRound },
+        { key: "api", label: tr("Hummingbot API"), icon: ServerCog },
+        { key: "gateway", label: tr("Gateway"), icon: Network },
+        { key: "keys", label: tr("Keys and Wallets"), icon: KeyRound },
       ],
     },
     {
-      label: "Condor",
+      label: tr("Condor"),
       tabs: [
-        { key: "servers", label: "Servers", icon: Server },
-        { key: "agents", label: "Agents", icon: Brain },
-        { key: "llm", label: "LLM Endpoints", icon: Sparkles },
-        { key: "voice", label: "Voice & AI", icon: Mic },
+        { key: "servers", label: tr("Servers"), icon: Server },
+        { key: "agents", label: tr("Agents"), icon: Brain },
+        { key: "llm", label: tr("LLM Endpoints"), icon: Sparkles },
+        { key: "voice", label: tr("Voice & AI"), icon: Mic },
       ],
     },
     {
-      label: "Account",
+      label: tr("Account"),
       tabs: [
-        { key: "notifications", label: "Notifications", icon: Bell },
-        { key: "privacy", label: "Privacy", icon: Shield },
+        { key: "notifications", label: tr("Notifications"), icon: Bell },
+        { key: "privacy", label: tr("Privacy"), icon: Shield },
       ],
     },
   ];
@@ -91,10 +97,10 @@ function buildGroups(server: string | null, isAdmin: boolean): TabGroup[] {
   // restarts the process (FEAT-071).
   if (isAdmin) {
     groups.push({
-      label: "Admin",
+      label: tr("Admin"),
       tabs: [
-        { key: "admin", label: "Admin", icon: ShieldCheck },
-        { key: "updates", label: "Updates", icon: Download },
+        { key: "admin", label: tr("Admin"), icon: ShieldCheck },
+        { key: "updates", label: tr("Updates"), icon: Download },
       ],
     });
   }
@@ -105,6 +111,8 @@ export function Settings() {
   const [params, setParams] = useSearchParams();
   const { logout } = useAuth();
   const { server } = useServer();
+  const { language, setLanguage } = useLanguage();
+  const tr = useT();
 
   // There is no `is_admin` claim on the client, so the admin surface answering
   // at all is the discriminator: `/admin/people` is 403 for everyone else. The
@@ -112,7 +120,7 @@ export function Settings() {
   // Hiding the tab is cosmetic — routes/admin.py re-checks the role every call.
   const isAdmin = useIsAdmin();
 
-  const groups = buildGroups(server, isAdmin);
+  const groups = buildGroups(server, isAdmin, tr);
   const tabs = groups.flatMap((g) => g.tabs);
   const requested = (params.get("tab") as TabKey) || "servers";
   const available = tabs.some((t) => t.key === requested);
@@ -132,19 +140,35 @@ export function Settings() {
   return (
     <div className="mx-auto max-w-6xl">
       <div className="mb-4 flex items-center justify-between">
-        <h1 className="text-xl font-bold text-[var(--color-text)]">Settings</h1>
+        <h1 className="text-xl font-bold text-[var(--color-text)]">{t("Settings")}</h1>
+        <div className="flex items-center gap-3">
+          <label className="flex items-center gap-1.5 text-sm text-[var(--color-text-muted)]">
+            <span className="sr-only">{tr("Language")}</span>
+            <select
+              aria-label={tr("Language")}
+              value={language}
+              onChange={(e) => setLanguage(e.target.value as Language)}
+              className="rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-2 py-1 text-sm text-[var(--color-text)]"
+            >
+              {(Object.keys(LANGUAGE_LABELS) as Language[]).map((code) => (
+                <option key={code} value={code}>
+                  {LANGUAGE_LABELS[code]}
+                </option>
+              ))}
+            </select>
+          </label>
         <button
           onClick={logout}
           className="flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-red)]"
         >
           <LogOut className="h-3.5 w-3.5" />
-          Logout
-        </button>
+          {t("Logout")}</button>
+        </div>
       </div>
 
       {/* Narrow screens: one select, grouped the same way as the sidebar. */}
       <select
-        aria-label="Settings section"
+        aria-label={t("Settings section")}
         value={tab}
         onChange={(e) => setParams({ tab: e.target.value })}
         className="mb-4 w-full rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2 text-sm text-[var(--color-text)] md:hidden"
@@ -162,7 +186,7 @@ export function Settings() {
 
       <div className="flex gap-8">
         <nav
-          aria-label="Settings sections"
+          aria-label={t("Settings sections")}
           className="hidden w-52 shrink-0 space-y-5 md:block"
         >
           {groups.map((g) => (
@@ -242,16 +266,12 @@ function AdminOnlyNotice({ tab }: { tab: "updates" | "admin" }) {
   return (
     <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
       <h2 className="mb-1 text-sm font-semibold text-[var(--color-text)]">
-        {what} is admin-only
-      </h2>
+        {what} {t("is admin-only")}</h2>
       <p className="text-sm text-[var(--color-text-muted)]">
-        This seat is signed in without the admin role, so the {what} tab is not
-        shown and its API answers 403. Give this user{" "}
-        <code className="text-[var(--color-text)]">role: admin</code> in{" "}
-        <code className="text-[var(--color-text)]">config.yml</code>, then
-        reload. <code className="text-[var(--color-text)]">make doctor</code>{" "}
-        names the id it signs in as.
-      </p>
+        {t("This seat is signed in without the admin role, so the")}{" "}{what} {t("tab is not shown and its API answers 403. Give this user")}{" "}
+        <code className="text-[var(--color-text)]">{t("role: admin")}</code> in{" "}
+        <code className="text-[var(--color-text)]">config.yml</code>{t(", then reload.")}<code className="text-[var(--color-text)]">{t("make doctor")}</code>{" "}
+        {t("names the id it signs in as.")}</p>
     </div>
   );
 }

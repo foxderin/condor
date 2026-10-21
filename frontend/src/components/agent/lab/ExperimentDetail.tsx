@@ -5,6 +5,7 @@ import { useMemo } from "react";
 import { SnapshotBody } from "@/components/agent/session/Snapshot";
 import { api } from "@/lib/api";
 import { type ParsedSnapshot, parseSnapshot } from "@/lib/parse-agent";
+import { t } from "@/lib/i18n";
 
 /**
  * A dry run or a single tick — one file, one tick, no journal.
@@ -51,8 +52,7 @@ export function ExperimentDetail({
         <div className="rounded-lg border border-red-500/40 bg-red-500/5 p-4">
           <h3 className="mb-2 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-red-400">
             <AlertTriangle className="h-3.5 w-3.5" />
-            Agent Error
-          </h3>
+            {t("Agent Error")}</h3>
           <div className="whitespace-pre-wrap font-mono text-xs text-red-300">
             {parsed.agentResponse}
           </div>

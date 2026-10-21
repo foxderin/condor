@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 
 import type { ChartPriceAxis } from "@/components/trade/TradeChart";
 import { getThemeColors } from "@/lib/theme-colors";
+import { t } from "@/lib/i18n";
 
 export interface DepthBin {
   price: number;
@@ -244,7 +245,7 @@ export function LiquidityDepthColumn({
       ref={containerRef}
       style={{ width }}
       className="relative shrink-0 overflow-hidden border-l border-[var(--color-border)]"
-      title="Liquidity by price — base above the active price, quote below"
+      title={t("Liquidity by price — base above the active price, quote below")}
     >
       <canvas ref={canvasRef} className="absolute left-0 top-0" />
     </div>

@@ -12,6 +12,7 @@ import {
   routineAgents,
   type RoutineScope,
 } from "@/lib/routineUtils";
+import { t } from "@/lib/i18n";
 
 /**
  * Which routine the library is reading, and whose routines it lists.
@@ -145,7 +146,7 @@ export function RoutinePicker({
         setOpen((v) => !v);
       }}
       onKeyDown={onTriggerKey}
-      aria-label="Routine"
+      aria-label={t("Routine")}
       aria-haspopup="listbox"
       aria-expanded={open}
       title={
@@ -177,8 +178,8 @@ export function RoutinePicker({
       <select
         value={scope}
         onChange={(e) => onScopeChange(e.target.value)}
-        aria-label="Routine scope"
-        title="Whose routines this list shows"
+        aria-label={t("Routine scope")}
+        title={t("Whose routines this list shows")}
         className={`w-full cursor-pointer appearance-none rounded-md border py-1 pl-2 pr-6 text-[10px] font-medium transition-colors focus:outline-none focus:ring-1 focus:ring-[var(--color-primary)]/40 ${
           scope === "all" || scope === "condor" || scope === "routine"
             ? "border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
@@ -267,8 +268,7 @@ export function RoutinePicker({
           </div>
           {matches.length === 0 ? (
             <p className="px-3 py-3 text-[11px] text-[var(--color-text-muted)]">
-              No routine matches.
-            </p>
+              {t("No routine matches.")}</p>
           ) : (
             matches.map((r) => {
               const isActive = r.name === active?.name;

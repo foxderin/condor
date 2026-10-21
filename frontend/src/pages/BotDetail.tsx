@@ -17,6 +17,7 @@ import { FallbackSpinner } from "@/components/ui/FallbackSpinner";
 import { useServer } from "@/hooks/useServer";
 import { api } from "@/lib/api";
 import { configToYaml, validateYamlMapping } from "@/lib/configYaml";
+import { t } from "@/lib/i18n";
 
 export function BotDetail() {
   const { id } = useParams<{ id: string }>();
@@ -111,8 +112,7 @@ export function BotDetail() {
         className="mb-4 inline-flex items-center gap-1 text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
       >
         <ArrowLeft className="h-4 w-4" />
-        Back to bots
-      </Link>
+        {t("Back to bots")}</Link>
 
       <div className="mb-6 flex items-center gap-3">
         <h1 className="text-xl font-bold text-[var(--color-text)]">{bot.name}</h1>
@@ -133,8 +133,7 @@ export function BotDetail() {
         >
           <div className="mb-3 flex items-center justify-between">
             <h3 className="font-medium text-[var(--color-text-muted)]">
-              Configuration
-            </h3>
+              {t("Configuration")}</h3>
             {hasConfig && configId && (
               <button
                 onClick={handleToggleEdit}
@@ -152,8 +151,7 @@ export function BotDetail() {
 
           {!hasConfig ? (
             <p className="text-sm text-[var(--color-text-muted)]">
-              No config available
-            </p>
+              {t("No config available")}</p>
           ) : editing ? (
             <>
               {/* Save / Reset toolbar */}
@@ -164,8 +162,7 @@ export function BotDetail() {
                     className="flex items-center gap-1 text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
                   >
                     <RotateCcw className="h-3 w-3" />
-                    Reset
-                  </button>
+                    {t("Reset")}</button>
                 )}
                 <button
                   onClick={handleSave}
@@ -223,12 +220,10 @@ export function BotDetail() {
         {/* Performance */}
         <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
           <h3 className="mb-3 font-medium text-[var(--color-text-muted)]">
-            Performance
-          </h3>
+            {t("Performance")}</h3>
           {Object.keys(performance).length === 0 ? (
             <p className="text-sm text-[var(--color-text-muted)]">
-              No performance data
-            </p>
+              {t("No performance data")}</p>
           ) : (
             <dl className="space-y-2 text-sm">
               {Object.entries(performance).map(([k, v]) => (

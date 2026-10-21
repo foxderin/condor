@@ -2,6 +2,7 @@ import { useRef } from "react";
 
 import { MAX_SPLIT_FRAC, MIN_SPLIT_FRAC } from "@/hooks/useDockSplit";
 import { useResizeDrag } from "@/hooks/useResizeDrag";
+import { t } from "@/lib/i18n";
 
 /**
  * The seam *between* two open dock sections, and the way to move it.
@@ -94,7 +95,7 @@ export function DockSplitHandle({
       onMouseDown={onMouseDown}
       onKeyDown={onKeyDown}
       onDoubleClick={() => setFrac(defaultFrac)}
-      title="Drag to resize — double-click to reset"
+      title={t("Drag to resize — double-click to reset")}
       // Pulled up over the section border above it, so the grabbable strip is
       // the seam the reader can see rather than a gap below it.
       className={`-mt-1 h-1.5 shrink-0 cursor-row-resize transition-colors hover:bg-[var(--color-primary)]/30 focus:outline-none focus-visible:bg-[var(--color-primary)]/30 ${

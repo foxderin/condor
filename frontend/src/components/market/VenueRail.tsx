@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { Eye, KeyRound } from "lucide-react";
 
 import { formatConnectorName } from "@/lib/formatters";
+import { t } from "@/lib/i18n";
 
 /**
  * The venue axis of the market browser.
@@ -71,11 +72,11 @@ export function VenueRail({
           up with rows, one header's height further down. */}
       <div
         role="listbox"
-        aria-label="Exchange"
+        aria-label={t("Exchange")}
         className="min-h-0 flex-1 overflow-y-auto pb-2 pt-1"
       >
         <VenueGroup
-          label="Your accounts"
+          label={t("Your accounts")}
           heading={grouped}
           icon={KeyRound}
           tone="mine"
@@ -85,7 +86,7 @@ export function VenueRail({
           onSelect={onChange}
         />
         <VenueGroup
-          label="View only"
+          label={t("View only")}
           heading={grouped}
           icon={Eye}
           tone="viewOnly"
@@ -175,7 +176,7 @@ function VenueGroup({
           <span className="truncate">{formatConnectorName(c)}</span>
           {c === current && (
             <span
-              title="The venue on the chart"
+              title={t("The venue on the chart")}
               aria-hidden
               className="ml-auto h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-text-muted)]"
             />

@@ -7,6 +7,7 @@ import {
   formatConnectorName,
   pnlTextClass,
 } from "@/lib/formatters";
+import { t } from "@/lib/i18n";
 
 /**
  * The scope's records, cut two other ways (FEAT-112, rehosted by FEAT-116).
@@ -46,19 +47,19 @@ export function ScopeBreakdowns({
     <div className="min-h-0 flex-1 overflow-y-auto scrollbar-thin border-t border-[var(--color-border)]/60 p-3">
       <div className="grid gap-3 md:grid-cols-2">
         <Breakdown
-          title="By instrument"
+          title={t("By instrument")}
           test="pair"
           buckets={byPair}
           symbol={symbol}
-          caption="Signed exposure from each record's open positions."
+          caption={t("Signed exposure from each record's open positions.")}
         />
         <Breakdown
-          title="By venue"
+          title={t("By venue")}
           test="venue"
           buckets={byVenue}
           symbol={symbol}
           label={formatConnectorName}
-          caption="Leverage and margin health are not measured — no route reports them."
+          caption={t("Leverage and margin health are not measured — no route reports them.")}
         />
       </div>
 
@@ -71,11 +72,7 @@ export function ScopeBreakdowns({
         data-not-measured
         className="mt-3 text-[10px] leading-relaxed text-[var(--color-text-muted)]"
       >
-        Not measured here: margin, leverage and account health; live orders and
-        fill-level flow; sub-accounts; and fees, which are executor-only and
-        therefore a floor. Condor's records carry none of them, so nothing on
-        this screen stands in for them.
-      </p>
+        {t("Not measured here: margin, leverage and account health; live orders and fill-level flow; sub-accounts; and fees, which are executor-only and therefore a floor. Condor's records carry none of them, so nothing on this screen stands in for them.")}</p>
     </div>
   );
 }
@@ -125,8 +122,7 @@ function Breakdown({
 
       {ranked.length === 0 ? (
         <p className="px-3 py-4 text-center text-xs text-[var(--color-text-muted)]">
-          Nothing to fold yet.
-        </p>
+          {t("Nothing to fold yet.")}</p>
       ) : (
         <ul className="divide-y divide-[var(--color-border)]">
           {ranked.map((bucket) => (
@@ -153,8 +149,7 @@ function Breakdown({
                   {gross > 0 && (
                     <>
                       {" · "}
-                      {Math.round((Math.abs(bucket.exposure) / gross) * 100)}% of gross
-                    </>
+                      {Math.round((Math.abs(bucket.exposure) / gross) * 100)}{t("% of gross")}</>
                   )}
                 </span>
               </div>

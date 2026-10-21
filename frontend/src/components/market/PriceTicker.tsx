@@ -6,6 +6,7 @@ import { candleChannelKey, candleStore } from "@/lib/candle-store";
 import { formatCompactVolume } from "@/lib/formatters";
 import { changeColumnLabel, changeWindowTitle, formatChange } from "@/lib/marketChange";
 import { useTickers } from "@/components/market/useTickers";
+import { t } from "@/lib/i18n";
 
 interface PriceTickerProps {
   server: string;
@@ -148,7 +149,7 @@ export function PriceTicker({
           tick colour. It still wears a label, so the row of headings above the
           numbers is unbroken. */}
       <div>
-        <p className="text-[10px] leading-tight text-[var(--color-text-muted)]">Mark</p>
+        <p className="text-[10px] leading-tight text-[var(--color-text-muted)]">{t("Mark")}</p>
         <p className={`text-base font-bold tabular-nums leading-tight ${dirColor}`}>
           {displayPrice.toLocaleString("en-US", { maximumFractionDigits: 8 })}
         </p>
@@ -156,15 +157,15 @@ export function PriceTicker({
 
       {price && price.best_bid > 0 && (
         <>
-          <Stat label="Bid" valueClass="text-[var(--color-green)]" className="hidden sm:block">
+          <Stat label={t("Bid")} valueClass="text-[var(--color-green)]" className="hidden sm:block">
             {price.best_bid.toLocaleString("en-US", { maximumFractionDigits: 8 })}
           </Stat>
 
-          <Stat label="Ask" valueClass="text-[var(--color-red)]" className="hidden sm:block">
+          <Stat label={t("Ask")} valueClass="text-[var(--color-red)]" className="hidden sm:block">
             {price.best_ask.toLocaleString("en-US", { maximumFractionDigits: 8 })}
           </Stat>
 
-          <Stat label="Spread" className="hidden md:block">
+          <Stat label={t("Spread")} className="hidden md:block">
             {spreadPct.toFixed(3)}%
           </Stat>
         </>
@@ -194,7 +195,7 @@ export function PriceTicker({
           )}
 
           <Stat
-            label="24h Volume"
+            label={t("24h Volume")}
             title={
               ticker.usd_volume != null
                 ? `$${ticker.usd_volume.toLocaleString("en-US", { maximumFractionDigits: 2 })} traded in 24h`

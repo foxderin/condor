@@ -11,6 +11,7 @@ import { getThemeColors, pnlHexColor } from "@/lib/theme-colors";
 import { roundToPricePrecision } from "@/lib/formatters";
 import { createDragHitPrimitive, type DragTarget } from "./priceLineDrag";
 import { usePriceLineDrag } from "./usePriceLineDrag";
+import { t } from "@/lib/i18n";
 
 type PickField = PickSlot | null;
 
@@ -1108,12 +1109,12 @@ export function TradeChart({
       {activePickField && (
         <div className="flex items-center justify-between border-b border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-1.5">
           <p className="text-[10px] text-[var(--color-text-muted)]">
-            Click on chart to set{" "}
+            {t("Click on chart to set")}{" "}
             {pickLabel(activePickField, lineLabels)}{" "}
             price
           </p>
           <span className="animate-pulse rounded bg-[var(--color-primary)]/20 px-2 py-0.5 text-xs text-[var(--color-primary)]">
-            Pick mode:{" "}
+            {t("Pick mode:")}{" "}
             {pickLabel(activePickField, lineLabels)}
           </span>
         </div>
@@ -1136,8 +1137,7 @@ export function TradeChart({
         />
         {/* Measure-tool and drag discoverability hint */}
         <div className="pointer-events-none absolute bottom-1 left-2 z-10 text-[9px] text-[var(--color-text-muted)] opacity-60">
-          ⇧+click: measure range · drag a price line to move it
-        </div>
+          {t("⇧+click: measure range · drag a price line to move it")}</div>
         {/* Executor tooltip overlay — rendered via portal to escape overflow-hidden */}
         {createPortal(
           <div

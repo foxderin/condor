@@ -3,6 +3,7 @@ import { AlertTriangle } from "lucide-react";
 import { closeSummary } from "@/components/agent/session/closeTypes";
 import type { AgentPerformance } from "@/lib/api";
 import { formatCompactUsd, formatCurrencyPnl, pnlTextClass } from "@/lib/formatters";
+import { t } from "@/lib/i18n";
 
 // ── Session KPIs ──
 //
@@ -72,32 +73,30 @@ export function SessionKpis({ perf }: { perf?: AgentPerformance | null }) {
         <div className="flex items-start gap-2 rounded-lg border border-amber-500/40 bg-amber-500/5 px-4 py-2.5 text-xs text-amber-300">
           <AlertTriangle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
           <span>
-            <strong>Incomplete.</strong> No live or archived instance for{" "}
-            <span className="font-mono">{perf?.unresolved_bases?.join(", ")}</span>. The figures below are a
-            floor — whatever those bots did is not in them.
-          </span>
+            <strong>{t("Incomplete.")}</strong> {t("No live or archived instance for")}{" "}
+            <span className="font-mono">{perf?.unresolved_bases?.join(", ")}</span>{t(". The figures below are a floor — whatever those bots did is not in them.")}</span>
         </div>
       )}
 
       <div data-session-kpis className="flex flex-wrap items-start gap-x-5 gap-y-3">
         <Kpi
-          label="Total PnL"
+          label={t("Total PnL")}
           value={formatCurrencyPnl(total)}
           className={pnlTextClass(total)}
         />
-        <Kpi label="Realized" value={formatCurrencyPnl(perf?.realized_pnl ?? 0)} />
+        <Kpi label={t("Realized")} value={formatCurrencyPnl(perf?.realized_pnl ?? 0)} />
         {/* Labelled live because it has exactly one scope and no lifetime twin:
             unrealized PnL is the open book of the instances running now, and
             summing it across generations would add up marks nobody holds (#234). */}
-        <Kpi label="Unrealized" value={formatCurrencyPnl(perf?.unrealized_pnl ?? 0)} sub="live only" />
-        <Kpi label="Volume" value={formatCompactUsd(volume)} />
+        <Kpi label={t("Unrealized")} value={formatCurrencyPnl(perf?.unrealized_pnl ?? 0)} sub="live only" />
+        <Kpi label={t("Volume")} value={formatCompactUsd(volume)} />
         <Kpi
-          label="Fees"
+          label={t("Fees")}
           value={feesKnown ? formatCompactUsd(perf?.fees ?? 0) : "—"}
           sub={feesKnown ? undefined : "not reported"}
         />
-        <Kpi label="Closes" value={tradeValue} sub={tradeSub} />
-        <Kpi label="Open" value={String(perf?.open_count ?? 0)} />
+        <Kpi label={t("Closes")} value={tradeValue} sub={tradeSub} />
+        <Kpi label={t("Open")} value={String(perf?.open_count ?? 0)} />
       </div>
 
       {/* Scope labelling (FEAT-135). Realized and Volume above are one number
@@ -111,35 +110,31 @@ export function SessionKpis({ perf }: { perf?: AgentPerformance | null }) {
         <div className="space-y-2 rounded-lg border border-[var(--color-border)]/60 px-4 py-2.5">
           <div className="flex flex-wrap items-start gap-x-5 gap-y-3">
             <Kpi
-              label="Realized · session"
+              label={t("Realized · session")}
               value={scopeMoney(perf?.session_realized_pnl)}
               sub={scopeInstances(perf?.session_instances, "no ownership window")}
               className={pnlTextClass(perf?.session_realized_pnl ?? 0)}
             />
             <Kpi
-              label="Volume · session"
+              label={t("Volume · session")}
               value={scopeVolume(perf?.session_volume)}
               sub={scopeInstances(perf?.session_instances, "no ownership window")}
             />
             <Kpi
-              label="Realized · lifetime"
+              label={t("Realized · lifetime")}
               value={scopeMoney(perf?.lifetime_realized_pnl)}
               sub={scopeInstances(perf?.lifetime_instances, "no instance aggregate")}
               className={pnlTextClass(perf?.lifetime_realized_pnl ?? 0)}
             />
             <Kpi
-              label="Volume · lifetime"
+              label={t("Volume · lifetime")}
               value={scopeVolume(perf?.lifetime_volume)}
               sub={scopeInstances(perf?.lifetime_instances, "no instance aggregate")}
             />
           </div>
           <p className="text-[10px] leading-snug text-[var(--color-text-muted)]">
-            <strong>Session</strong> is sliced to this session&apos;s ownership window;{" "}
-            <strong>lifetime</strong> covers every generation ever deployed under the bot names it owns,
-            stopped and archived ones included. Neither corrects the other — a cumulative leaderboard
-            wants lifetime, this session&apos;s own result is the session figure. &ldquo;Unavailable&rdquo;
-            is never the other scope&apos;s total.
-          </p>
+            <strong>{t("Session")}</strong> {t("is sliced to this session&apos;s ownership window;")}{" "}
+            <strong>lifetime</strong> {t("covers every generation ever deployed under the bot names it owns, stopped and archived ones included. Neither corrects the other — a cumulative leaderboard wants lifetime, this session&apos;s own result is the session figure. &ldquo;Unavailable&rdquo; is never the other scope&apos;s total.")}</p>
         </div>
       )}
     </div>

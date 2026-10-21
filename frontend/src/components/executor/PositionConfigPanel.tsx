@@ -15,6 +15,7 @@ import {
 import { ORDER_TYPE_OPTIONS } from "./field-options";
 import type { ExecutorValidation } from "./types";
 import type { PositionAction, PositionState } from "./position-config";
+import { t } from "@/lib/i18n";
 
 // ── Panel Component ──
 
@@ -46,7 +47,7 @@ export function PositionConfigPanel({ state, dispatch, validation, currentPrice,
       {/* Entry */}
       <div className="space-y-2.5">
         <div className="flex items-center justify-between">
-          <SectionHeader>Entry</SectionHeader>
+          <SectionHeader>{t("Entry")}</SectionHeader>
           {currentPrice && currentPrice > 0 && (
             <button
               onClick={() => {
@@ -60,18 +61,17 @@ export function PositionConfigPanel({ state, dispatch, validation, currentPrice,
               className="flex items-center gap-1 rounded border border-[var(--color-border)] bg-[var(--color-surface)] px-2 py-1 text-[10px] text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-surface-hover)]"
             >
               <Sparkles className="h-3 w-3" />
-              Auto-fill
-            </button>
+              {t("Auto-fill")}</button>
           )}
         </div>
         <PriceField
-          label="Entry Price (0 = market order)"
+          label={t("Entry Price (0 = market order)")}
           value={state.entry_price}
           field="entry_price"
           activePickField={state.activePickField}
           dispatch={dispatch}
           valid={true}
-          hint="Leave at 0 for market entry"
+          hint={t("Leave at 0 for market entry")}
         />
         <AmountField
           value={state.amount}
@@ -86,9 +86,9 @@ export function PositionConfigPanel({ state, dispatch, validation, currentPrice,
 
       {/* Triple Barrier */}
       <div className="space-y-2.5">
-        <SectionHeader>Exit Strategy</SectionHeader>
+        <SectionHeader>{t("Exit Strategy")}</SectionHeader>
         <NumberField
-          label="Stop Loss"
+          label={t("Stop Loss")}
           value={state.stop_loss}
           field="stop_loss"
           dispatch={dispatch}
@@ -97,7 +97,7 @@ export function PositionConfigPanel({ state, dispatch, validation, currentPrice,
           suffix="%"
         />
         <NumberField
-          label="Take Profit"
+          label={t("Take Profit")}
           value={state.take_profit}
           field="take_profit"
           dispatch={dispatch}
@@ -106,7 +106,7 @@ export function PositionConfigPanel({ state, dispatch, validation, currentPrice,
           suffix="%"
         />
         <NumberField
-          label="Time Limit (0 = disabled)"
+          label={t("Time Limit (0 = disabled)")}
           value={state.time_limit}
           field="time_limit"
           dispatch={dispatch}
@@ -118,9 +118,9 @@ export function PositionConfigPanel({ state, dispatch, validation, currentPrice,
 
       {/* Trailing Stop */}
       <div className="space-y-2.5">
-        <SectionHeader>Trailing Stop</SectionHeader>
+        <SectionHeader>{t("Trailing Stop")}</SectionHeader>
         <NumberField
-          label="Activation Price"
+          label={t("Activation Price")}
           value={state.trailing_stop_activation_price}
           field="trailing_stop_activation_price"
           dispatch={dispatch}
@@ -129,7 +129,7 @@ export function PositionConfigPanel({ state, dispatch, validation, currentPrice,
           suffix="%"
         />
         <NumberField
-          label="Trailing Delta"
+          label={t("Trailing Delta")}
           value={state.trailing_stop_trailing_delta}
           field="trailing_stop_trailing_delta"
           dispatch={dispatch}
@@ -137,7 +137,7 @@ export function PositionConfigPanel({ state, dispatch, validation, currentPrice,
           isPercent
           suffix="%"
         />
-        <p className="text-[10px] text-[var(--color-text-muted)]">Set both to enable trailing stop. 0 = disabled.</p>
+        <p className="text-[10px] text-[var(--color-text-muted)]">{t("Set both to enable trailing stop. 0 = disabled.")}</p>
       </div>
 
       {/* Advanced */}
@@ -145,11 +145,11 @@ export function PositionConfigPanel({ state, dispatch, validation, currentPrice,
         open={state.showAdvanced}
         onToggle={() => dispatch({ type: "SET_FIELD", field: "showAdvanced", value: !state.showAdvanced })}
       >
-        <NumberField label="Activation Bounds (0 = disabled)" value={state.activation_bounds} field="activation_bounds" dispatch={dispatch} step={0.01} isPercent suffix="%" />
-        <SelectField label="Open Order Type" value={state.open_order_type} field="open_order_type" dispatch={dispatch} options={ORDER_TYPE_OPTIONS} />
-        <SelectField label="Take Profit Order Type" value={state.take_profit_order_type} field="take_profit_order_type" dispatch={dispatch} options={ORDER_TYPE_OPTIONS} />
-        <SelectField label="Stop Loss Order Type" value={state.stop_loss_order_type} field="stop_loss_order_type" dispatch={dispatch} options={ORDER_TYPE_OPTIONS} />
-        <SelectField label="Time Limit Order Type" value={state.time_limit_order_type} field="time_limit_order_type" dispatch={dispatch} options={ORDER_TYPE_OPTIONS} />
+        <NumberField label={t("Activation Bounds (0 = disabled)")} value={state.activation_bounds} field="activation_bounds" dispatch={dispatch} step={0.01} isPercent suffix="%" />
+        <SelectField label={t("Open Order Type")} value={state.open_order_type} field="open_order_type" dispatch={dispatch} options={ORDER_TYPE_OPTIONS} />
+        <SelectField label={t("Take Profit Order Type")} value={state.take_profit_order_type} field="take_profit_order_type" dispatch={dispatch} options={ORDER_TYPE_OPTIONS} />
+        <SelectField label={t("Stop Loss Order Type")} value={state.stop_loss_order_type} field="stop_loss_order_type" dispatch={dispatch} options={ORDER_TYPE_OPTIONS} />
+        <SelectField label={t("Time Limit Order Type")} value={state.time_limit_order_type} field="time_limit_order_type" dispatch={dispatch} options={ORDER_TYPE_OPTIONS} />
       </AdvancedSection>
 
       <ValidationMessages errors={validation.errors} />

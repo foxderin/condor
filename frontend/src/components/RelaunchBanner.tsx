@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useReloadAfterRelaunch } from "@/hooks/useRelaunch";
 import { isForbidden } from "@/lib/admin-api";
 import { updatesApi } from "@/lib/updates-api";
+import { t } from "@/lib/i18n";
 
 /**
  * "You updated; apply it" — and then it applies it.
@@ -163,56 +164,48 @@ function RelaunchStrip({ data }: { data: Relaunch }) {
       <p className="min-w-0 flex-1 text-xs leading-relaxed text-[var(--color-text)]">
         {phase === "counting" && (
           <>
-            <strong className="font-semibold">Condor has been updated.</strong>{" "}
+            <strong className="font-semibold">{t("Condor has been updated.")}</strong>{" "}
             <span className="text-[var(--color-text-muted)]">
-              Restarting in {left}s to apply it
-              {moved ? (
+              {t("Restarting in")}{" "}{left}{t("s to apply it")}{moved ? (
                 <>
                   {" "}
                   (<span className="font-mono">{moved}</span>)
                 </>
               ) : null}
-              . Bots and open positions are untouched.
-            </span>
+              {t(". Bots and open positions are untouched.")}</span>
           </>
         )}
         {phase === "restarting" && (
           <>
-            <strong className="font-semibold">Restarting Condor…</strong>{" "}
+            <strong className="font-semibold">{t("Restarting Condor…")}</strong>{" "}
             <span className="text-[var(--color-text-muted)]">
-              This page will reconnect and reload on its own.
-            </span>
+              {t("This page will reconnect and reload on its own.")}</span>
           </>
         )}
         {phase === "stuck" && (
           <>
-            <strong className="font-semibold">Condor has not come back.</strong>{" "}
+            <strong className="font-semibold">{t("Condor has not come back.")}</strong>{" "}
             <span className="text-[var(--color-text-muted)]">
-              Check the terminal it was started from — if the restart failed, the
-              reason is in <span className="font-mono">.condor/restart-failure.log</span>.
+              {t("Check the terminal it was started from — if the restart failed, the reason is in")}<span className="font-mono">.condor/restart-failure.log</span>.
             </span>
           </>
         )}
         {phase === "denied" && (
           <>
             <strong className="font-semibold">
-              This seat cannot restart Condor.
-            </strong>{" "}
+              {t("This seat cannot restart Condor.")}</strong>{" "}
             <span className="text-[var(--color-text-muted)]">
-              The update is on disk, but applying it needs the admin role — the
-              request was refused. Give this user{" "}
-              <span className="font-mono">role: admin</span> in{" "}
-              <span className="font-mono">config.yml</span>, or run{" "}
-              <span className="font-mono">make restart</span> on the host.
-            </span>
+              {t("The update is on disk, but applying it needs the admin role — the request was refused. Give this user")}{" "}
+              <span className="font-mono">{t("role: admin")}</span> in{" "}
+              <span className="font-mono">config.yml</span>{t(", or run")}{" "}
+              <span className="font-mono">{t("make restart")}</span> {t("on the host.")}</span>
           </>
         )}
         {phase === "cancelled" && (
           <>
-            <strong className="font-semibold">Condor has been updated.</strong>{" "}
+            <strong className="font-semibold">{t("Condor has been updated.")}</strong>{" "}
             <span className="text-[var(--color-text-muted)]">
-              It is still running the code it booted with
-              {moved ? (
+              {t("It is still running the code it booted with")}{moved ? (
                 <>
                   {" "}
                   (<span className="font-mono">{moved}</span>)
@@ -229,8 +222,7 @@ function RelaunchStrip({ data }: { data: Relaunch }) {
           onClick={() => setPhase("cancelled")}
           className="shrink-0 whitespace-nowrap rounded-md border border-[var(--color-border)] px-3 py-1 text-xs font-medium text-[var(--color-text)] transition-colors hover:bg-[var(--color-surface-hover)]"
         >
-          Cancel
-        </button>
+          {t("Cancel")}</button>
       )}
 
       {/*
@@ -244,8 +236,7 @@ function RelaunchStrip({ data }: { data: Relaunch }) {
           onClick={() => void relaunchNow()}
           className="shrink-0 whitespace-nowrap rounded-md bg-[var(--color-yellow)]/20 px-3 py-1 text-xs font-medium text-[var(--color-text)] transition-colors hover:bg-[var(--color-yellow)]/30"
         >
-          Restart now
-        </button>
+          {t("Restart now")}</button>
       )}
 
       {phase === "cancelled" && (
@@ -259,13 +250,10 @@ function RelaunchStrip({ data }: { data: Relaunch }) {
 
       {showHow && phase === "cancelled" && (
         <p className="w-full text-xs leading-relaxed text-[var(--color-text-muted)]">
-          Restart now restarts Condor in place. You can also run{" "}
+          {t("Restart now restarts Condor in place. You can also run")}{" "}
           <code className="rounded bg-[var(--color-surface-hover)] px-1 py-0.5 font-mono text-[11px] text-[var(--color-text)]">
-            make restart
-          </code>{" "}
-          from the Condor directory. Bots and open positions are untouched;
-          continuous routines and agent loops are restored on the way back up.
-        </p>
+            {t("make restart")}</code>{" "}
+          {t("from the Condor directory. Bots and open positions are untouched; continuous routines and agent loops are restored on the way back up.")}</p>
       )}
     </div>
   );

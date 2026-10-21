@@ -23,6 +23,7 @@ import {
   isMeteoraProvider,
   rangeWarnings,
 } from "./lp-config";
+import { t } from "@/lib/i18n";
 
 // ── Options ──
 
@@ -149,18 +150,16 @@ export function LPConfigPanel({
         </p>
       ) : (
         <div className="space-y-2">
-          <SectionHeader>Pool</SectionHeader>
+          <SectionHeader>{t("Pool")}</SectionHeader>
           {poolFetching && !pool ? (
-            <p className="text-[10px] text-[var(--color-text-muted)]">Resolving pool…</p>
+            <p className="text-[10px] text-[var(--color-text-muted)]">{t("Resolving pool…")}</p>
           ) : unsupported ? (
             <div className="rounded border border-amber-400/30 bg-amber-400/10 p-2">
               <p className="flex items-start gap-1 text-[10px] text-amber-400">
                 <AlertTriangle className="mt-px h-3 w-3 shrink-0" />
                 <span>
-                  The deepest pool for this pair is on{" "}
-                  <span className="font-mono">{pool?.dex_id ?? "an unknown venue"}</span>, which
-                  is not a CLMM venue. Enter a pool address and provider by hand.
-                </span>
+                  {t("The deepest pool for this pair is on")}{" "}
+                  <span className="font-mono">{pool?.dex_id ?? "an unknown venue"}</span>{t(", which is not a CLMM venue. Enter a pool address and provider by hand.")}</span>
               </p>
             </div>
           ) : pool?.pool_address ? (
@@ -184,27 +183,25 @@ export function LPConfigPanel({
             </div>
           ) : (
             <p className="text-[10px] text-[var(--color-text-muted)]">
-              No pool found for this pair. Enter one by hand.
-            </p>
+              {t("No pool found for this pair. Enter one by hand.")}</p>
           )}
 
           <div>
             <label className="mb-1 block text-xs text-[var(--color-text-muted)]">
-              Pool Address
-            </label>
+              {t("Pool Address")}</label>
             <input
               type="text"
               value={state.pool_address}
               onChange={(e) =>
                 dispatch({ type: "SET_FIELD", field: "pool_address", value: e.target.value.trim() })
               }
-              placeholder="Pool contract address"
+              placeholder={t("Pool contract address")}
               spellCheck={false}
               className="w-full rounded border border-[var(--color-border)] bg-[var(--color-bg)] px-2.5 py-1.5 font-mono text-[11px] text-[var(--color-text)] placeholder:text-[var(--color-text-muted)]/40 focus:border-[var(--color-primary)] focus:outline-none"
             />
           </div>
           <SelectField
-            label="LP Provider"
+            label={t("LP Provider")}
             value={state.lp_provider}
             field="lp_provider"
             dispatch={dispatch}
@@ -215,7 +212,7 @@ export function LPConfigPanel({
 
       {/* Side */}
       <div className="space-y-2">
-        <SectionHeader>Position Side</SectionHeader>
+        <SectionHeader>{t("Position Side")}</SectionHeader>
         <div className="flex overflow-hidden rounded-md border border-[var(--color-border)]">
           {SIDE_OPTIONS.map((opt) => (
             <button
@@ -240,15 +237,14 @@ export function LPConfigPanel({
       {/* Range */}
       <div className="space-y-2.5">
         <div className="flex items-center justify-between">
-          <SectionHeader>Range</SectionHeader>
+          <SectionHeader>{t("Range")}</SectionHeader>
           {price != null && price > 0 && (
             <button
               onClick={() => dispatch({ type: "AUTO_RANGE", price })}
               className="flex items-center gap-1 rounded border border-[var(--color-border)] bg-[var(--color-surface)] px-2 py-1 text-[10px] text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-surface-hover)]"
             >
               <Sparkles className="h-3 w-3" />
-              Auto
-            </button>
+              {t("Auto")}</button>
           )}
         </div>
         <div className="flex overflow-hidden rounded-md border border-[var(--color-border)]">
@@ -267,7 +263,7 @@ export function LPConfigPanel({
           ))}
         </div>
         <PriceField
-          label="Upper Price"
+          label={t("Upper Price")}
           value={state.upper_price}
           field="upper_price"
           activePickField={state.activePickField}
@@ -275,7 +271,7 @@ export function LPConfigPanel({
           valid={state.upper_price > state.lower_price}
         />
         <PriceField
-          label="Lower Price"
+          label={t("Lower Price")}
           value={state.lower_price}
           field="lower_price"
           activePickField={state.activePickField}
@@ -286,18 +282,18 @@ export function LPConfigPanel({
 
       {/* Auto-close triggers */}
       <div className="space-y-2.5">
-        <SectionHeader>Auto-Close Triggers</SectionHeader>
+        <SectionHeader>{t("Auto-Close Triggers")}</SectionHeader>
         <PriceField
-          label="Upper Limit"
+          label={t("Upper Limit")}
           value={state.upper_limit_price}
           field="upper_limit_price"
           activePickField={state.activePickField}
           dispatch={dispatch}
           valid={state.upper_limit_price > state.upper_price}
-          hint="Close when price rises to this level"
+          hint={t("Close when price rises to this level")}
         />
         <PriceField
-          label="Lower Limit"
+          label={t("Lower Limit")}
           value={state.lower_limit_price}
           field="lower_limit_price"
           activePickField={state.activePickField}
@@ -305,16 +301,15 @@ export function LPConfigPanel({
           valid={
             state.lower_limit_price > 0 && state.lower_limit_price < state.lower_price
           }
-          hint="Close when price falls to this level"
+          hint={t("Close when price falls to this level")}
         />
         <p className="text-[10px] text-[var(--color-text-muted)]">
-          Both only fire while the position is out of range. Leave at 0 for no trigger.
-        </p>
+          {t("Both only fire while the position is out of range. Leave at 0 for no trigger.")}</p>
       </div>
 
       {/* Amounts */}
       <div className="space-y-2.5">
-        <SectionHeader>Amounts</SectionHeader>
+        <SectionHeader>{t("Amounts")}</SectionHeader>
         <div>
           <NumberField
             label={`Base Amount (${baseAsset})`}
@@ -353,18 +348,15 @@ export function LPConfigPanel({
 
       {/* On Close — a decision about the tokens you get back, not a tuning knob. */}
       <div className="space-y-2">
-        <SectionHeader>On Close</SectionHeader>
+        <SectionHeader>{t("On Close")}</SectionHeader>
         <ToggleField
-          label="Keep Position"
+          label={t("Keep Position")}
           value={state.keep_position}
           field="keep_position"
           dispatch={dispatch}
         />
         <p className="text-[10px] text-[var(--color-text-muted)]">
-          On close, keep the net token change as a spot position instead of swapping
-          back to {quoteAsset}. This sets the config field; stopping from the
-          executors table asks again.
-        </p>
+          {t("On close, keep the net token change as a spot position instead of swapping back to")}{quoteAsset}{t(". This sets the config field; stopping from the executors table asks again.")}</p>
       </div>
 
       {/* Rendered only when there is something under it: everything else that
@@ -377,7 +369,7 @@ export function LPConfigPanel({
           }
         >
           <SelectField
-            label="Meteora Strategy"
+            label={t("Meteora Strategy")}
             value={state.strategy_type}
             field="strategy_type"
             dispatch={dispatch}

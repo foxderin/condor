@@ -9,6 +9,7 @@ import {
   formatDelegationTime,
 } from "@/components/agent/delegationStatus";
 import { api, type Delegation } from "@/lib/api";
+import { t } from "@/lib/i18n";
 
 /** How much of the delegation record the list is showing. */
 type Scope = "mine" | "all" | "history";
@@ -173,7 +174,7 @@ export function DockTasks({
                       onClick={() => stopMutation.mutate(d.task_id)}
                       disabled={stopMutation.isPending}
                       className="mt-0.5 flex h-5 shrink-0 items-center rounded border border-red-500/30 bg-red-500/10 px-1.5 text-[10px] text-red-400 transition-colors hover:bg-red-500/20 disabled:opacity-40"
-                      title="Confirm stop"
+                      title={t("Confirm stop")}
                     >
                       {stopMutation.isPending ? (
                         <Loader2 className="h-3 w-3 animate-spin" />
@@ -186,7 +187,7 @@ export function DockTasks({
                       type="button"
                       onClick={() => setConfirmStopId(d.task_id)}
                       className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border border-red-500/30 bg-red-500/10 text-red-400 transition-colors hover:bg-red-500/20"
-                      title="Stop task"
+                      title={t("Stop task")}
                     >
                       <Square className="h-2.5 w-2.5" />
                     </button>

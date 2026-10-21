@@ -14,6 +14,7 @@ import {
 
 import { ShareConversation } from "@/components/chat/ShareConversation";
 import { api, type ConversationMeta } from "@/lib/api";
+import { t } from "@/lib/i18n";
 
 const QUERY_KEY = ["conversations"] as const;
 
@@ -128,8 +129,7 @@ export const ConversationList = memo(function ConversationList({
     <div className="flex min-h-0 flex-1 flex-col">
       <div className="border-b border-[var(--color-border)] px-3 py-2">
         <span className="text-[10px] font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
-          Conversations
-        </span>
+          {t("Conversations")}</span>
       </div>
 
       <button
@@ -137,19 +137,16 @@ export const ConversationList = memo(function ConversationList({
         className="flex items-center gap-2 border-b border-[var(--color-border)] px-3 py-2.5 text-left text-sm text-[var(--color-primary)] hover:bg-[var(--color-surface-hover)]"
       >
         <Plus className="h-4 w-4" />
-        New chat
-      </button>
+        {t("New chat")}</button>
 
       <div className="flex-1 overflow-y-auto">
         {isLoading && (
           <div className="flex items-center gap-2 px-3 py-4 text-xs text-[var(--color-text-muted)]">
-            <Loader2 className="h-3 w-3 animate-spin" /> Loading…
-          </div>
+            <Loader2 className="h-3 w-3 animate-spin" /> {t("Loading…")}</div>
         )}
         {!isLoading && conversations.length === 0 && (
           <div className="px-3 py-6 text-center text-xs text-[var(--color-text-muted)]">
-            Nothing yet. Start a chat and it will be here — from Telegram too.
-          </div>
+            {t("Nothing yet. Start a chat and it will be here — from Telegram too.")}</div>
         )}
 
         {grouped.map(({ group, items }) => (
@@ -188,7 +185,7 @@ export const ConversationList = memo(function ConversationList({
                       <button
                         onClick={() => commitRename(meta.id)}
                         className="rounded p-1 text-[var(--color-green)] hover:bg-[var(--color-surface-hover)]"
-                        title="Save"
+                        title={t("Save")}
                       >
                         <Check className="h-3.5 w-3.5" />
                       </button>
@@ -196,8 +193,7 @@ export const ConversationList = memo(function ConversationList({
                   ) : confirmDelete === meta.id ? (
                     <div className="flex items-center justify-between gap-2">
                       <span className="truncate text-xs text-[var(--color-text-muted)]">
-                        Delete this conversation?
-                      </span>
+                        {t("Delete this conversation?")}</span>
                       <div className="flex shrink-0 gap-1">
                         <button
                           onClick={() => {
@@ -206,14 +202,12 @@ export const ConversationList = memo(function ConversationList({
                           }}
                           className="rounded bg-[var(--color-red)] px-2 py-0.5 text-[10px] font-medium text-white"
                         >
-                          Delete
-                        </button>
+                          {t("Delete")}</button>
                         <button
                           onClick={() => setConfirmDelete(null)}
                           className="rounded border border-[var(--color-border)] px-2 py-0.5 text-[10px]"
                         >
-                          Cancel
-                        </button>
+                          {t("Cancel")}</button>
                       </div>
                     </div>
                   ) : (
@@ -229,7 +223,7 @@ export const ConversationList = memo(function ConversationList({
                           {liveIds.has(meta.id) && (
                             <span
                               className="h-1.5 w-1.5 shrink-0 rounded-full bg-green-500"
-                              title="Session live"
+                              title={t("Session live")}
                             />
                           )}
                           <span className="shrink-0 text-[10px] text-[var(--color-text-muted)]">
@@ -250,17 +244,15 @@ export const ConversationList = memo(function ConversationList({
                           ) : (
                             <span className="flex items-center gap-1">
                               <MessageSquare className="h-2.5 w-2.5" />
-                              Condor
-                            </span>
+                              {t("Condor")}</span>
                           )}
                           {meta.surface === "tg" && (
                             <span
                               className="flex items-center gap-1 rounded bg-[var(--color-surface-hover)] px-1 py-0.5"
-                              title="Started in Telegram"
+                              title={t("Started in Telegram")}
                             >
                               <Send className="h-2.5 w-2.5" />
-                              Telegram
-                            </span>
+                              {t("Telegram")}</span>
                           )}
                         </div>
                       </button>
@@ -271,7 +263,7 @@ export const ConversationList = memo(function ConversationList({
                             setRenaming(meta.id);
                           }}
                           className="rounded bg-[var(--color-surface)] p-1 text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
-                          title="Rename"
+                          title={t("Rename")}
                         >
                           <Pencil className="h-3 w-3" />
                         </button>
@@ -293,7 +285,7 @@ export const ConversationList = memo(function ConversationList({
                         <button
                           onClick={() => setConfirmDelete(meta.id)}
                           className="rounded bg-[var(--color-surface)] p-1 text-[var(--color-text-muted)] hover:text-[var(--color-red)]"
-                          title="Delete"
+                          title={t("Delete")}
                         >
                           <Trash2 className="h-3 w-3" />
                         </button>

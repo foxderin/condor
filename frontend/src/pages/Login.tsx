@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { useAuth } from "@/lib/auth";
+import { t } from "@/lib/i18n";
 
 export function Login() {
   const { isAuthenticated, loginWithToken, loginLocal } = useAuth();
@@ -111,12 +112,11 @@ export function Login() {
   return (
     <div className="flex h-screen items-center justify-center">
       <div className="w-full max-w-sm rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-8 text-center">
-        <img src="/condor_old.jpeg" alt="Condor" className="mx-auto mb-4 h-16 w-16 rounded-full" />
-        <h1 className="mb-2 text-2xl font-bold">Condor</h1>
+        <img src="/condor_old.jpeg" alt={t("Condor")} className="mx-auto mb-4 h-16 w-16 rounded-full" />
+        <h1 className="mb-2 text-2xl font-bold">{t("Condor")}</h1>
         {loggingIn || (mode === null && !searchParams.get("token")) ? (
           <p className="text-sm text-[var(--color-text-muted)]">
-            Signing in...
-          </p>
+            {t("Signing in...")}</p>
         ) : mode === "local" ? (
           // Local mode has no Telegram bot to run /web in, and the sign-in it
           // does have just failed. Two things can cause that — the server went
@@ -125,18 +125,15 @@ export function Login() {
           // the server did answer, its own detail lands below in red.
           <>
             <p className="mb-4 text-sm text-[var(--color-text-muted)]">
-              This install runs in local mode, so there is no login link — the dashboard signs you in by itself. That did not work this time.
-            </p>
+              {t("This install runs in local mode, so there is no login link — the dashboard signs you in by itself. That did not work this time.")}</p>
             <p className="mb-6 text-sm text-[var(--color-text-muted)]">
-              Check that Condor is still running, and that <code className="rounded bg-[var(--color-bg)] px-1.5 py-0.5 font-mono text-xs">ADMIN_USER_ID</code> in <code className="rounded bg-[var(--color-bg)] px-1.5 py-0.5 font-mono text-xs">.env</code> is an approved user in <code className="rounded bg-[var(--color-bg)] px-1.5 py-0.5 font-mono text-xs">config.yml</code> — or run <code className="rounded bg-[var(--color-bg)] px-1.5 py-0.5 font-mono text-xs">make setup</code> and choose Local mode.
-            </p>
+              {t("Check that Condor is still running, and that")}{" "}<code className="rounded bg-[var(--color-bg)] px-1.5 py-0.5 font-mono text-xs">ADMIN_USER_ID</code> in <code className="rounded bg-[var(--color-bg)] px-1.5 py-0.5 font-mono text-xs">.env</code> {t("is an approved user in")}{" "}<code className="rounded bg-[var(--color-bg)] px-1.5 py-0.5 font-mono text-xs">config.yml</code> {t("— or run")}{" "}<code className="rounded bg-[var(--color-bg)] px-1.5 py-0.5 font-mono text-xs">{t("make setup")}</code> {t("and choose Local mode.")}</p>
             <button
               type="button"
               onClick={() => void attemptLocalLogin()}
               className="rounded-lg bg-[var(--color-accent)] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
             >
-              Retry
-            </button>
+              {t("Retry")}</button>
           </>
         ) : mode === "unreachable" ? (
           // The probe got no answer at all, so neither card above applies: the
@@ -145,24 +142,20 @@ export function Login() {
           // in red.
           <>
             <p className="mb-4 text-sm text-[var(--color-text-muted)]">
-              The dashboard could not reach Condor, so it cannot tell how this install signs you in.
-            </p>
+              {t("The dashboard could not reach Condor, so it cannot tell how this install signs you in.")}</p>
             <p className="mb-6 text-sm text-[var(--color-text-muted)]">
-              Check that Condor is running — <code className="rounded bg-[var(--color-bg)] px-1.5 py-0.5 font-mono text-xs">make status</code> shows it, <code className="rounded bg-[var(--color-bg)] px-1.5 py-0.5 font-mono text-xs">make run</code> starts it — then retry.
-            </p>
+              {t("Check that Condor is running —")}{" "}<code className="rounded bg-[var(--color-bg)] px-1.5 py-0.5 font-mono text-xs">{t("make status")}</code> {t("shows it,")}{" "}<code className="rounded bg-[var(--color-bg)] px-1.5 py-0.5 font-mono text-xs">{t("make run")}</code> {t("starts it — then retry.")}</p>
             <button
               type="button"
               onClick={retryProbe}
               className="rounded-lg bg-[var(--color-accent)] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
             >
-              Retry
-            </button>
+              {t("Retry")}</button>
           </>
         ) : (
           <>
             <p className="mb-6 text-sm text-[var(--color-text-muted)]">
-              Run the <code className="rounded bg-[var(--color-bg)] px-1.5 py-0.5 font-mono text-xs">/web</code> command in your Telegram bot to get a login link.
-            </p>
+              {t("Run the")}{" "}<code className="rounded bg-[var(--color-bg)] px-1.5 py-0.5 font-mono text-xs">/web</code> {t("command in your Telegram bot to get a login link.")}</p>
           </>
         )}
         {error && (

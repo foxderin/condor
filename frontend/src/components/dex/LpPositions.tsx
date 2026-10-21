@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { feeAmount, lpStateStyle } from "./lp-position";
 import { useLpPositions } from "@/hooks/useLpPositions";
 import { formatPnl, formatUsd, pnlColor } from "@/lib/formatters";
+import { t } from "@/lib/i18n";
 
 /**
  * The LP positions you already hold, above the pools you might enter.
@@ -29,8 +30,7 @@ export function LpPositions({ server }: { server: string }) {
     <div className="overflow-hidden rounded-lg border border-[var(--color-border)]">
       <div className="flex items-center justify-between border-b border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-2">
         <span className="text-xs font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
-          Your LP positions
-        </span>
+          {t("Your LP positions")}</span>
         <span className="text-xs text-[var(--color-text-muted)]">
           {positions.length}
         </span>

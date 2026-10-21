@@ -6,6 +6,7 @@ import { api } from "@/lib/api";
 
 import { HubBrowser } from "./HubBrowser";
 import { ImportAgentDialog } from "./ImportAgentDialog";
+import { t } from "@/lib/i18n";
 
 /**
  * Where an agent arrives from somewhere else, and where one leaves.
@@ -28,13 +29,9 @@ export function AgentsSettings() {
       <section>
         <h2 className="mb-1 flex items-center gap-1.5 text-sm font-bold text-[var(--color-text)]">
           <Globe className="h-3.5 w-3.5" />
-          The agent hub
-        </h2>
+          {t("The agent hub")}</h2>
         <p className="mb-3 text-xs text-[var(--color-text-muted)]">
-          Agents other people published. Installing one goes through the same
-          review as a file: every executable is named before anything is written,
-          the routines and skills arrive switched off, and nothing is started.
-        </p>
+          {t("Agents other people published. Installing one goes through the same review as a file: every executable is named before anything is written, the routines and skills arrive switched off, and nothing is started.")}</p>
         <HubBrowser
           onInstalled={() => queryClient.invalidateQueries({ queryKey: ["agents"] })}
         />
@@ -42,13 +39,9 @@ export function AgentsSettings() {
 
       <section className="border-t border-[var(--color-border)] pt-8">
         <h2 className="mb-1 text-sm font-bold text-[var(--color-text)]">
-          Import an agent
-        </h2>
+          {t("Import an agent")}</h2>
         <p className="mb-3 text-xs text-[var(--color-text-muted)]">
-          An agent travels as one file. Importing reads it, shows you what is in it and
-          registers the agent with its routines and skills switched off — nothing runs
-          until you switch them on.
-        </p>
+          {t("An agent travels as one file. Importing reads it, shows you what is in it and registers the agent with its routines and skills switched off — nothing runs until you switch them on.")}</p>
         <ImportAgentDialog
           onImported={() => queryClient.invalidateQueries({ queryKey: ["agents"] })}
         />
@@ -56,13 +49,9 @@ export function AgentsSettings() {
 
       <section className="border-t border-[var(--color-border)] pt-8">
         <h2 className="mb-1 text-sm font-bold text-[var(--color-text)]">
-          Export an agent
-        </h2>
+          {t("Export an agent")}</h2>
         <p className="mb-3 text-xs text-[var(--color-text-muted)]">
-          The file carries the agent itself — its AGENT.md, skills, routines, controllers
-          and loops. Its memory, journals, session history and this install's server pin
-          stay here.
-        </p>
+          {t("The file carries the agent itself — its AGENT.md, skills, routines, controllers and loops. Its memory, journals, session history and this install's server pin stay here.")}</p>
         {isLoading ? (
           <Loader2 className="h-4 w-4 animate-spin text-[var(--color-text-muted)]" />
         ) : (
@@ -90,15 +79,9 @@ export function AgentsSettings() {
 
       <section className="border-t border-[var(--color-border)] pt-8">
         <h2 className="mb-1 text-sm font-bold text-[var(--color-text)]">
-          Publishing to the hub
-        </h2>
+          {t("Publishing to the hub")}</h2>
         <p className="mb-3 text-xs text-[var(--color-text-muted)]">
-          Publishing needs a Botcamp token, which is install-wide: every publish
-          from this box is made with it, under that account. Paste one here, then
-          use Publish on an agent's own page. Publishing sends the agent's files
-          off this box — unpublishing removes the listing, it does not recall
-          anybody's download.
-        </p>
+          {t("Publishing needs a Botcamp token, which is install-wide: every publish from this box is made with it, under that account. Paste one here, then use Publish on an agent's own page. Publishing sends the agent's files off this box — unpublishing removes the listing, it does not recall anybody's download.")}</p>
         <HubTokenField />
       </section>
     </div>
@@ -134,7 +117,7 @@ export function HubTokenField() {
       <div className="flex items-center gap-2">
         <input
           type="password"
-          aria-label="Botcamp token"
+          aria-label={t("Botcamp token")}
           value={value}
           disabled={locked || save.isPending}
           onChange={(e) => setValue(e.target.value)}
@@ -154,20 +137,16 @@ export function HubTokenField() {
             disabled={save.isPending}
             className="text-xs text-[var(--color-text-muted)] underline hover:text-[var(--color-red)] disabled:opacity-50"
           >
-            Clear
-          </button>
+            {t("Clear")}</button>
         )}
       </div>
       {data?.set && (
         <p data-hub-token-set className="flex items-center gap-1 text-[11px] text-[var(--color-text-muted)]">
-          <Check className="h-3 w-3 text-[var(--color-primary)]" /> A token is set.
-          It is never shown again — replace it by pasting another.
-        </p>
+          <Check className="h-3 w-3 text-[var(--color-primary)]" /> {t("A token is set. It is never shown again — replace it by pasting another.")}</p>
       )}
       {locked && (
         <p className="text-[11px] text-[var(--color-text-muted)]">
-          Only the admin can change it: there is one token for the whole install.
-        </p>
+          {t("Only the admin can change it: there is one token for the whole install.")}</p>
       )}
       {save.isError && (
         <p role="alert" data-hub-token-error className="text-xs text-[var(--color-red)]">
@@ -226,8 +205,7 @@ export function ExportAgentButton({ slug }: { slug: string }) {
         ) : (
           <Download className="h-3.5 w-3.5" />
         )}
-        Export
-      </button>
+        {t("Export")}</button>
     </span>
   );
 }
@@ -300,7 +278,7 @@ export function PublishAgentButton({ slug }: { slug: string }) {
       )}
       {done !== null && (
         <span data-publish-done className="text-xs text-[var(--color-text-muted)]">
-          Published{done && ` as ${done}`}.
+          {t("Published")}{done && ` as ${done}`}.
         </span>
       )}
       {preview ? (
@@ -309,10 +287,8 @@ export function PublishAgentButton({ slug }: { slug: string }) {
           className="flex items-center gap-2 rounded-lg border border-amber-500/30 bg-amber-500/5 px-2.5 py-1 text-[11px] text-[var(--color-text-muted)]"
         >
           <span>
-            Uploading version {preview.version} — {preview.files.length} file
-            {preview.files.length !== 1 ? "s" : ""}, {preview.bytes} bytes. This
-            leaves your machine and cannot be recalled from anybody's download.
-          </span>
+            {t("Uploading version")}{" "}{preview.version} — {preview.files.length} file
+            {preview.files.length !== 1 ? "s" : ""}, {preview.bytes} {t("bytes. This leaves your machine and cannot be recalled from anybody's download.")}</span>
           <button
             onClick={send}
             disabled={busy}
@@ -325,8 +301,7 @@ export function PublishAgentButton({ slug }: { slug: string }) {
             disabled={busy}
             className="shrink-0 underline hover:text-[var(--color-text)] disabled:opacity-50"
           >
-            Cancel
-          </button>
+            {t("Cancel")}</button>
         </span>
       ) : (
         <button
@@ -340,8 +315,7 @@ export function PublishAgentButton({ slug }: { slug: string }) {
           ) : (
             <Upload className="h-3.5 w-3.5" />
           )}
-          Publish
-        </button>
+          {t("Publish")}</button>
       )}
     </span>
   );

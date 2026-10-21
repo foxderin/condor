@@ -7,6 +7,7 @@ import remarkGfm from "remark-gfm";
 import { snapshotQueryOptions } from "@/hooks/useSnapshotBubbles";
 import { type ParsedSnapshot, type ToolCall, parseSnapshot } from "@/lib/parse-agent";
 import { toolCallState } from "@/lib/formatters";
+import { t } from "@/lib/i18n";
 
 // ── Snapshot Detail ──
 //
@@ -48,7 +49,7 @@ export function SnapshotDetail({ slug, sslug, sessionNum, tick }: { slug: string
   }
 
   if (!parsed) {
-    return <p className="py-8 text-center text-sm text-[var(--color-text-muted)]">Select a snapshot to view details.</p>;
+    return <p className="py-8 text-center text-sm text-[var(--color-text-muted)]">{t("Select a snapshot to view details.")}</p>;
   }
 
   return <SnapshotBody parsed={parsed} />;
@@ -85,7 +86,7 @@ export function SnapshotBody({ parsed }: { parsed: ParsedSnapshot }) {
           surface, and `chat-markdown` is already the house style for it. */}
       {parsed.agentResponse && (
         <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
-          <h4 className="mb-3 text-xs font-bold uppercase tracking-widest text-[var(--color-text-muted)]">Agent Response</h4>
+          <h4 className="mb-3 text-xs font-bold uppercase tracking-widest text-[var(--color-text-muted)]">{t("Agent Response")}</h4>
           <div
             data-agent-response
             className="chat-markdown text-sm leading-relaxed text-[var(--color-text)]"
@@ -101,7 +102,7 @@ export function SnapshotBody({ parsed }: { parsed: ParsedSnapshot }) {
       {parsed.toolCalls.length > 0 && (
         <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
           <h4 className="mb-3 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[var(--color-text-muted)]">
-            <Wrench className="h-3 w-3" /> Tool Calls ({parsed.toolCalls.length})
+            <Wrench className="h-3 w-3" /> {t("Tool Calls (")}{parsed.toolCalls.length})
           </h4>
           <div className="flex flex-wrap gap-2">
             {parsed.toolCalls.map((tc) => (
@@ -115,7 +116,7 @@ export function SnapshotBody({ parsed }: { parsed: ParsedSnapshot }) {
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         {parsed.riskState && (
           <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
-            <h4 className="mb-2 text-xs font-bold uppercase tracking-widest text-[var(--color-text-muted)]">Risk State</h4>
+            <h4 className="mb-2 text-xs font-bold uppercase tracking-widest text-[var(--color-text-muted)]">{t("Risk State")}</h4>
             <div className="space-y-1 font-mono text-xs leading-relaxed text-[var(--color-text-muted)]">
               {parsed.riskState.split("\n").map((line, i) => {
                 const text = relabelRiskVerdict(line.replace(/^- /, ""));
@@ -133,7 +134,7 @@ export function SnapshotBody({ parsed }: { parsed: ParsedSnapshot }) {
 
         {parsed.executorState && (
           <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
-            <h4 className="mb-2 text-xs font-bold uppercase tracking-widest text-[var(--color-text-muted)]">Executor State</h4>
+            <h4 className="mb-2 text-xs font-bold uppercase tracking-widest text-[var(--color-text-muted)]">{t("Executor State")}</h4>
             <pre className="whitespace-pre-wrap font-mono text-xs leading-relaxed text-[var(--color-text-muted)]">
               {parsed.executorState}
             </pre>
@@ -144,7 +145,7 @@ export function SnapshotBody({ parsed }: { parsed: ParsedSnapshot }) {
       {/* Stats Footer */}
       {parsed.stats.duration > 0 && (
         <div className="flex flex-wrap gap-4 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-3 font-mono text-xs text-[var(--color-text-muted)]">
-          <span>Duration: <strong className="text-[var(--color-text)]">{parsed.stats.duration.toFixed(1)}s</strong></span>
+          <span>{t("Duration:")}{" "}<strong className="text-[var(--color-text)]">{parsed.stats.duration.toFixed(1)}s</strong></span>
         </div>
       )}
     </div>
@@ -191,7 +192,7 @@ export function ToolCallChip({ tc }: { tc: ToolCall }) {
         <div className="space-y-2 border-t border-[var(--color-border)]/30 p-3">
           {tc.input && (
             <div>
-              <span className="mb-1 block text-[10px] font-bold uppercase tracking-wider text-[var(--color-text-muted)]">Input</span>
+              <span className="mb-1 block text-[10px] font-bold uppercase tracking-wider text-[var(--color-text-muted)]">{t("Input")}</span>
               <pre className="max-h-40 overflow-auto rounded-md bg-[var(--color-surface)] p-2 font-mono text-[11px] leading-relaxed text-[var(--color-text-muted)]">
                 {tc.input}
               </pre>
@@ -199,7 +200,7 @@ export function ToolCallChip({ tc }: { tc: ToolCall }) {
           )}
           {tc.output && (
             <div>
-              <span className="mb-1 block text-[10px] font-bold uppercase tracking-wider text-[var(--color-text-muted)]">Output</span>
+              <span className="mb-1 block text-[10px] font-bold uppercase tracking-wider text-[var(--color-text-muted)]">{t("Output")}</span>
               <pre className="max-h-40 overflow-auto rounded-md bg-[var(--color-surface)] p-2 font-mono text-[11px] leading-relaxed text-[var(--color-text-muted)]">
                 {tc.output}
               </pre>
@@ -222,7 +223,7 @@ export function SystemPromptCard({ prompt, charCount }: { prompt: string; charCo
         className="flex w-full items-center justify-between p-4 text-left transition-colors hover:bg-[var(--color-surface-hover)]"
       >
         <div className="flex items-center gap-2">
-          <h4 className="text-xs font-bold uppercase tracking-widest text-[var(--color-text-muted)]">System Prompt</h4>
+          <h4 className="text-xs font-bold uppercase tracking-widest text-[var(--color-text-muted)]">{t("System Prompt")}</h4>
           <span className="text-[10px] text-[var(--color-text-muted)]">({charCount.toLocaleString()} chars)</span>
         </div>
         {expanded ? <ChevronDown className="h-3.5 w-3.5 text-[var(--color-text-muted)]" /> : <ChevronRight className="h-3.5 w-3.5 text-[var(--color-text-muted)]" />}

@@ -12,6 +12,7 @@ import {
   subscribe,
   unsubscribe,
 } from "@/lib/push";
+import { t } from "@/lib/i18n";
 
 const SUBSCRIPTIONS_KEY = ["push", "subscriptions"] as const;
 
@@ -88,15 +89,12 @@ export function NotificationsSettings() {
           <Lock className="mt-0.5 h-4 w-4 shrink-0 text-[var(--color-text-muted)]" />
           <div className="space-y-2 text-xs leading-relaxed text-[var(--color-text-muted)]">
             <p>
-              Desktop notifications need a secure connection. You are on{" "}
+              {t("Desktop notifications need a secure connection. You are on")}{" "}
               <code className="text-[var(--color-text)]">{currentOrigin()}</code>.
             </p>
             <p>
-              Serve the dashboard over HTTPS —{" "}
-              <code className="text-[var(--color-text)]">tailscale serve</code> gives
-              you one on your tailnet — and this switch appears. Nothing else about
-              Condor changes; the bell above keeps working exactly as it does now.
-            </p>
+              {t("Serve the dashboard over HTTPS —")}{" "}
+              <code className="text-[var(--color-text)]">{t("tailscale serve")}</code> {t("gives you one on your tailnet — and this switch appears. Nothing else about Condor changes; the bell above keeps working exactly as it does now.")}</p>
           </div>
         </div>
       </Frame>
@@ -109,10 +107,7 @@ export function NotificationsSettings() {
         <div className="flex items-start gap-2.5 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-3">
           <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0 text-[var(--color-text-muted)]" />
           <p className="text-xs leading-relaxed text-[var(--color-text-muted)]">
-            This browser has no Web Push support, so there is nothing to turn on
-            here. Chrome, Edge, Firefox and Safari 16.1+ all have it; on iOS the
-            app has to be added to the Home Screen first.
-          </p>
+            {t("This browser has no Web Push support, so there is nothing to turn on here. Chrome, Edge, Firefox and Safari 16.1+ all have it; on iOS the app has to be added to the Home Screen first.")}</p>
         </div>
       </Frame>
     );
@@ -158,16 +153,14 @@ export function NotificationsSettings() {
 
       <section>
         <h4 className="mb-2 text-xs font-semibold uppercase tracking-wide text-[var(--color-text-muted)]">
-          Devices
-        </h4>
+          {t("Devices")}</h4>
         {isLoading ? (
           <div className="flex items-center justify-center py-6 text-[var(--color-text-muted)]">
             <Loader2 className="h-4 w-4 animate-spin" />
           </div>
         ) : items.length === 0 ? (
           <p className="text-xs text-[var(--color-text-muted)]">
-            No device is subscribed yet.
-          </p>
+            {t("No device is subscribed yet.")}</p>
         ) : (
           <ul className="space-y-1">
             {items.map((row) => (
@@ -181,12 +174,11 @@ export function NotificationsSettings() {
                     {row.label || "Unnamed device"}
                     {row.endpoint === thisDevice && (
                       <span className="ml-1.5 text-[var(--color-text-muted)]">
-                        (this one)
-                      </span>
+                        {t("(this one)")}</span>
                     )}
                   </span>
                   <span className="block text-[10px] text-[var(--color-text-muted)]">
-                    Added {formatRelativeTime(row.created)}
+                    {t("Added")}{" "}{formatRelativeTime(row.created)}
                   </span>
                 </span>
                 <button
@@ -196,7 +188,7 @@ export function NotificationsSettings() {
                       ? toggle.mutate(false)
                       : forget.mutate(row.endpoint)
                   }
-                  title="Stop notifying this device"
+                  title={t("Stop notifying this device")}
                   className="shrink-0 rounded p-1 text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-red)]"
                 >
                   <Trash2 className="h-3.5 w-3.5" />
@@ -208,11 +200,7 @@ export function NotificationsSettings() {
       </section>
 
       <p className="text-xs leading-relaxed text-[var(--color-text-muted)]">
-        Notification text is encrypted to this browser's own key before it
-        leaves the machine, so the push service that relays it cannot read it.
-        If you also use Telegram you will get both — turn this off on a device
-        where the second buzz is not worth it.
-      </p>
+        {t("Notification text is encrypted to this browser's own key before it leaves the machine, so the push service that relays it cannot read it. If you also use Telegram you will get both — turn this off on a device where the second buzz is not worth it.")}</p>
     </Frame>
   );
 }
@@ -223,13 +211,9 @@ function Frame({ children }: { children: React.ReactNode }) {
       <section>
         <h3 className="mb-1 text-sm font-semibold text-[var(--color-text)]">
           <Bell className="mr-1.5 inline h-4 w-4" />
-          Desktop notifications
-        </h3>
+          {t("Desktop notifications")}</h3>
         <p className="text-xs leading-relaxed text-[var(--color-text-muted)]">
-          A routine that finishes at 3am, a delegation that completes while the
-          laptop is asleep — these ring on this machine with no Condor window
-          open. Clicking one opens Condor on the thing that happened.
-        </p>
+          {t("A routine that finishes at 3am, a delegation that completes while the laptop is asleep — these ring on this machine with no Condor window open. Clicking one opens Condor on the thing that happened.")}</p>
       </section>
       {children}
     </div>

@@ -6,6 +6,7 @@ import yamlLib from "js-yaml";
 import { CodeEditor } from "@/components/editor/CodeEditor";
 import { api } from "@/lib/api";
 import { configToYaml, CONTROLLER_HIDDEN_KEYS, validateYamlMapping } from "@/lib/configYaml";
+import { t } from "@/lib/i18n";
 
 /**
  * The right drawer's config column: a controller's config as editable YAML.
@@ -81,15 +82,14 @@ export function YamlConfigEditor({
           <button
             onClick={onCollapse}
             className="rounded p-0.5 text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)]"
-            title="Hide config"
+            title={t("Hide config")}
           >
             <ChevronRight className="h-3.5 w-3.5" />
           </button>
           <h3 className="text-xs font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
-            Config
-          </h3>
+            {t("Config")}</h3>
           {isDirty && (
-            <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-yellow)]" title="Unsaved changes" />
+            <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-yellow)]" title={t("Unsaved changes")} />
           )}
         </div>
         <div className="flex items-center gap-1.5">
@@ -99,8 +99,7 @@ export function YamlConfigEditor({
               className="flex items-center gap-1 text-[10px] text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
             >
               <RotateCcw className="h-3 w-3" />
-              Reset
-            </button>
+              {t("Reset")}</button>
           )}
           <button
             onClick={() => saveMutation.mutate()}
@@ -112,8 +111,7 @@ export function YamlConfigEditor({
             ) : (
               <Save className="h-3 w-3" />
             )}
-            Save
-          </button>
+            {t("Save")}</button>
         </div>
       </div>
 
@@ -129,8 +127,7 @@ export function YamlConfigEditor({
       )}
       {saveMutation.isSuccess && !isDirty && (
         <div className="px-4 py-1.5 text-[10px] text-[var(--color-green)] bg-[var(--color-green)]/5">
-          Config saved successfully
-        </div>
+          {t("Config saved successfully")}</div>
       )}
 
       {/* YAML editor */}

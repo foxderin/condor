@@ -5,6 +5,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
 import { api } from "@/lib/api";
+import { t } from "@/lib/i18n";
 
 // ── Session Canvas ──
 //
@@ -37,12 +38,10 @@ export function SessionCanvasPanel({ slug, sslug, sessionNum }: { slug: string; 
       >
         <div className="flex items-center gap-2">
           <h3 className="text-xs font-bold uppercase tracking-widest text-[var(--color-text-muted)]">
-            Narrative — the agent's own words
-          </h3>
+            {t("Narrative — the agent's own words")}</h3>
           {data && data.last_revised_tick > 0 && (
             <span className="text-[10px] text-[var(--color-text-muted)]/70">
-              last revised at tick #{data.last_revised_tick} · unverified
-            </span>
+              {t("last revised at tick #")}{data.last_revised_tick} {t("· unverified")}</span>
           )}
         </div>
         {expanded ? (

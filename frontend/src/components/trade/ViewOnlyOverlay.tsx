@@ -2,6 +2,7 @@ import { KeyRound } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import { formatConnectorName } from "@/lib/formatters";
+import { t } from "@/lib/i18n";
 
 /**
  * What the Execute panel shows on a venue Condor can read but not trade (ARCH-272).
@@ -27,18 +28,16 @@ export function ViewOnlyOverlay({ connector }: { connector: string }) {
         </div>
 
         <h3 className="mb-1.5 text-sm font-bold text-[var(--color-text)]">
-          View only — no API keys for {formatConnectorName(connector)}
+          {t("View only — no API keys for")}{" "}{formatConnectorName(connector)}
         </h3>
         <p className="mb-4 max-w-[15rem] text-[11px] leading-relaxed text-[var(--color-text-muted)]">
-          Charts, order book and market data are live. Add keys to trade here.
-        </p>
+          {t("Charts, order book and market data are live. Add keys to trade here.")}</p>
 
         <Link
           to="/settings?tab=keys"
           className="rounded-lg bg-[var(--color-primary)] px-4 py-2 text-xs font-semibold text-white transition-all hover:bg-[var(--color-primary-hover)] active:scale-[0.98]"
         >
-          Add API keys
-        </Link>
+          {t("Add API keys")}</Link>
       </div>
     </div>
   );

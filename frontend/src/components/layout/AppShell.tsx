@@ -20,6 +20,7 @@ import { useViewFacts } from "@/lib/viewFacts";
 import { CurrencySelector } from "./CurrencySelector";
 import { NotificationBell } from "./NotificationBell";
 import { ServerSelector } from "./ServerSelector";
+import { t } from "@/lib/i18n";
 
 /**
  * Full-bleed routes that carry a parameter, so an exact match cannot find them.
@@ -109,8 +110,8 @@ function AppShellBody() {
         {/* Left: logo + nav */}
         <div className="flex items-center gap-6">
           <NavLink to="/" className="flex items-center gap-2 font-bold tracking-tight">
-            <img src="/condor_old.jpeg" alt="Condor" className="h-6 w-6 rounded-full" />
-            <span className="text-sm">Condor</span>
+            <img src="/condor_old.jpeg" alt={t("Condor")} className="h-6 w-6 rounded-full" />
+            <span className="text-sm">{t("Condor")}</span>
           </NavLink>
 
           <nav className="flex items-center">
@@ -150,7 +151,7 @@ function AppShellBody() {
             <button
               onClick={() => setReportOpen(true)}
               className="rounded p-1.5 text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-accent)]"
-              title="Report an issue"
+              title={t("Report an issue")}
             >
               <Bug className="h-4 w-4" />
             </button>

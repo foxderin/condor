@@ -6,6 +6,7 @@ import { ADMIN_PEOPLE_KEY, adminApi } from "@/lib/admin-api";
 
 import { AuditTrail } from "./admin/AuditTrail";
 import { ConnectedPeopleList } from "./admin/PeopleList";
+import { t } from "@/lib/i18n";
 
 /**
  * Admin-only people administration (ARCH-177, FEAT-088).
@@ -37,15 +38,12 @@ export function AdminSettings() {
     <div className="space-y-4">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <p className="max-w-2xl text-xs leading-relaxed text-[var(--color-text-muted)]">
-          Everyone who has ever contacted the bot, and the servers each of them can
-          reach. Approving, blocking and every grant here is recorded in the audit
-          log and takes effect immediately, with no restart.
-        </p>
+          {t("Everyone who has ever contacted the bot, and the servers each of them can reach. Approving, blocking and every grant here is recorded in the audit log and takes effect immediately, with no restart.")}</p>
         <button
           type="button"
           onClick={() => refreshMut.mutate()}
           disabled={refreshMut.isPending}
-          title="Ask Telegram what the records with no stored name are called"
+          title={t("Ask Telegram what the records with no stored name are called")}
           className="flex shrink-0 items-center gap-1.5 rounded-md border border-[var(--color-border)] px-3 py-1.5 text-xs font-medium text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)] disabled:opacity-50"
         >
           {refreshMut.isPending ? (
@@ -53,13 +51,12 @@ export function AdminSettings() {
           ) : (
             <RefreshCw className="h-3.5 w-3.5" />
           )}
-          Refresh names
-        </button>
+          {t("Refresh names")}</button>
       </div>
 
       {refreshMut.isSuccess && (
         <p className="text-xs text-[var(--color-text-muted)]">
-          Named {refreshMut.data.resolved} of {refreshMut.data.checked} records
+          {t("Named")}{" "}{refreshMut.data.resolved} of {refreshMut.data.checked} records
           {refreshMut.data.failed > 0
             ? ` · ${refreshMut.data.failed} did not answer (they may have blocked the bot)`
             : ""}

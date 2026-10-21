@@ -23,6 +23,7 @@ import { AnchoredMenu } from "@/components/ui/AnchoredMenu";
 import { useSessionOptions } from "@/hooks/useChat";
 import { CHAT_SLUG, api, type AgentDetail, type StrategyDetail } from "@/lib/api";
 import { agentQuery } from "@/lib/queryClient";
+import { t } from "@/lib/i18n";
 
 // ── Server pin ──
 
@@ -105,8 +106,7 @@ function ServerPinPicker({ slug, serverName }: { slug: string; serverName: strin
         className="min-w-[220px] py-0.5"
       >
         <div className="px-2.5 pb-1 pt-1.5 text-[10px] font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
-          Pin to server
-        </div>
+          {t("Pin to server")}</div>
         {(servers ?? []).map((s) => (
           <button
             key={s.name}
@@ -131,8 +131,7 @@ function ServerPinPicker({ slug, serverName }: { slug: string; serverName: strin
             serverName ? "text-[var(--color-text)]" : "font-medium text-[var(--color-primary)]"
           }`}
         >
-          No pin — follow the chat's selection
-        </button>
+          {t("No pin — follow the chat's selection")}</button>
       </AnchoredMenu>
     </>
   );
@@ -243,8 +242,7 @@ export function WorkspaceHeader({
             data-live-badge
             className="flex items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-emerald-400"
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" /> Live
-          </span>
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" /> {t("Live")}</span>
         )}
         <ModelPicker slug={agent.slug} agentKey={agent.agent_key} />
         {agent.tools && agent.tools.length > 0 && (
@@ -277,10 +275,10 @@ export function WorkspaceHeader({
             to={sidePanelHref}
             data-side-panel-link
             className="flex items-center gap-1.5 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1.5 text-xs font-semibold text-[var(--color-text-muted)] transition-all hover:border-[var(--color-primary)]/50 hover:text-[var(--color-primary)]"
-            title="Show this beside the chat, in the side panel"
+            title={t("Show this beside the chat, in the side panel")}
           >
             <PanelRight className="h-3.5 w-3.5" />
-            <span className="hidden sm:inline">Side panel</span>
+            <span className="hidden sm:inline">{t("Side panel")}</span>
           </Link>
         )}
         {/* Labelled "Open chat", not "Chat": it lands in the workspace at `/`,
@@ -293,7 +291,7 @@ export function WorkspaceHeader({
           title={`Open your chat with ${agent.name} in the workspace — continues the live conversation if there is one`}
         >
           <MessageSquareText className="h-3.5 w-3.5" />
-          <span className="hidden sm:inline">Open chat</span>
+          <span className="hidden sm:inline">{t("Open chat")}</span>
         </button>
         {/* One file, beside the irreversible one. An agent has to be able to
             leave this install as readily as it can be deleted from it — that
@@ -317,7 +315,7 @@ export function WorkspaceHeader({
             title={isRunning ? "Stop all loops before deleting" : "Delete agent"}
           >
             <Trash2 className="h-3.5 w-3.5" />
-            <span className="hidden sm:inline">Delete</span>
+            <span className="hidden sm:inline">{t("Delete")}</span>
           </button>
         )}
       </div>

@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import { privateKeyToAccount } from "viem/accounts";
 
 import { api } from "@/lib/api";
+import { t } from "@/lib/i18n";
 
 export type WalletChain = "solana" | "ethereum";
 
@@ -85,8 +86,7 @@ export function ImportGatewayWallet({
     <div className="space-y-4">
       <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-3">
         <p className="mb-1.5 text-xs font-medium text-[var(--color-text)]">
-          Where to find your private key
-        </p>
+          {t("Where to find your private key")}</p>
         <ul className="space-y-1 text-xs text-[var(--color-text-muted)]">
           {EXPORT_INSTRUCTIONS[chain].map(({ wallet, steps }) => (
             <li key={wallet}>
@@ -100,8 +100,7 @@ export function ImportGatewayWallet({
         <div className="flex items-start gap-2 rounded-lg border border-[var(--color-primary)]/30 bg-[var(--color-primary)]/5 p-3 text-sm text-[var(--color-text)]">
           <Check className="mt-0.5 h-4 w-4 shrink-0 text-[var(--color-primary)]" />
           <span>
-            Wallet imported into Gateway.
-            {importedAddress && (
+            {t("Wallet imported into Gateway.")}{importedAddress && (
               <span className="ml-1 break-all font-mono text-xs text-[var(--color-text-muted)]">
                 {importedAddress}
               </span>
@@ -111,7 +110,7 @@ export function ImportGatewayWallet({
       ) : (
         <div className="space-y-3">
           <div>
-            <label className="mb-1 block text-xs text-[var(--color-text-muted)]">Private key</label>
+            <label className="mb-1 block text-xs text-[var(--color-text-muted)]">{t("Private key")}</label>
             <input
               type="password"
               // Browsers ignore autocomplete="off" on password fields; "new-password" is the value
@@ -131,7 +130,7 @@ export function ImportGatewayWallet({
             />
             {derived && (
               <p className="mt-1 break-all font-mono text-xs text-[var(--color-text-muted)]">
-                Will import: {derived}
+                {t("Will import:")}{" "}{derived}
               </p>
             )}
             {trimmed.length > 0 && !keyLooksValid && (
@@ -151,13 +150,10 @@ export function ImportGatewayWallet({
               disabled={saving}
               className="h-3.5 w-3.5 accent-[var(--color-primary)]"
             />
-            Set as default wallet for this chain
-          </label>
+            {t("Set as default wallet for this chain")}</label>
 
           <p className="text-xs text-[var(--color-text-muted)]">
-            The key is sent to your Hummingbot API server and stored encrypted by the Gateway. It is
-            never persisted by this dashboard.
-          </p>
+            {t("The key is sent to your Hummingbot API server and stored encrypted by the Gateway. It is never persisted by this dashboard.")}</p>
 
           {error && (
             <div className="flex items-start gap-2 rounded-md border border-[var(--color-red)]/30 bg-red-500/5 p-2.5 text-xs text-[var(--color-red)]">
@@ -173,15 +169,13 @@ export function ImportGatewayWallet({
               className="flex items-center gap-1.5 rounded-md bg-[var(--color-primary)] px-4 py-1.5 text-xs font-medium text-white transition-colors hover:bg-[var(--color-primary)]/80 disabled:opacity-50"
             >
               {saving && <Loader2 className="h-3 w-3 animate-spin" />}
-              Import into Gateway
-            </button>
+              {t("Import into Gateway")}</button>
             <button
               onClick={onBack}
               disabled={saving}
               className="rounded-md px-3 py-1.5 text-xs text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)] disabled:opacity-50"
             >
-              Cancel
-            </button>
+              {t("Cancel")}</button>
           </div>
         </div>
       )}

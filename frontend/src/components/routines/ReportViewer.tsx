@@ -11,6 +11,7 @@ import { useCallback, useEffect, useState } from "react";
 import { ReportFrame } from "@/components/routines/ReportFrame";
 import { InlineConfirm } from "@/components/ui/InlineConfirm";
 import { type ReportSummary } from "@/lib/api";
+import { t } from "@/lib/i18n";
 
 interface ReportViewerProps {
   report: ReportSummary;
@@ -114,7 +115,7 @@ export function ReportViewer({
             onClick={goPrev}
             disabled={!hasPrev}
             className="rounded p-1.5 text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)] disabled:opacity-30"
-            title="Previous (Left Arrow)"
+            title={t("Previous (Left Arrow)")}
           >
             <ChevronLeft className="h-4 w-4" />
           </button>
@@ -122,7 +123,7 @@ export function ReportViewer({
             onClick={goNext}
             disabled={!hasNext}
             className="rounded p-1.5 text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)] disabled:opacity-30"
-            title="Next (Right Arrow)"
+            title={t("Next (Right Arrow)")}
           >
             <ChevronRight className="h-4 w-4" />
           </button>
@@ -145,7 +146,7 @@ export function ReportViewer({
               }}
               onCancel={() => setConfirmDelete(false)}
               triggerLabel="Delete report"
-              confirmLabel="Confirm delete report"
+              confirmLabel={t("Confirm delete report")}
               cancelLabel="Cancel delete report"
               size="md"
             />
@@ -159,8 +160,8 @@ export function ReportViewer({
               data-report-close
               onClick={onClose}
               className="rounded p-1.5 text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)]"
-              title="Back (Esc)"
-              aria-label="Close report"
+              title={t("Back (Esc)")}
+              aria-label={t("Close report")}
             >
               <ArrowLeft className="h-4 w-4" />
             </button>
@@ -176,8 +177,8 @@ export function ReportViewer({
           <button
             onClick={goPrev}
             className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white/70 hover:bg-black/70 hover:text-white transition-all"
-            title="Previous report"
-            aria-label="Previous report"
+            title={t("Previous report")}
+            aria-label={t("Previous report")}
           >
             <ChevronLeft className="h-5 w-5" />
           </button>
@@ -186,8 +187,8 @@ export function ReportViewer({
           <button
             onClick={goNext}
             className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white/70 hover:bg-black/70 hover:text-white transition-all"
-            title="Next report"
-            aria-label="Next report"
+            title={t("Next report")}
+            aria-label={t("Next report")}
           >
             <ChevronRight className="h-5 w-5" />
           </button>

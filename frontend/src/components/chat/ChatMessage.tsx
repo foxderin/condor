@@ -25,6 +25,7 @@ import { copyText } from "@/lib/clipboard";
 import { splitStreamedMarkdown } from "@/lib/markdownStream";
 import { ChartSlot, ChartSlotHost } from "./ChartSlots";
 import { RunStrip } from "./ToolCallStatus";
+import { t } from "@/lib/i18n";
 
 /** One array, so the plugin list is never a fresh prop on a streamed frame. */
 const GFM = [remarkGfm];
@@ -225,8 +226,8 @@ function CopyTurn({ text }: { text: string }) {
         timer.current = setTimeout(() => setCopied(false), 1500);
       }}
       className="rounded p-0.5 text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text)]"
-      title="Copy this message"
-      aria-label="Copy this message"
+      title={t("Copy this message")}
+      aria-label={t("Copy this message")}
     >
       {copied ? (
         <Check className="h-3.5 w-3.5 text-[var(--color-green)]" />
@@ -303,7 +304,7 @@ function Attachment({ attachment }: { attachment: ChatAttachment }) {
       {src ? (
         <img
           src={src}
-          alt="Attached image"
+          alt={t("Attached image")}
           className="max-h-64 w-auto max-w-full object-contain"
         />
       ) : (
@@ -344,7 +345,7 @@ export const ChatMessageView = memo(function ChatMessageView({
       <div className="group mb-4 border-l-2 border-[var(--color-yellow)] bg-amber-500/10 py-2 pl-3 pr-3">
         <div className="mb-1 flex items-center gap-1.5">
           <ShieldAlert className="h-3.5 w-3.5 shrink-0 text-[var(--color-yellow)]" />
-          <TurnLabel label="Key material" color="var(--color-yellow)" />
+          <TurnLabel label={t("Key material")} color="var(--color-yellow)" />
           <div className="ml-auto">
             <TurnActions ts={message.ts} text={message.text} />
           </div>
@@ -500,7 +501,7 @@ export const ChatMessageView = memo(function ChatMessageView({
           {live ? (
             <>
               <Loader2 className="h-3 w-3 animate-spin" />
-              <span className="text-xs">Working...</span>
+              <span className="text-xs">{t("Working...")}</span>
             </>
           ) : (
             "..."
@@ -513,7 +514,7 @@ export const ChatMessageView = memo(function ChatMessageView({
       {message.interrupted && (
         <div className="mt-1 flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-[var(--color-text-muted)]">
           <Square className="h-2.5 w-2.5" />
-          <span className="whitespace-nowrap">Interrupted</span>
+          <span className="whitespace-nowrap">{t("Interrupted")}</span>
           <div className="h-px flex-1 bg-[var(--color-border)]" />
         </div>
       )}

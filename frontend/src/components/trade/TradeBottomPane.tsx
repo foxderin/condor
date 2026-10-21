@@ -19,6 +19,7 @@ import {
 import { stopKeepCopy } from "@/lib/executorStopCopy";
 import { executorsQuery } from "@/lib/queryClient";
 import { TRADE_BOTTOM_PANE_KEY } from "@/lib/sessionState";
+import { t } from "@/lib/i18n";
 
 interface TradeBottomPaneProps {
   executors: ExecutorInfo[];
@@ -133,13 +134,13 @@ function ExecutorTooltip({
           <div className="flex items-center gap-2 mb-1.5 text-[var(--color-text-muted)]">
             {entry > 0 && (
               <span>
-                Entry: <span className="text-[var(--color-text)] font-mono">{formatPriceSig(entry)}</span>
+                {t("Entry:")}{" "}<span className="text-[var(--color-text)] font-mono">{formatPriceSig(entry)}</span>
               </span>
             )}
             {entry > 0 && exit > 0 && exit !== entry && <span>→</span>}
             {exit > 0 && exit !== entry && (
               <span>
-                {active ? "Now" : "Close"}:{" "}
+                {active ? t("Now") : t("Close (price)")}:{" "}
                 <span className="text-[var(--color-text)] font-mono">{formatPriceSig(exit)}</span>
               </span>
             )}
@@ -150,31 +151,31 @@ function ExecutorTooltip({
         <div className="grid grid-cols-2 gap-x-3 gap-y-1 text-[10px]">
           {amount > 0 && (
             <div>
-              <span className="text-[var(--color-text-muted)]">Amount: </span>
+              <span className="text-[var(--color-text-muted)]">{t("Amount:")}{" "}</span>
               <span className="font-mono">{formatUsd(amount)}</span>
             </div>
           )}
           {leverage > 1 && (
             <div>
-              <span className="text-[var(--color-text-muted)]">Leverage: </span>
+              <span className="text-[var(--color-text-muted)]">{t("Leverage:")}{" "}</span>
               <span className="font-mono">{leverage}x</span>
             </div>
           )}
           {slPct > 0 && slPct !== -1 && (
             <div>
-              <span className="text-[var(--color-text-muted)]">SL: </span>
+              <span className="text-[var(--color-text-muted)]">{t("SL:")}{" "}</span>
               <span className="font-mono text-[var(--color-red)]">{(slPct * 100).toFixed(2)}%</span>
             </div>
           )}
           {tpPct > 0 && tpPct !== -1 && (
             <div>
-              <span className="text-[var(--color-text-muted)]">TP: </span>
+              <span className="text-[var(--color-text-muted)]">{t("TP:")}{" "}</span>
               <span className="font-mono text-[var(--color-green)]">{(tpPct * 100).toFixed(2)}%</span>
             </div>
           )}
           {executor.type === "grid" && !!config.start_price && (
             <div className="col-span-2">
-              <span className="text-[var(--color-text-muted)]">Range: </span>
+              <span className="text-[var(--color-text-muted)]">{t("Range:")}{" "}</span>
               <span className="font-mono">
                 {formatPriceSig(Number(config.start_price as number))} – {formatPriceSig(Number(config.end_price as number))}
               </span>
@@ -182,7 +183,7 @@ function ExecutorTooltip({
           )}
           {executor.close_type && !active && (
             <div className="col-span-2">
-              <span className="text-[var(--color-text-muted)]">Close: </span>
+              <span className="text-[var(--color-text-muted)]">{t("Close:")}{" "}</span>
               <span>{executor.close_type.replace(/_/g, " ")}</span>
             </div>
           )}
@@ -460,7 +461,7 @@ export function TradeBottomPane({
                   : "text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
               }`}
             >
-              Executors ({executors.length})
+              {t("Executors (")}{executors.length})
             </button>
             <button
               onClick={() => setTab("positions")}
@@ -470,7 +471,7 @@ export function TradeBottomPane({
                   : "text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
               }`}
             >
-              Positions ({positions.length})
+              {t("Positions (")}{positions.length})
               {isLoadingPositions && <Loader2 className="ml-1 inline h-3 w-3 animate-spin" />}
             </button>
           </div>
@@ -482,15 +483,15 @@ export function TradeBottomPane({
                 <thead className="sticky top-0 bg-[var(--color-surface)] z-[1]">
                   <tr className="border-b border-[var(--color-border)] text-left text-[10px] uppercase tracking-wider text-[var(--color-text-muted)]">
                     <th className="px-3 py-1.5 font-medium">ID</th>
-                    <th className="px-3 py-1.5 font-medium">Type</th>
-                    <th className="px-3 py-1.5 font-medium">Side</th>
-                    <SortTh col="status" current={sortCol} asc={sortAsc} onClick={handleSortClick}>Status</SortTh>
-                    <th className="px-3 py-1.5 font-medium text-right">Entry</th>
-                    <th className="px-3 py-1.5 font-medium text-right">Price</th>
-                    <SortTh col="pnl" current={sortCol} asc={sortAsc} onClick={handleSortClick} align="right">PnL</SortTh>
-                    <SortTh col="pnl_pct" current={sortCol} asc={sortAsc} onClick={handleSortClick} align="right">PnL%</SortTh>
-                    <SortTh col="volume" current={sortCol} asc={sortAsc} onClick={handleSortClick} align="right">Volume</SortTh>
-                    <SortTh col="age" current={sortCol} asc={sortAsc} onClick={handleSortClick} align="right">Age</SortTh>
+                    <th className="px-3 py-1.5 font-medium">{t("Type")}</th>
+                    <th className="px-3 py-1.5 font-medium">{t("Side")}</th>
+                    <SortTh col="status" current={sortCol} asc={sortAsc} onClick={handleSortClick}>{t("Status")}</SortTh>
+                    <th className="px-3 py-1.5 font-medium text-right">{t("Entry")}</th>
+                    <th className="px-3 py-1.5 font-medium text-right">{t("Price")}</th>
+                    <SortTh col="pnl" current={sortCol} asc={sortAsc} onClick={handleSortClick} align="right">{t("PnL")}</SortTh>
+                    <SortTh col="pnl_pct" current={sortCol} asc={sortAsc} onClick={handleSortClick} align="right">{t("PnL%")}</SortTh>
+                    <SortTh col="volume" current={sortCol} asc={sortAsc} onClick={handleSortClick} align="right">{t("Volume")}</SortTh>
+                    <SortTh col="age" current={sortCol} asc={sortAsc} onClick={handleSortClick} align="right">{t("Age")}</SortTh>
                     <th className="w-8" />
                   </tr>
                 </thead>
@@ -498,8 +499,7 @@ export function TradeBottomPane({
                   {sortedExecutors.length === 0 ? (
                     <tr>
                       <td colSpan={11} className="px-3 py-3 text-center text-[var(--color-text-muted)]">
-                        No executors for this pair
-                      </td>
+                        {t("No executors for this pair")}</td>
                     </tr>
                   ) : (
                     sortedExecutors.map((ex) => {
@@ -592,7 +592,7 @@ export function TradeBottomPane({
                                 onClick={() => handleStop(ex.id)}
                                 disabled={stopping}
                                 className="rounded p-0.5 text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-red)]/20 hover:text-[var(--color-red)] disabled:opacity-50"
-                                title="Stop executor"
+                                title={t("Stop executor")}
                               >
                                 {stopping ? (
                                   <Loader2 className="h-3 w-3 animate-spin" />
@@ -614,8 +614,7 @@ export function TradeBottomPane({
               <div className="space-y-1 p-2">
                 {positions.length === 0 ? (
                   <p className="py-3 text-center text-[var(--color-text-muted)]">
-                    No positions for this pair
-                  </p>
+                    {t("No positions for this pair")}</p>
                 ) : (
                   positions.map((pos, i) => {
                     const side = pos.position_side?.toLowerCase();
@@ -642,10 +641,9 @@ export function TradeBottomPane({
                             {pos.pool_scoped === false && (
                               <span
                                 className="rounded border border-[var(--color-border)] px-1 py-0.5 text-[9px] text-[var(--color-text-muted)]"
-                                title="Held from a swap, which the aggregator routed itself — this is a position in the pair, not in this pool."
+                                title={t("Held from a swap, which the aggregator routed itself — this is a position in the pair, not in this pool.")}
                               >
-                                any pool
-                              </span>
+                                {t("any pool")}</span>
                             )}
                             <div className="text-[11px]">
                               <span className="text-[var(--color-text)]">{Math.abs(pos.amount).toFixed(4)}</span>
@@ -658,7 +656,7 @@ export function TradeBottomPane({
                           <div className="flex items-center gap-3 text-[11px]">
                             {!isFlat && (
                               <span className="text-[var(--color-text-muted)]">
-                                Now: {formatPriceSig(pos.current_price)}
+                                {t("Now:")}{" "}{formatPriceSig(pos.current_price)}
                               </span>
                             )}
                             {pos.leverage > 1 && (
@@ -671,7 +669,7 @@ export function TradeBottomPane({
                               onClick={() => setConfirmClearPos(pos)}
                               disabled={isClearing}
                               className="rounded p-0.5 text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-red)]/20 hover:text-[var(--color-red)] disabled:opacity-50"
-                              title="Clear position"
+                              title={t("Clear position")}
                             >
                               {isClearing ? (
                                 <Loader2 className="h-3 w-3 animate-spin" />
@@ -683,12 +681,12 @@ export function TradeBottomPane({
                         </div>
                         <div className="mt-1 flex items-center gap-3 text-[10px] text-[var(--color-text-muted)]">
                           <span>
-                            Realized: <span className={`font-mono ${pnlTextClass(pos.realized_pnl)}`}>
+                            {t("Realized:")}{" "}<span className={`font-mono ${pnlTextClass(pos.realized_pnl)}`}>
                               {fmtPnl(pos.realized_pnl)}
                             </span>
                           </span>
                           <span>
-                            Fees: <span className="font-mono">${Math.abs(pos.cum_fees).toFixed(2)}</span>
+                            {t("Fees:")}{" "}<span className="font-mono">${Math.abs(pos.cum_fees).toFixed(2)}</span>
                           </span>
                           {pos.executor_count > 0 && (
                             <span>{pos.executor_count} executor{pos.executor_count !== 1 ? "s" : ""}</span>
@@ -717,7 +715,7 @@ export function TradeBottomPane({
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
           <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-xl">
             <p className="text-sm text-[var(--color-text)]">
-              Stop executor <span className="font-mono text-[var(--color-text-muted)]">{confirmStopId.slice(0, 8)}</span>?
+              {t("Stop executor")}{" "}<span className="font-mono text-[var(--color-text-muted)]">{confirmStopId.slice(0, 8)}</span>?
             </p>
             <label className="mt-3 flex cursor-pointer select-none items-center gap-2">
               <input
@@ -736,14 +734,12 @@ export function TradeBottomPane({
                 onClick={() => setConfirmStopId(null)}
                 className="rounded px-3 py-1.5 text-xs text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)]"
               >
-                Cancel
-              </button>
+                {t("Cancel")}</button>
               <button
                 onClick={() => stopMutation.mutate({ id: confirmStopId, keep: keepPosition })}
                 className="rounded bg-[var(--color-red)] px-3 py-1.5 text-xs font-medium text-white hover:brightness-110"
               >
-                Stop
-              </button>
+                {t("Stop")}</button>
             </div>
           </div>
         </div>
@@ -754,25 +750,22 @@ export function TradeBottomPane({
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
           <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 shadow-xl">
             <p className="text-sm text-[var(--color-text)]">
-              Clear <span className="font-medium">{confirmClearPos.position_side?.toUpperCase()}</span> position on{" "}
+              {t("Clear")}{" "}<span className="font-medium">{confirmClearPos.position_side?.toUpperCase()}</span> {t("position on")}{" "}
               <span className="font-mono text-[var(--color-text-muted)]">{confirmClearPos.trading_pair}</span>?
             </p>
             <p className="mt-1 text-[11px] text-[var(--color-text-muted)]">
-              This resets the tracked position state. It does not close the position on the exchange.
-            </p>
+              {t("This resets the tracked position state. It does not close the position on the exchange.")}</p>
             <div className="mt-3 flex justify-end gap-2">
               <button
                 onClick={() => setConfirmClearPos(null)}
                 className="rounded px-3 py-1.5 text-xs text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)]"
               >
-                Cancel
-              </button>
+                {t("Cancel")}</button>
               <button
                 onClick={() => clearPositionMutation.mutate(confirmClearPos)}
                 className="rounded bg-[var(--color-red)] px-3 py-1.5 text-xs font-medium text-white hover:brightness-110"
               >
-                Clear
-              </button>
+                {t("Clear")}</button>
             </div>
           </div>
         </div>

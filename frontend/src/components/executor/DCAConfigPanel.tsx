@@ -13,6 +13,7 @@ import {
 } from "./fields";
 import type { ExecutorValidation } from "./types";
 import { dcaBreakEven, levelSlot, type DCAAction, type DCAState } from "./dca-config";
+import { t } from "@/lib/i18n";
 
 // ── Panel Component ──
 
@@ -54,7 +55,7 @@ export function DCAConfigPanel({ state, dispatch, validation, currentPrice, isSp
       {/* DCA Levels */}
       <div className="space-y-2.5">
         <div className="flex items-center justify-between">
-          <SectionHeader>DCA Levels</SectionHeader>
+          <SectionHeader>{t("DCA Levels")}</SectionHeader>
           <div className="flex items-center gap-1">
             {currentPrice && currentPrice > 0 && (
               <button
@@ -62,16 +63,14 @@ export function DCAConfigPanel({ state, dispatch, validation, currentPrice, isSp
                 className="flex items-center gap-1 rounded border border-[var(--color-border)] bg-[var(--color-surface)] px-2 py-1 text-[10px] text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-surface-hover)]"
               >
                 <Sparkles className="h-3 w-3" />
-                Auto-fill
-              </button>
+                {t("Auto-fill")}</button>
             )}
             <button
               onClick={() => dispatch({ type: "ADD_LEVEL" })}
               className="flex items-center gap-1 rounded border border-[var(--color-border)] bg-[var(--color-surface)] px-2 py-1 text-[10px] text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-surface-hover)]"
             >
               <Plus className="h-3 w-3" />
-              Add
-            </button>
+              {t("Add")}</button>
           </div>
         </div>
 
@@ -79,8 +78,7 @@ export function DCAConfigPanel({ state, dispatch, validation, currentPrice, isSp
           <div key={i} className="flex items-end gap-1.5">
             <div className="flex-1">
               <label className="mb-1 block text-[10px] text-[var(--color-text-muted)]">
-                Level {i + 1} Amount
-              </label>
+                {t("Level")}{" "}{i + 1} {t("Amount")}</label>
               <input
                 type="number"
                 step="10"
@@ -93,7 +91,7 @@ export function DCAConfigPanel({ state, dispatch, validation, currentPrice, isSp
             </div>
             <div className="flex-1">
               <PriceField
-                label="Price"
+                label={t("Price")}
                 value={state.prices[i]}
                 field={levelSlot(i)}
                 activePickField={state.activePickField}
@@ -113,18 +111,18 @@ export function DCAConfigPanel({ state, dispatch, validation, currentPrice, isSp
         ))}
 
         <p className="rounded bg-[var(--color-bg)] px-2.5 py-1.5 text-[10px] text-[var(--color-text-muted)]">
-          {state.amounts_quote.length} levels &middot; Total: ${totalQuote.toFixed(2)}
-          {bep > 0 && <> &middot; BEP: <span className="font-mono text-amber-400">{bep.toPrecision(6)}</span></>}
+          {state.amounts_quote.length} {t("levels &middot; Total: $")}{totalQuote.toFixed(2)}
+          {bep > 0 && <> {t("&middot; BEP:")}{" "}<span className="font-mono text-amber-400">{bep.toPrecision(6)}</span></>}
         </p>
         <LeverageField value={state.leverage} field="leverage" dispatch={dispatch} isSpot={isSpot} />
       </div>
 
       {/* Exit Strategy */}
       <div className="space-y-2.5">
-        <SectionHeader>Exit Strategy</SectionHeader>
-        <NumberField label="Take Profit" value={state.take_profit} field="take_profit" dispatch={dispatch} step={0.01} isPercent suffix="%" />
-        <NumberField label="Stop Loss" value={state.stop_loss} field="stop_loss" dispatch={dispatch} step={0.01} isPercent suffix="%" />
-        <NumberField label="Time Limit (0 = disabled)" value={state.time_limit} field="time_limit" dispatch={dispatch} step={60} min={0} suffix="sec" />
+        <SectionHeader>{t("Exit Strategy")}</SectionHeader>
+        <NumberField label={t("Take Profit")} value={state.take_profit} field="take_profit" dispatch={dispatch} step={0.01} isPercent suffix="%" />
+        <NumberField label={t("Stop Loss")} value={state.stop_loss} field="stop_loss" dispatch={dispatch} step={0.01} isPercent suffix="%" />
+        <NumberField label={t("Time Limit (0 = disabled)")} value={state.time_limit} field="time_limit" dispatch={dispatch} step={60} min={0} suffix="sec" />
       </div>
 
       {/* Mode & Advanced */}
@@ -132,12 +130,12 @@ export function DCAConfigPanel({ state, dispatch, validation, currentPrice, isSp
         open={state.showAdvanced}
         onToggle={() => dispatch({ type: "SET_FIELD", field: "showAdvanced", value: !state.showAdvanced })}
       >
-        <SelectField label="Mode" value={state.mode} field="mode" dispatch={dispatch} options={MODE_OPTIONS} />
-        <NumberField label="Activation Bounds (0 = disabled)" value={state.activation_bounds} field="activation_bounds" dispatch={dispatch} step={0.01} isPercent suffix="%" />
+        <SelectField label={t("Mode")} value={state.mode} field="mode" dispatch={dispatch} options={MODE_OPTIONS} />
+        <NumberField label={t("Activation Bounds (0 = disabled)")} value={state.activation_bounds} field="activation_bounds" dispatch={dispatch} step={0.01} isPercent suffix="%" />
         <div className="space-y-2.5">
-          <SectionHeader>Trailing Stop</SectionHeader>
-          <NumberField label="Activation Price" value={state.trailing_stop_activation_price} field="trailing_stop_activation_price" dispatch={dispatch} step={0.01} isPercent suffix="%" />
-          <NumberField label="Trailing Delta" value={state.trailing_stop_trailing_delta} field="trailing_stop_trailing_delta" dispatch={dispatch} step={0.01} isPercent suffix="%" />
+          <SectionHeader>{t("Trailing Stop")}</SectionHeader>
+          <NumberField label={t("Activation Price")} value={state.trailing_stop_activation_price} field="trailing_stop_activation_price" dispatch={dispatch} step={0.01} isPercent suffix="%" />
+          <NumberField label={t("Trailing Delta")} value={state.trailing_stop_trailing_delta} field="trailing_stop_trailing_delta" dispatch={dispatch} step={0.01} isPercent suffix="%" />
         </div>
       </AdvancedSection>
 

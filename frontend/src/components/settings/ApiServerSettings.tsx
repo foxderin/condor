@@ -10,6 +10,7 @@ import {
   type ApiClientConfigUpdate,
   type ApiUpgradeStatus,
 } from "@/lib/api";
+import { t } from "@/lib/i18n";
 
 /**
  * Settings → Hummingbot API: what the navbar-selected server runs, the client defaults
@@ -82,14 +83,14 @@ function VersionCard({ server }: { server: string }) {
 
   if (isLoading) {
     return (
-      <Card title="Version">
+      <Card title={t("Version")}>
         <Loader2 className="h-4 w-4 animate-spin text-[var(--color-text-muted)]" />
       </Card>
     );
   }
   if (error) {
     return (
-      <Card title="Version">
+      <Card title={t("Version")}>
         <Problem error={error} />
       </Card>
     );
@@ -103,28 +104,26 @@ function VersionCard({ server }: { server: string }) {
   const shortDigest = digest ? digest.slice(digest.indexOf("sha256:")).slice(0, 19) : null;
 
   return (
-    <Card title="Version">
+    <Card title={t("Version")}>
       <div className="divide-y divide-[var(--color-border)]">
         <Row label="hummingbot-api">{data.api_version}</Row>
         <Row label="hummingbot">{data.hummingbot_version ?? "not installed"}</Row>
-        <Row label="Image">{container?.image ?? "unknown"}</Row>
-        <Row label="Digest">{shortDigest ?? "locally built"}</Row>
+        <Row label={t("Image")}>{container?.image ?? "unknown"}</Row>
+        <Row label={t("Digest")}>{shortDigest ?? "locally built"}</Row>
         {container?.compose_project && (
-          <Row label="Compose project">{container.compose_project}</Row>
+          <Row label={t("Compose project")}>{container.compose_project}</Row>
         )}
       </div>
 
       {data.pinned === true && (
         <div className="mt-3 flex items-start gap-2 rounded-md border border-amber-500/30 p-2 text-xs text-amber-500">
           <Lock className="mt-0.5 h-3.5 w-3.5 shrink-0" />
-          <span>Pinned{data.pinned_reason ? ` — ${data.pinned_reason}` : ""}</span>
+          <span>{t("Pinned")}{data.pinned_reason ? ` — ${data.pinned_reason}` : ""}</span>
         </div>
       )}
       {data.pinned === null && (
         <p className="mt-3 text-xs text-[var(--color-text-muted)]">
-          Could not reach the Docker daemon on this server, so whether the image is pinned
-          is unknown.
-        </p>
+          {t("Could not reach the Docker daemon on this server, so whether the image is pinned is unknown.")}</p>
       )}
     </Card>
   );
@@ -168,14 +167,14 @@ function BotDefaultsCard({ server }: { server: string }) {
 
   if (isLoading) {
     return (
-      <Card title="Bot defaults">
+      <Card title={t("Bot defaults")}>
         <Loader2 className="h-4 w-4 animate-spin text-[var(--color-text-muted)]" />
       </Card>
     );
   }
   if (error) {
     return (
-      <Card title="Bot defaults">
+      <Card title={t("Bot defaults")}>
         <Problem error={error} />
       </Card>
     );
@@ -209,16 +208,16 @@ function BotDefaultsCard({ server }: { server: string }) {
     "w-full rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-2 py-1.5 text-sm text-[var(--color-text)] disabled:cursor-not-allowed disabled:opacity-50";
 
   return (
-    <Card title="Bot defaults">
+    <Card title={t("Bot defaults")}>
       <div className="space-y-3">
         <label className="block">
-          <span className="text-xs text-[var(--color-text-muted)]">Rate oracle source</span>
+          <span className="text-xs text-[var(--color-text-muted)]">{t("Rate oracle source")}</span>
           <select
             value={source}
             onChange={(e) => edit({ source: e.target.value })}
             disabled={!isOwner}
             title={isOwner ? undefined : OWNER_ONLY_HINT}
-            aria-label="Rate oracle source"
+            aria-label={t("Rate oracle source")}
             className={field}
           >
             {/* The server's own list: which sources exist is whatever its bundled
@@ -237,24 +236,24 @@ function BotDefaultsCard({ server }: { server: string }) {
 
         <div className="grid grid-cols-2 gap-3">
           <label className="block">
-            <span className="text-xs text-[var(--color-text-muted)]">Global token</span>
+            <span className="text-xs text-[var(--color-text-muted)]">{t("Global token")}</span>
             <input
               value={tokenName}
               onChange={(e) => edit({ tokenName: e.target.value })}
               disabled={!isOwner}
               title={isOwner ? undefined : OWNER_ONLY_HINT}
-              aria-label="Global token"
+              aria-label={t("Global token")}
               className={field}
             />
           </label>
           <label className="block">
-            <span className="text-xs text-[var(--color-text-muted)]">Token symbol</span>
+            <span className="text-xs text-[var(--color-text-muted)]">{t("Token symbol")}</span>
             <input
               value={tokenSymbol}
               onChange={(e) => edit({ tokenSymbol: e.target.value })}
               disabled={!isOwner}
               title={isOwner ? undefined : OWNER_ONLY_HINT}
-              aria-label="Token symbol"
+              aria-label={t("Token symbol")}
               className={field}
             />
           </label>
@@ -262,8 +261,7 @@ function BotDefaultsCard({ server }: { server: string }) {
 
         <label className="block">
           <span className="text-xs text-[var(--color-text-muted)]">
-            Rate limit share (%)
-          </span>
+            {t("Rate limit share (%)")}</span>
           <input
             type="number"
             min={1}
@@ -272,21 +270,18 @@ function BotDefaultsCard({ server }: { server: string }) {
             onChange={(e) => edit({ sharePct: e.target.value })}
             disabled={!isOwner}
             title={isOwner ? undefined : OWNER_ONLY_HINT}
-            aria-label="Rate limit share (%)"
+            aria-label={t("Rate limit share (%)")}
             className={field}
           />
           {!shareValid && sharePct !== "" && (
             <span className="text-xs text-[var(--color-red)]">
-              Must be more than 0 and at most 100.
-            </span>
+              {t("Must be more than 0 and at most 100.")}</span>
           )}
         </label>
 
         <div className="flex items-center justify-between gap-3 pt-1">
           <p className="text-xs text-[var(--color-text-muted)]">
-            Applies to bots deployed after saving. Running bots keep their current
-            settings.
-          </p>
+            {t("Applies to bots deployed after saving. Running bots keep their current settings.")}</p>
           <button
             onClick={() => saveMut.mutate(changes)}
             disabled={!canSave || saveMut.isPending}
@@ -298,8 +293,7 @@ function BotDefaultsCard({ server }: { server: string }) {
             ) : (
               <Save className="h-3 w-3" />
             )}
-            Save
-          </button>
+            {t("Save")}</button>
         </div>
 
         {!isOwner && (
@@ -381,14 +375,14 @@ function UpgradeCard({ server }: { server: string }) {
 
   if (preflight.isLoading) {
     return (
-      <Card title="Upgrade">
+      <Card title={t("Upgrade")}>
         <Loader2 className="h-4 w-4 animate-spin text-[var(--color-text-muted)]" />
       </Card>
     );
   }
   if (preflight.error) {
     return (
-      <Card title="Upgrade">
+      <Card title={t("Upgrade")}>
         <Problem error={preflight.error} />
       </Card>
     );
@@ -403,10 +397,10 @@ function UpgradeCard({ server }: { server: string }) {
   const canPress = isOwner && info.can_upgrade && run === null;
 
   return (
-    <Card title="Upgrade">
+    <Card title={t("Upgrade")}>
       {info.can_upgrade ? (
         <p className="text-sm text-[var(--color-text)]">
-          Update available for <span className="font-mono text-xs">{info.image_ref}</span>.
+          {t("Update available for")}{" "}<span className="font-mono text-xs">{info.image_ref}</span>.
         </p>
       ) : (
         <p className="text-xs text-[var(--color-text-muted)]">{blocked}</p>
@@ -436,8 +430,7 @@ function UpgradeCard({ server }: { server: string }) {
               onClick={() => setRunServer(null)}
               className="mt-2 text-[var(--color-text-muted)] underline"
             >
-              Dismiss
-            </button>
+              {t("Dismiss")}</button>
           )}
         </div>
       )}
@@ -445,9 +438,7 @@ function UpgradeCard({ server }: { server: string }) {
       {!confirming && (
         <div className="mt-3 flex items-center justify-between gap-3">
           <p className="text-xs text-[var(--color-text-muted)]">
-            {bots} bot{bots === 1 ? "" : "s"} keep running; only the API container is
-            recreated.
-          </p>
+            {bots} bot{bots === 1 ? "" : "s"} {t("keep running; only the API container is recreated.")}</p>
           <button
             onClick={() => setConfirming(true)}
             disabled={!canPress}
@@ -455,39 +446,32 @@ function UpgradeCard({ server }: { server: string }) {
             className="flex shrink-0 items-center gap-1.5 rounded-md bg-[var(--color-primary)] px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-[var(--color-primary)]/80 disabled:cursor-not-allowed disabled:opacity-50"
           >
             <ArrowUpCircle className="h-3 w-3" />
-            Upgrade
-          </button>
+            {t("Upgrade")}</button>
         </div>
       )}
 
       {confirming && (
         <div className="mt-3 space-y-2 rounded-md border border-amber-500/30 p-3 text-xs">
           <p className="text-[var(--color-text)]">
-            Pull <span className="font-mono">{info.image_ref}</span> on{" "}
-            <span className="font-medium">{server}</span> and recreate its API container.
-          </p>
+            {t("Pull")}{" "}<span className="font-mono">{info.image_ref}</span> on{" "}
+            <span className="font-medium">{server}</span> {t("and recreate its API container.")}</p>
           {needsAck ? (
             <label className="flex items-start gap-2 text-[var(--color-red)]">
               <input
                 type="checkbox"
                 checked={acknowledged}
                 onChange={(e) => setAcknowledged(e.target.checked)}
-                aria-label="Acknowledge executor loss"
+                aria-label={t("Acknowledge executor loss")}
                 className="mt-0.5"
               />
               <span>
-                {executors} running executor{executors === 1 ? "" : "s"} will be closed as
-                SYSTEM_CLEANUP and not restored.
-              </span>
+                {executors} {t("running executor")}{executors === 1 ? "" : "s"} {t("will be closed as SYSTEM_CLEANUP and not restored.")}</span>
             </label>
           ) : (
-            <p className="text-[var(--color-text-muted)]">No executors are running.</p>
+            <p className="text-[var(--color-text-muted)]">{t("No executors are running.")}</p>
           )}
           <p className="text-[var(--color-text-muted)]">
-            {bots} bot{bots === 1 ? "" : "s"} keep running. If the server does not come back
-            within 3 minutes, check <code>docker compose logs hummingbot-api</code> over SSH
-            — there is no rollback.
-          </p>
+            {bots} bot{bots === 1 ? "" : "s"} {t("keep running. If the server does not come back within 3 minutes, check")}<code>{t("docker compose logs hummingbot-api")}</code> {t("over SSH — there is no rollback.")}</p>
           <div className="flex items-center gap-2 pt-1">
             <button
               onClick={() => startMut.mutate()}
@@ -495,8 +479,7 @@ function UpgradeCard({ server }: { server: string }) {
               className="flex items-center gap-1.5 rounded-md bg-[var(--color-red)] px-3 py-1.5 font-medium text-white disabled:cursor-not-allowed disabled:opacity-50"
             >
               {startMut.isPending && <Loader2 className="h-3 w-3 animate-spin" />}
-              Upgrade now
-            </button>
+              {t("Upgrade now")}</button>
             <button
               onClick={() => {
                 setConfirming(false);
@@ -504,8 +487,7 @@ function UpgradeCard({ server }: { server: string }) {
               }}
               className="text-[var(--color-text-muted)] underline"
             >
-              Cancel
-            </button>
+              {t("Cancel")}</button>
           </div>
           {startMut.error != null && <Problem error={startMut.error} />}
         </div>
@@ -529,7 +511,7 @@ function MarketDataCard({ server }: { server: string }) {
   if (entries.length === 0) return null;
 
   return (
-    <Card title="Market data">
+    <Card title={t("Market data")}>
       <div className="divide-y divide-[var(--color-border)]">
         {entries.map(([key, value]) => (
           <Row key={key} label={humanize(key)}>
@@ -538,9 +520,7 @@ function MarketDataCard({ server }: { server: string }) {
         ))}
       </div>
       <p className="mt-3 text-xs text-[var(--color-text-muted)]">
-        Read-only. Set in the server&apos;s <code>.env</code> as <code>MARKET_DATA_*</code>;
-        takes effect on API restart.
-      </p>
+        {t("Read-only. Set in the server&apos;s")}{" "}<code>.env</code> as <code>{t("MARKET_DATA_*")}</code>{t("; takes effect on API restart.")}</p>
     </Card>
   );
 }
@@ -551,8 +531,7 @@ export function ApiServerSettings() {
   if (!server) {
     return (
       <p className="py-8 text-center text-sm text-[var(--color-text-muted)]">
-        Select a server in the top bar.
-      </p>
+        {t("Select a server in the top bar.")}</p>
     );
   }
 

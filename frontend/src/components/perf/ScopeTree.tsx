@@ -7,6 +7,7 @@ import { agentColor } from "@/lib/agentColor";
 import { formatCurrencyPnl, formatCurrencyVolume, pnlColor, shortBotName } from "@/lib/formatters";
 import type { ConvertQuote, PerfNode } from "@/lib/perf-tree";
 import { agentOfNodeId, foldLeaves, TOP_LEVEL_KINDS } from "@/lib/perf-tree";
+import { t } from "@/lib/i18n";
 
 /**
  * The status marker, at one size for every row.
@@ -401,8 +402,7 @@ export function ScopeTree({
   if (root.children.length === 0) {
     return compact ? null : (
       <p className="px-3 py-4 text-center text-[10px] text-[var(--color-text-muted)]">
-        Nothing in scope.
-      </p>
+        {t("Nothing in scope.")}</p>
     );
   }
 

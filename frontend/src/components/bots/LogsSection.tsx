@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import type { BotLogEntry } from "@/lib/api";
+import { t } from "@/lib/i18n";
 
 function formatLogTime(ts?: number): string {
   if (!ts) return "";
@@ -26,7 +27,7 @@ export function LogsSection({ logs }: { logs: BotLogEntry[] }) {
 
   if (logs.length === 0) {
     return (
-      <p className="text-xs text-[var(--color-text-muted)] py-2">No logs available</p>
+      <p className="text-xs text-[var(--color-text-muted)] py-2">{t("No logs available")}</p>
     );
   }
 

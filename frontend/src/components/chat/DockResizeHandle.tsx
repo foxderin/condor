@@ -1,4 +1,5 @@
 import { useResizeDrag } from "@/hooks/useResizeDrag";
+import { t } from "@/lib/i18n";
 
 /**
  * The seam between the conversation and a dock, and the way to move it.
@@ -66,7 +67,7 @@ export function DockResizeHandle({
       onMouseDown={onMouseDown}
       onKeyDown={onKeyDown}
       onDoubleClick={() => onWidth(reset)}
-      title="Drag to resize — double-click to reset"
+      title={t("Drag to resize — double-click to reset")}
       className={`-ml-1 w-1.5 shrink-0 cursor-col-resize transition-colors hover:bg-[var(--color-primary)]/30 focus:outline-none focus-visible:bg-[var(--color-primary)]/30 ${
         isDragging ? "bg-[var(--color-primary)]/30" : ""
       }`}

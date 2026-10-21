@@ -17,6 +17,7 @@ import { tsToSeconds } from "@/lib/formatters";
 import { geckoIntervalForSpan } from "@/lib/gecko-candles";
 import { candlesQuery } from "@/lib/queryClient";
 import { getThemeColors } from "@/lib/theme-colors";
+import { t } from "@/lib/i18n";
 
 export interface SnapshotBubble {
   tick: number;
@@ -675,18 +676,17 @@ export function ExecutorChart({
         </p>
         <div className="flex items-center gap-2">
           {isLoading && (
-            <span className="text-[10px] text-[var(--color-text-muted)]">Loading...</span>
+            <span className="text-[10px] text-[var(--color-text-muted)]">{t("Loading...")}</span>
           )}
           {isError && (
-            <span className="text-[10px] text-red-400">Failed to load candles</span>
+            <span className="text-[10px] text-red-400">{t("Failed to load candles")}</span>
           )}
           {!isLoading && !isError && candles && candles.length === 0 && (
-            <span className="text-[10px] text-[var(--color-text-muted)]">No candle data</span>
+            <span className="text-[10px] text-[var(--color-text-muted)]">{t("No candle data")}</span>
           )}
           {overlays.length > 1 && (
             <span className="text-[10px] text-[var(--color-text-muted)]">
-              {overlays.length} executors overlaid
-            </span>
+              {overlays.length} {t("executors overlaid")}</span>
           )}
           <button
             onClick={toggleFullscreen}

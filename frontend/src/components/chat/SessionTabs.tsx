@@ -13,6 +13,7 @@ import { deriveAgentStatus } from "@/components/agent/agentStatus";
 import { AnchoredMenu } from "@/components/ui/AnchoredMenu";
 import type { ChatSlot } from "@/hooks/useChatSocket";
 import { CHAT_SLUG, type AgentSummary } from "@/lib/api";
+import { t } from "@/lib/i18n";
 
 /**
  * The live sessions, as tabs.
@@ -217,8 +218,8 @@ function NewChatTab({
         onClick={() => setOpen((v) => !v)}
         aria-haspopup="menu"
         aria-expanded={open}
-        aria-label="New chat"
-        title="New chat"
+        aria-label={t("New chat")}
+        title={t("New chat")}
         className={`flex shrink-0 items-center self-center rounded p-1 transition-colors ${
           open
             ? "bg-[var(--color-surface-hover)] text-[var(--color-text)]"
@@ -238,8 +239,7 @@ function NewChatTab({
         className="flex w-[236px] flex-col py-0.5"
       >
         <div className="px-2.5 pb-1 pt-1.5 text-[10px] font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
-          New chat with
-        </div>
+          {t("New chat with")}</div>
         <NewChatOption
           label={condor?.name || "Condor"}
           hint={condor?.description || "General trading assistant"}
@@ -289,7 +289,7 @@ function NewChatOption({
       {live && (
         <span
           className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400"
-          title="Loop running"
+          title={t("Loop running")}
         />
       )}
     </button>
@@ -377,13 +377,13 @@ function SessionTab({
       {needsApproval && (
         <AlertTriangle
           className="h-3 w-3 shrink-0 text-[var(--color-yellow)]"
-          aria-label="Waiting for your approval"
+          aria-label={t("Waiting for your approval")}
         />
       )}
       <span
         role="button"
         tabIndex={0}
-        aria-label="Close session"
+        aria-label={t("Close session")}
         onClick={(e) => {
           e.stopPropagation();
           onClose();

@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { CodeEditor } from "@/components/editor/CodeEditor";
 import { api } from "@/lib/api";
 import { configToYaml, parseYamlMapping } from "@/lib/configYaml";
+import { t } from "@/lib/i18n";
 
 /**
  * What a buffer that dropped top-level keys is refused with.
@@ -128,8 +129,7 @@ export function StrategyConfigEditor({
             onClick={() => edit(originalYaml)}
             className="flex items-center gap-1 text-[11px] text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text)]"
           >
-            <RotateCcw className="h-3 w-3" /> Reset
-          </button>
+            <RotateCcw className="h-3 w-3" /> {t("Reset")}</button>
         )}
         <button
           type="button"

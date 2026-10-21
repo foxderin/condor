@@ -33,6 +33,7 @@ import { useEscapeKey } from "@/hooks/useEscapeKey";
 import { useServer } from "@/hooks/useServer";
 import { api, type ControllerConfigSummary } from "@/lib/api";
 import { configToYaml, validateYamlMapping } from "@/lib/configYaml";
+import { t } from "@/lib/i18n";
 
 // ── Types ──
 
@@ -101,8 +102,7 @@ function ContextMenu({
           className="flex items-center gap-2 w-full px-3 py-1.5 text-left hover:bg-[var(--color-surface-hover)] text-[var(--color-text)]"
         >
           <Copy className="h-3 w-3" />
-          Clone
-        </button>
+          {t("Clone")}</button>
       )}
       {state.file.kind === "controller" && (
         <button
@@ -110,16 +110,14 @@ function ContextMenu({
           className="flex items-center gap-2 w-full px-3 py-1.5 text-left hover:bg-[var(--color-surface-hover)] text-[var(--color-text)]"
         >
           <Plus className="h-3 w-3" />
-          New Config
-        </button>
+          {t("New Config")}</button>
       )}
       <button
         onClick={() => { onDelete(state.file); onClose(); }}
         className="flex items-center gap-2 w-full px-3 py-1.5 text-left hover:bg-[var(--color-red)]/10 text-[var(--color-red)]"
       >
         <Trash2 className="h-3 w-3" />
-        Delete
-      </button>
+        {t("Delete")}</button>
     </div>
   );
 }
@@ -172,7 +170,7 @@ function FileTree({
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Search files..."
+          placeholder={t("Search files...")}
           className="w-full rounded border border-[var(--color-border)] bg-[var(--color-surface)] px-2 py-1 text-xs text-[var(--color-text)] placeholder-[var(--color-text-muted)]/50 outline-none focus:border-[var(--color-primary)]"
         />
       </div>
@@ -397,8 +395,7 @@ function EditorPane({
           {yamlError && (
             <span className="flex items-center gap-1 text-xs text-[var(--color-red)]">
               <AlertTriangle className="h-3 w-3" />
-              YAML error
-            </span>
+              {t("YAML error")}</span>
           )}
           {saveMutation.isError && (
             <span className="text-xs text-[var(--color-red)]">
@@ -408,7 +405,7 @@ function EditorPane({
           <button
             onClick={() => onDelete(tab.file)}
             className="p-1 rounded text-[var(--color-text-muted)] hover:text-[var(--color-red)] hover:bg-[var(--color-red)]/10 transition-colors"
-            title="Delete"
+            title={t("Delete")}
           >
             <Trash2 className="h-3.5 w-3.5" />
           </button>
@@ -418,8 +415,7 @@ function EditorPane({
               className="flex items-center gap-1 text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
             >
               <RotateCcw className="h-3 w-3" />
-              Reset
-            </button>
+              {t("Reset")}</button>
           )}
           {!tab.readOnly && (
             <button
@@ -477,12 +473,12 @@ function ModalShell({
       <div className="flex h-12 shrink-0 items-center justify-between border-b border-[var(--color-border)] bg-[var(--color-surface)] px-4">
         <div className="flex items-center gap-2">
           <TerminalSquare className="h-4 w-4 text-[var(--color-text-muted)]" />
-          <h2 className="text-sm font-semibold">Controllers &amp; configs</h2>
+          <h2 className="text-sm font-semibold">{t("Controllers &amp; configs")}</h2>
         </div>
         <button
           onClick={onClose}
           className="rounded p-1.5 text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)]"
-          title="Close (Esc)"
+          title={t("Close (Esc)")}
         >
           <X className="h-4 w-4" />
         </button>
@@ -698,7 +694,7 @@ export function EditorModal({ open, onClose }: { open: boolean; onClose: () => v
     return (
       <ModalShell open={open} onClose={onClose}>
         <div className="p-6">
-          <NoServerCard message="Select a server from the sidebar to edit controller configs." />
+          <NoServerCard message={t("Select a server from the sidebar to edit controller configs.")} />
         </div>
       </ModalShell>
     );
@@ -725,8 +721,7 @@ export function EditorModal({ open, onClose }: { open: boolean; onClose: () => v
           <div className="px-2 py-2 border-b border-[var(--color-border)]/50 space-y-1.5">
             <div className="flex items-center justify-between px-1">
               <span className="text-xs font-medium text-[var(--color-text-muted)] uppercase tracking-wider flex items-center gap-1">
-                Explorer
-                {hasDirtyTabs && (
+                {t("Explorer")}{hasDirtyTabs && (
                   <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-warning)]" />
                 )}
               </span>
@@ -734,14 +729,14 @@ export function EditorModal({ open, onClose }: { open: boolean; onClose: () => v
                 <button
                   onClick={() => setShowUpload(true)}
                   className="p-1 rounded hover:bg-[var(--color-surface-hover)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
-                  title="Upload file"
+                  title={t("Upload file")}
                 >
                   <Upload className="h-3.5 w-3.5" />
                 </button>
                 <button
                   onClick={() => setNewConfigTarget({})}
                   className="p-1 rounded hover:bg-[var(--color-surface-hover)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
-                  title="New config from template"
+                  title={t("New config from template")}
                 >
                   <Plus className="h-3.5 w-3.5" />
                 </button>
@@ -758,8 +753,7 @@ export function EditorModal({ open, onClose }: { open: boolean; onClose: () => v
                 }`}
               >
                 <FileText className="h-3 w-3" />
-                Configs
-              </button>
+                {t("Configs")}</button>
               <button
                 onClick={() => setExplorerView("controllers")}
                 className={`flex items-center gap-1 flex-1 justify-center rounded px-1.5 py-0.5 text-[10px] font-medium transition-colors ${
@@ -769,8 +763,7 @@ export function EditorModal({ open, onClose }: { open: boolean; onClose: () => v
                 }`}
               >
                 <Code2 className="h-3 w-3" />
-                Controllers
-              </button>
+                {t("Controllers")}</button>
             </div>
           </div>
           <FileTree
@@ -813,7 +806,7 @@ export function EditorModal({ open, onClose }: { open: boolean; onClose: () => v
                         ? "bg-[var(--color-primary)]/10 text-[var(--color-primary)]"
                         : "text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
                     }`}
-                    title="Toggle split view"
+                    title={t("Toggle split view")}
                   >
                     <SplitSquareHorizontal className="h-3.5 w-3.5" />
                   </button>
@@ -849,10 +842,9 @@ export function EditorModal({ open, onClose }: { open: boolean; onClose: () => v
             <div className="flex items-center justify-center h-full text-[var(--color-text-muted)]">
               <div className="text-center space-y-2">
                 <Code2 className="h-10 w-10 mx-auto opacity-40" />
-                <p className="text-sm">Select a file from the explorer</p>
+                <p className="text-sm">{t("Select a file from the explorer")}</p>
                 <p className="text-xs opacity-60">
-                  Controllers (.py) and Configs (.yml)
-                </p>
+                  {t("Controllers (.py) and Configs (.yml)")}</p>
               </div>
             </div>
           )}

@@ -19,6 +19,7 @@ import type {
   ChatAgentOption,
   CustomProvider,
 } from "@/lib/api";
+import { t } from "@/lib/i18n";
 
 /**
  * What the conversation runs on: the model that answers, and the server it
@@ -73,7 +74,7 @@ export function AgentWiring({
   return (
     <div className="flex min-w-0 items-center gap-1.5">
       <PickerField
-        label="Model"
+        label={t("Model")}
         icon={<Brain className="h-3 w-3 shrink-0" />}
         value={short}
         full={model}
@@ -96,7 +97,7 @@ export function AgentWiring({
           nothing to pick, only somewhere to go and change it. */}
       {pinned ? (
         <PickerField
-          label="Server"
+          label={t("Server")}
           icon={<Lock className="h-3 w-3 shrink-0" />}
           value={serverName}
           tone="pinned"
@@ -108,7 +109,7 @@ export function AgentWiring({
         />
       ) : (
         <PickerField
-          label="Server"
+          label={t("Server")}
           icon={<Server className="h-3 w-3 shrink-0" />}
           value={serverName || "None"}
           full={serverName}

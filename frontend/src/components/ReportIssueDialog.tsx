@@ -9,6 +9,7 @@ import { api } from "@/lib/api";
 import { areaForRoute, buildDiagnostics } from "@/lib/diagnostics";
 import { ISSUE_REPO, openIssueDraft, type IssueKind } from "@/lib/github-issue";
 import { AREAS, type Area } from "@/lib/page-context";
+import { t } from "@/lib/i18n";
 
 /**
  * "Report an issue" — writes a GitHub issue draft, does not file it.
@@ -94,14 +95,10 @@ export function ReportIssueDialog({
         className="max-h-full w-full max-w-lg overflow-y-auto rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className="text-lg font-semibold text-[var(--color-text)]">Report an issue</h2>
+        <h2 className="text-lg font-semibold text-[var(--color-text)]">{t("Report an issue")}</h2>
         <p className="mt-1 mb-4 text-xs text-[var(--color-text-muted)]">
-          Opens a prefilled issue on{" "}
-          <span className="font-mono">{ISSUE_REPO}</span> in a new tab. You review and
-          submit it under your own GitHub account — nothing is sent from here. Text
-          that looks like a key, token or password is masked on the way out, so the
-          form can differ slightly from what you typed.
-        </p>
+          {t("Opens a prefilled issue on")}{" "}
+          <span className="font-mono">{ISSUE_REPO}</span> {t("in a new tab. You review and submit it under your own GitHub account — nothing is sent from here. Text that looks like a key, token or password is masked on the way out, so the form can differ slightly from what you typed.")}</p>
 
         <div className="mb-4 flex gap-1 rounded-lg bg-[var(--color-bg)] p-1">
           {(["bug", "feature"] as const).map((k) => (
@@ -122,7 +119,7 @@ export function ReportIssueDialog({
         <div className="space-y-3">
           <div>
             <label className="mb-1 block text-xs text-[var(--color-text-muted)]">
-              Title <span className="text-[var(--color-red)]">*</span>
+              {t("Title")}{" "}<span className="text-[var(--color-red)]">*</span>
             </label>
             <input
               value={title}
@@ -137,8 +134,7 @@ export function ReportIssueDialog({
 
           <div>
             <label className="mb-1 block text-xs text-[var(--color-text-muted)]">
-              Area
-            </label>
+              {t("Area")}</label>
             <select
               value={effectiveArea}
               onChange={(e) => setArea(e.target.value as Area)}
@@ -151,8 +147,7 @@ export function ReportIssueDialog({
               ))}
             </select>
             <p className="mt-1 text-[10px] text-[var(--color-text-muted)]/70">
-              Preselected from the page you were on.
-            </p>
+              {t("Preselected from the page you were on.")}</p>
           </div>
 
           <div>
@@ -197,13 +192,11 @@ export function ReportIssueDialog({
                 className="mt-0.5 accent-[var(--color-primary)]"
               />
               <span className="text-xs text-[var(--color-text)]">
-                Attach diagnostics
-                <span className="block text-[10px] text-[var(--color-text-muted)]">
+                {t("Attach diagnostics")}<span className="block text-[10px] text-[var(--color-text-muted)]">
                   {isBug
                     ? "Build version, page, live-data status, failing requests and recent console errors."
                     : "Build version and the page you were on — nothing else."}{" "}
-                  Becomes part of a public issue — read it first.
-                </span>
+                  {t("Becomes part of a public issue — read it first.")}</span>
               </span>
             </label>
 
@@ -218,8 +211,7 @@ export function ReportIssueDialog({
                   ) : (
                     <ChevronRight className="h-3 w-3" />
                   )}
-                  {showDiagnostics ? "Hide" : "Show"} what will be attached
-                </button>
+                  {showDiagnostics ? "Hide" : "Show"} {t("what will be attached")}</button>
                 {showDiagnostics && (
                   <pre className="mt-2 max-h-40 overflow-auto whitespace-pre-wrap break-all rounded bg-[var(--color-surface)] p-2 font-mono text-[10px] text-[var(--color-text-muted)]">
                     {diagnostics}
@@ -235,15 +227,13 @@ export function ReportIssueDialog({
             onClick={onClose}
             className="rounded-lg px-4 py-2 text-sm text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)]"
           >
-            Cancel
-          </button>
+            {t("Cancel")}</button>
           <button
             onClick={submit}
             disabled={!canSubmit}
             className="flex items-center gap-1.5 rounded-lg bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-40"
           >
-            Continue on GitHub
-            <ExternalLink className="h-3.5 w-3.5" />
+            {t("Continue on GitHub")}<ExternalLink className="h-3.5 w-3.5" />
           </button>
         </div>
       </div>

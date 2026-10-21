@@ -16,6 +16,7 @@ import { venuesQueryKey } from "@/components/market/useVenues";
 import { useServer } from "@/hooks/useServer";
 import { OWNER_ONLY_HINT, useServerPermission } from "@/hooks/useServerPermission";
 import { api } from "@/lib/api";
+import { t } from "@/lib/i18n";
 
 const IMAGE_OPTIONS = [
   { label: "Development", value: "hummingbot/gateway:development" },
@@ -77,14 +78,13 @@ function NetworkConfigEditor({ server, networkId }: { server: string; networkId:
   if (isLoading) {
     return (
       <div className="flex items-center gap-2 p-3 text-xs text-[var(--color-text-muted)]">
-        <Loader2 className="h-3 w-3 animate-spin" /> Loading config...
-      </div>
+        <Loader2 className="h-3 w-3 animate-spin" /> {t("Loading config...")}</div>
     );
   }
   if (error || !data) {
     return (
       <p className="p-3 text-xs text-[var(--color-red)]">
-        Failed to load config{error ? `: ${(error as Error).message}` : ""}
+        {t("Failed to load config")}{error ? `: ${(error as Error).message}` : ""}
       </p>
     );
   }
@@ -184,20 +184,18 @@ function NetworkConfigEditor({ server, networkId }: { server: string; networkId:
           className="flex items-center gap-1.5 rounded-md bg-[var(--color-primary)] px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-[var(--color-primary)]/80 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {saveMut.isPending ? <Loader2 className="h-3 w-3 animate-spin" /> : <Check className="h-3 w-3" />}
-          Save {changed.length > 0 ? `(${changed.length})` : ""}
+          {t("Save")}{" "}{changed.length > 0 ? `(${changed.length})` : ""}
         </button>
         {changed.length > 0 && (
           <button
             onClick={() => setDraft({})}
             className="rounded-md px-2 py-1.5 text-xs text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)]"
           >
-            Discard
-          </button>
+            {t("Discard")}</button>
         )}
         {saveMut.isSuccess && changed.length === 0 && (
           <span className="flex items-center gap-1 text-xs text-emerald-400">
-            <Check className="h-3 w-3" /> Saved
-          </span>
+            <Check className="h-3 w-3" /> {t("Saved")}</span>
         )}
         {saveMut.error && (
           <span className="text-xs text-[var(--color-red)]">{saveMut.error.message}</span>
@@ -228,7 +226,7 @@ function GatewayNetworks({ server, running }: { server: string; running: boolean
       >
         <div className="flex items-center gap-2">
           <Globe className="h-4 w-4" />
-          <span className="font-medium">Networks & RPC</span>
+          <span className="font-medium">{t("Networks & RPC")}</span>
         </div>
         {open ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
       </button>
@@ -236,12 +234,10 @@ function GatewayNetworks({ server, running }: { server: string; running: boolean
         <div className="border-t border-[var(--color-border)] p-3 space-y-3">
           {!running ? (
             <p className="text-xs text-[var(--color-text-muted)]">
-              Start the Gateway to view and edit network configuration.
-            </p>
+              {t("Start the Gateway to view and edit network configuration.")}</p>
           ) : isLoading ? (
             <div className="flex items-center gap-2 text-xs text-[var(--color-text-muted)]">
-              <Loader2 className="h-3 w-3 animate-spin" /> Loading networks...
-            </div>
+              <Loader2 className="h-3 w-3 animate-spin" /> {t("Loading networks...")}</div>
           ) : error ? (
             <p className="text-xs text-[var(--color-red)]">{(error as Error).message}</p>
           ) : (
@@ -391,8 +387,7 @@ export function GatewaySettings() {
   if (!server) {
     return (
       <p className="py-8 text-center text-sm text-[var(--color-text-muted)]">
-        Select a server first.
-      </p>
+        {t("Select a server first.")}</p>
     );
   }
 
@@ -416,10 +411,10 @@ export function GatewaySettings() {
             />
             <div>
               <span className="text-sm font-medium text-[var(--color-text)]">
-                Gateway {isLoading ? "..." : running ? "Running" : "Stopped"}
+                {t("Gateway")}{" "}{isLoading ? "..." : running ? "Running" : "Stopped"}
               </span>
               <p className="text-xs text-[var(--color-text-muted)]">
-                Server: {server}
+                {t("Server:")}{" "}{server}
               </p>
             </div>
           </div>
@@ -434,8 +429,7 @@ export function GatewaySettings() {
                   className="flex items-center gap-1.5 rounded-md border border-[var(--color-border)] px-3 py-1.5 text-xs font-medium text-[var(--color-text)] transition-colors hover:bg-[var(--color-surface-hover)] disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {restartMut.isPending ? <Loader2 className="h-3 w-3 animate-spin" /> : <RefreshCw className="h-3 w-3" />}
-                  Restart
-                </button>
+                  {t("Restart")}</button>
                 {confirmStop ? (
                   <div className="flex items-center gap-1">
                     <button
@@ -450,8 +444,7 @@ export function GatewaySettings() {
                       onClick={() => setConfirmStop(false)}
                       className="rounded-md px-2 py-1.5 text-xs text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)]"
                     >
-                      Cancel
-                    </button>
+                      {t("Cancel")}</button>
                   </div>
                 ) : (
                   <button
@@ -460,8 +453,7 @@ export function GatewaySettings() {
                     title={isOwner ? undefined : OWNER_ONLY_HINT}
                     className="flex items-center gap-1.5 rounded-md border border-red-500/30 px-3 py-1.5 text-xs font-medium text-[var(--color-red)] transition-colors hover:bg-red-500/10 disabled:cursor-not-allowed disabled:opacity-50"
                   >
-                    <Square className="h-3 w-3" /> Stop
-                  </button>
+                    <Square className="h-3 w-3" /> {t("Stop")}</button>
                 )}
               </>
             ) : (
@@ -469,8 +461,7 @@ export function GatewaySettings() {
                 onClick={() => setShowDeploy(!showDeploy)}
                 className="flex items-center gap-1.5 rounded-md bg-[var(--color-primary)] px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-[var(--color-primary)]/80"
               >
-                <Play className="h-3 w-3" /> Deploy
-              </button>
+                <Play className="h-3 w-3" /> {t("Deploy")}</button>
             )}
           </div>
         </div>
@@ -480,7 +471,7 @@ export function GatewaySettings() {
           <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-[var(--color-border)] pt-3">
             {status.image && (
               <div className="flex items-center gap-1.5 text-xs text-[var(--color-text-muted)]">
-                <span className="text-[var(--color-text-muted)]/60">Image:</span>
+                <span className="text-[var(--color-text-muted)]/60">{t("Image:")}</span>
                 <code className="rounded bg-[var(--color-bg)] px-1.5 py-0.5 font-mono text-[var(--color-text)]">
                   {status.image}
                 </code>
@@ -488,7 +479,7 @@ export function GatewaySettings() {
             )}
             {status.created_at && (
               <div className="text-xs text-[var(--color-text-muted)]">
-                <span className="text-[var(--color-text-muted)]/60">Created: </span>
+                <span className="text-[var(--color-text-muted)]/60">{t("Created:")}{" "}</span>
                 {formatRelativeTime(status.created_at)}
               </div>
             )}
@@ -514,7 +505,7 @@ export function GatewaySettings() {
         >
           <div className="flex items-center gap-2">
             <Download className="h-4 w-4" />
-            <span className="font-medium">Pull Image</span>
+            <span className="font-medium">{t("Pull Image")}</span>
             {pulling && (
               <span className="flex items-center gap-1 text-xs text-[var(--color-primary)]">
                 <Loader2 className="h-3 w-3 animate-spin" /> pulling...
@@ -549,8 +540,7 @@ export function GatewaySettings() {
                     : "border-[var(--color-border)] text-[var(--color-text-muted)] hover:border-[var(--color-border-hover)]"
                 } disabled:opacity-50`}
               >
-                Custom
-              </button>
+                {t("Custom")}</button>
               {pullImage !== "custom" && (
                 <button
                   onClick={() => pullMut.mutate()}
@@ -559,8 +549,7 @@ export function GatewaySettings() {
                   className="flex items-center gap-1.5 rounded-md bg-[var(--color-primary)] px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-[var(--color-primary)]/80 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {pulling ? <Loader2 className="h-3 w-3 animate-spin" /> : <Download className="h-3 w-3" />}
-                  Pull
-                </button>
+                  {t("Pull")}</button>
               )}
             </div>
             {pullImage === "custom" && (
@@ -579,8 +568,7 @@ export function GatewaySettings() {
                   className="flex items-center gap-1.5 rounded-md bg-[var(--color-primary)] px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-[var(--color-primary)]/80 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {pulling ? <Loader2 className="h-3 w-3 animate-spin" /> : <Download className="h-3 w-3" />}
-                  Pull
-                </button>
+                  {t("Pull")}</button>
               </div>
             )}
 
@@ -590,7 +578,7 @@ export function GatewaySettings() {
                 <div className="flex items-center justify-between text-xs">
                   <span className="flex items-center gap-1.5 text-[var(--color-primary)]">
                     <Loader2 className="h-3 w-3 animate-spin" />
-                    Pulling {resolvedPullImage}
+                    {t("Pulling")}{" "}{resolvedPullImage}
                   </span>
                   <span className="text-[var(--color-text-muted)]">
                     {formatDuration(activePull.duration_seconds)}
@@ -604,20 +592,18 @@ export function GatewaySettings() {
             {isPulling && !activePull && (
               <div className="flex items-center gap-1.5 text-xs text-[var(--color-primary)]">
                 <Loader2 className="h-3 w-3 animate-spin" />
-                Starting pull...
-              </div>
+                {t("Starting pull...")}</div>
             )}
 
             {pullDone && (
               <p className="flex items-center gap-1 text-xs text-emerald-400">
-                <Check className="h-3 w-3" /> Image pulled successfully.
-              </p>
+                <Check className="h-3 w-3" /> {t("Image pulled successfully.")}</p>
             )}
             {!isPulling && pullMut.error && (
               <p className="text-xs text-[var(--color-red)]">{pullMut.error.message}</p>
             )}
             {!isPulling && activePull?.status === "failed" && (
-              <p className="text-xs text-[var(--color-red)]">Pull failed: {activePull.progress}</p>
+              <p className="text-xs text-[var(--color-red)]">{t("Pull failed:")}{" "}{activePull.progress}</p>
             )}
           </div>
         )}
@@ -626,10 +612,10 @@ export function GatewaySettings() {
       {/* Deploy form */}
       {showDeploy && !running && (
         <div className="rounded-lg border border-[var(--color-primary)]/30 bg-[var(--color-surface)] p-4">
-          <h3 className="mb-3 text-sm font-semibold text-[var(--color-text)]">Deploy Gateway</h3>
+          <h3 className="mb-3 text-sm font-semibold text-[var(--color-text)]">{t("Deploy Gateway")}</h3>
           <div className="space-y-3">
             <div>
-              <label className="mb-1 block text-xs text-[var(--color-text-muted)]">Image</label>
+              <label className="mb-1 block text-xs text-[var(--color-text-muted)]">{t("Image")}</label>
               <div className="flex flex-wrap gap-2">
                 {IMAGE_OPTIONS.map((opt) => (
                   <button
@@ -652,8 +638,7 @@ export function GatewaySettings() {
                       : "border-[var(--color-border)] text-[var(--color-text-muted)] hover:border-[var(--color-border-hover)]"
                   }`}
                 >
-                  Custom
-                </button>
+                  {t("Custom")}</button>
               </div>
               {image === "custom" && (
                 <input
@@ -666,7 +651,7 @@ export function GatewaySettings() {
             </div>
 
             <div className="w-32">
-              <label className="mb-1 block text-xs text-[var(--color-text-muted)]">Port</label>
+              <label className="mb-1 block text-xs text-[var(--color-text-muted)]">{t("Port")}</label>
               <input
                 type="number"
                 value={port}
@@ -676,9 +661,7 @@ export function GatewaySettings() {
             </div>
 
             <p className="text-xs text-[var(--color-text-muted)]">
-              The Gateway runs secured (TLS + mTLS). Certificates and the passphrase are
-              managed automatically by the Hummingbot API — no passphrase needed.
-            </p>
+              {t("The Gateway runs secured (TLS + mTLS). Certificates and the passphrase are managed automatically by the Hummingbot API — no passphrase needed.")}</p>
 
             <button
               onClick={() => startMut.mutate()}
@@ -687,8 +670,7 @@ export function GatewaySettings() {
               className="flex items-center gap-1.5 rounded-md bg-[var(--color-primary)] px-4 py-1.5 text-xs font-medium text-white transition-colors hover:bg-[var(--color-primary)]/80 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {startMut.isPending && <Loader2 className="h-3 w-3 animate-spin" />}
-              Start Gateway
-            </button>
+              {t("Start Gateway")}</button>
 
             {startMut.error && (
               <p className="text-xs text-[var(--color-red)]">{startMut.error.message}</p>
@@ -706,15 +688,14 @@ export function GatewaySettings() {
           onClick={() => setShowLogs(!showLogs)}
           className="flex w-full items-center justify-between p-3 text-sm text-[var(--color-text)] hover:bg-[var(--color-surface-hover)]"
         >
-          <span className="font-medium">Logs</span>
+          <span className="font-medium">{t("Logs")}</span>
           {showLogs ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
         </button>
         {showLogs && (
           <div className="border-t border-[var(--color-border)] p-3">
             {fetchingLogs ? (
               <div className="flex items-center gap-2 text-xs text-[var(--color-text-muted)]">
-                <Loader2 className="h-3 w-3 animate-spin" /> Loading logs...
-              </div>
+                <Loader2 className="h-3 w-3 animate-spin" /> {t("Loading logs...")}</div>
             ) : (
               <pre className="max-h-64 overflow-auto rounded bg-[var(--color-bg)] p-3 text-xs text-[var(--color-text-muted)] font-mono leading-relaxed whitespace-pre-wrap break-all">
                 {typeof logsData?.logs === "string"

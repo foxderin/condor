@@ -6,6 +6,7 @@ import { FallbackSpinner } from "@/components/ui/FallbackSpinner";
 import { useFleetData } from "@/hooks/useFleetData";
 import { useServer } from "@/hooks/useServer";
 import { parsePopulation } from "@/lib/perf-tree";
+import { t } from "@/lib/i18n";
 
 /**
  * `/bots` is the controller browser (FEAT-084).
@@ -45,7 +46,7 @@ export function Bots() {
   if (!server) {
     return (
       <div className="p-6">
-        <NoServerCard message="Select a server from the sidebar to view active bots." />
+        <NoServerCard message={t("Select a server from the sidebar to view active bots.")} />
       </div>
     );
   }
@@ -62,8 +63,7 @@ export function Bots() {
       <div className="p-6">
         <div className="rounded-lg border border-[var(--color-yellow)]/40 bg-[var(--color-yellow)]/10 px-4 py-3">
           <p className="text-sm font-medium text-[var(--color-yellow)]">
-            Unable to reach server
-          </p>
+            {t("Unable to reach server")}</p>
           {fleet.errorHint && (
             <p className="text-xs text-[var(--color-text-muted)] mt-1">{fleet.errorHint}</p>
           )}

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { feeAmount, lpStateStyle, rangeFraction, type LpPosition } from "@/components/dex/lp-position";
 import { type ConsolidatedPosition } from "@/lib/api";
 import { formatPnl, formatPriceSig, formatUsd, pnlColor } from "@/lib/formatters";
+import { t } from "@/lib/i18n";
 
 /** The quote a hold's numbers are denominated in — its pair's, as elsewhere. */
 function quoteOf(pair: string): string {
@@ -119,16 +120,14 @@ export function PositionsTab({
     return (
       <div className="flex flex-col items-center gap-2 py-16 text-[var(--color-text-muted)]">
         <Layers className="h-10 w-10" />
-        <p>No open positions.</p>
+        <p>{t("No open positions.")}</p>
         <p className="text-sm">
-          A position appears here when an executor or bot opens one.
-        </p>
+          {t("A position appears here when an executor or bot opens one.")}</p>
         <button
           onClick={() => navigate("/trade")}
           className="mt-1 text-sm text-[var(--color-primary)] hover:underline"
         >
-          Open the trade workspace
-        </button>
+          {t("Open the trade workspace")}</button>
       </div>
     );
   }
@@ -139,25 +138,24 @@ export function PositionsTab({
       {sortedHolds.length > 0 && (
         <div>
           <div className="mb-2 flex items-baseline justify-between gap-4">
-            <h2 className="text-sm font-semibold">Holds</h2>
+            <h2 className="text-sm font-semibold">{t("Holds")}</h2>
             {/* Load-bearing, not decoration: this is the honest scope of the data. */}
             <span className="text-xs text-[var(--color-text-muted)]">
-              Opened by Condor&apos;s executors and bots
-            </span>
+              {t("Opened by Condor&apos;s executors and bots")}</span>
           </div>
 
           <div className="overflow-x-auto rounded-lg border border-[var(--color-border)]">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-[var(--color-border)] bg-[var(--color-surface)]">
-                  <th className={TH}>Pair</th>
-                  <th className={TH}>Side</th>
-                  <th className={THR}>Size</th>
-                  <th className={THR}>Entry</th>
-                  <th className={THR}>Mark</th>
-                  <th className={THR}>Unrl PnL</th>
-                  <th className={THR}>Lev</th>
-                  <th className={TH}>Source</th>
+                  <th className={TH}>{t("Pair")}</th>
+                  <th className={TH}>{t("Side")}</th>
+                  <th className={THR}>{t("Size")}</th>
+                  <th className={THR}>{t("Entry")}</th>
+                  <th className={THR}>{t("Mark")}</th>
+                  <th className={THR}>{t("Unrl PnL")}</th>
+                  <th className={THR}>{t("Lev")}</th>
+                  <th className={TH}>{t("Source")}</th>
                   <th className="w-8" />
                 </tr>
               </thead>
@@ -229,9 +227,9 @@ export function PositionsTab({
       {lpPositions.length > 0 && (
         <div>
           <div className="mb-2 flex items-baseline justify-between gap-4">
-            <h2 className="text-sm font-semibold">Liquidity</h2>
+            <h2 className="text-sm font-semibold">{t("Liquidity")}</h2>
             <span className="text-xs text-[var(--color-text-muted)]">
-              {lpPositions.length} open range{lpPositions.length === 1 ? "" : "s"}
+              {lpPositions.length} {t("open range")}{lpPositions.length === 1 ? "" : "s"}
             </span>
           </div>
 
@@ -239,12 +237,12 @@ export function PositionsTab({
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-[var(--color-border)] bg-[var(--color-surface)]">
-                  <th className={TH}>Pool</th>
-                  <th className={TH}>State</th>
-                  <th className={TH}>Range</th>
-                  <th className={THR}>Value</th>
-                  <th className={THR}>Fees</th>
-                  <th className={THR}>PnL</th>
+                  <th className={TH}>{t("Pool")}</th>
+                  <th className={TH}>{t("State")}</th>
+                  <th className={TH}>{t("Range")}</th>
+                  <th className={THR}>{t("Value")}</th>
+                  <th className={THR}>{t("Fees")}</th>
+                  <th className={THR}>{t("PnL")}</th>
                   <th className="w-8" />
                 </tr>
               </thead>

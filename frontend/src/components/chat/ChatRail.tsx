@@ -19,6 +19,7 @@ import { useWorkspacePane } from "@/hooks/useWorkspacePane";
 import { EXECUTION_PATH } from "@/components/chat/accountPanels";
 import { CHAT_SLUG, type AgentSummary, type ConversationMeta } from "@/lib/api";
 import { CHAT_RAIL_OPEN_KEY } from "@/lib/sessionState";
+import { t } from "@/lib/i18n";
 
 function readOpen(): boolean {
   return localStorage.getItem(CHAT_RAIL_OPEN_KEY) !== "false";
@@ -125,14 +126,14 @@ export const ChatRail = memo(function ChatRail({
         <button
           onClick={() => toggle(true)}
           className="rounded p-1 text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)]"
-          title="Show agents and conversations"
+          title={t("Show agents and conversations")}
         >
           <PanelLeftOpen className="h-4 w-4" />
         </button>
         <button
           onClick={onNew}
           className="rounded p-1 text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)]"
-          title="New chat"
+          title={t("New chat")}
         >
           <Plus className="h-4 w-4" />
         </button>
@@ -165,7 +166,7 @@ export const ChatRail = memo(function ChatRail({
         <button
           onClick={() => toggle(false)}
           className="hidden rounded p-1 text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)] md:block"
-          title="Collapse"
+          title={t("Collapse")}
         >
           <PanelLeftClose className="h-3.5 w-3.5" />
         </button>
@@ -174,8 +175,7 @@ export const ChatRail = memo(function ChatRail({
       {/* Who you can talk to */}
       <div className="border-b border-[var(--color-border)] py-1">
         <div className="px-3 pb-1 pt-1.5 text-[10px] font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
-          Agents
-        </div>
+          {t("Agents")}</div>
         <RailRow
           label={condor?.name || "Condor"}
           icon={<MessageSquare className="h-3 w-3 shrink-0" />}
@@ -268,11 +268,11 @@ function LiveStrip({
         <Link
           to={EXECUTION_PATH}
           className={rowClass}
-          title="See every agent and what it last did"
+          title={t("See every agent and what it last did")}
         >
           {icon}
           <span className="min-w-0 flex-1 truncate">
-            Nothing looping{tasks}
+            {t("Nothing looping")}{tasks}
           </span>
           <ArrowUpRight className="h-3 w-3 shrink-0" />
         </Link>
@@ -295,7 +295,7 @@ function LiveStrip({
           className={rowClass}
           aria-expanded={open}
           aria-haspopup="listbox"
-          title="Open a running agent's loops"
+          title={t("Open a running agent's loops")}
         >
           {icon}
           <span className="min-w-0 flex-1 truncate">
@@ -337,7 +337,7 @@ function LiveStrip({
           onClick={() => setOpen(false)}
           className="mt-0.5 flex items-center gap-2 border-t border-[var(--color-border)] px-2.5 py-1.5 text-xs text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)]"
         >
-          <span className="min-w-0 flex-1 truncate">The whole fleet</span>
+          <span className="min-w-0 flex-1 truncate">{t("The whole fleet")}</span>
           <ArrowUpRight className="h-3 w-3 shrink-0" />
         </Link>
       </AnchoredMenu>
@@ -382,7 +382,7 @@ function RailRow({
       {live && (
         <span
           className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400"
-          title="Loop running"
+          title={t("Loop running")}
         />
       )}
       {onNew && (
@@ -417,8 +417,7 @@ function RailRow({
           {/* Width, not display: a label that animates from nothing keeps the
               row's own text from jumping when the pill grows. */}
           <span className="max-w-0 overflow-hidden whitespace-nowrap opacity-0 transition-all duration-200 group-hover:max-w-[2.5rem] group-hover:pr-0.5 group-hover:opacity-100 group-focus-within:max-w-[2.5rem] group-focus-within:pr-0.5 group-focus-within:opacity-100">
-            New
-          </span>
+            {t("New")}</span>
         </span>
       )}
     </button>

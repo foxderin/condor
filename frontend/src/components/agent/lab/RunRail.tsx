@@ -6,6 +6,7 @@ import { isLiveRun, isLoopRun, runFacts, runLabel } from "@/components/agent/lab
 import { useSeconds } from "@/hooks/useSeconds";
 import type { AgentRunRow } from "@/lib/api";
 import { formatAge } from "@/lib/formatters";
+import { t } from "@/lib/i18n";
 
 /**
  * The three readings of "what has this agent been doing".
@@ -114,8 +115,7 @@ export function RunRail({
     <div className="flex h-full w-[260px] shrink-0 flex-col border-r border-[var(--color-border)] bg-[var(--color-surface)]">
       <div className="border-b border-[var(--color-border)] px-3 py-2.5">
         <span className="text-xs font-bold uppercase tracking-wider text-[var(--color-text-muted)]">
-          Runs
-        </span>
+          {t("Runs")}</span>
       </div>
 
       {strategies.length > 1 && (
@@ -176,8 +176,7 @@ export function RunRail({
             onClick={onShowMore}
             className="w-full px-3 py-2.5 text-center text-[11px] text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)]"
           >
-            Show older
-          </button>
+            {t("Show older")}</button>
         )}
       </div>
 
@@ -188,8 +187,7 @@ export function RunRail({
           shrinking tail beside a permanent one. */}
       {anyChats && (
         <p className="border-t border-[var(--color-border)]/60 px-3 py-2 text-[10px] leading-snug text-[var(--color-text-muted)]/70">
-          Chats are yours alone, and are kept for less time than a loop's runs.
-        </p>
+          {t("Chats are yours alone, and are kept for less time than a loop's runs.")}</p>
       )}
     </div>
   );

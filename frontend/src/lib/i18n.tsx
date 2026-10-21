@@ -34,7 +34,59 @@ export const LANGUAGE_LABELS: Record<Language, string> = {
  *   - Labels carry no trailing period; full sentences keep their punctuation.
  *   - `{name}` placeholders are copied verbatim into the translation.
  */
-export const ZH: Record<string, string> = {};
+/** Minimal catalogue: enough to prove the switch end to end. */
+export const ZH: Record<string, string> = {
+  // shell and navigation
+  "Settings": "设置",
+  "Servers": "服务器",
+  "Agents": "智能体",
+  "Keys and Wallets": "密钥与钱包",
+  "LLM Endpoints": "LLM 端点",
+  "Voice & AI": "语音与 AI",
+  "Notifications": "通知",
+  "Privacy": "隐私",
+  "Admin": "管理",
+  "Updates": "更新",
+  "Account": "账户",
+  "Server": "服务器",
+  "Server · {name}": "服务器 · {name}",
+  "Language": "语言",
+  "Logout": "退出登录",
+  "Settings section": "设置分区",
+  "Settings sections": "设置分区列表",
+
+  // common verbs and labels
+  "Save": "保存",
+  "Cancel": "取消",
+  "Delete": "删除",
+  "Edit": "编辑",
+  "Add": "添加",
+  "Close": "关闭",
+  "Close (price)": "收盘",
+  "Close (position)": "平仓",
+  "Current": "当前",
+  "Now": "现在",
+  "Open": "开仓",
+  "Refresh": "刷新",
+  "Retry": "重试",
+  "Search": "搜索",
+  "Loading": "加载中",
+  "Name": "名称",
+  "Status": "状态",
+  "Type": "类型",
+  "Version": "版本",
+  "Amount": "数量",
+  "Price": "价格",
+  "Pair": "交易对",
+  "Take Profit": "止盈",
+  "Stop Loss": "止损",
+  "Leverage": "杠杆",
+  "PnL": "盈亏",
+  "Total PnL": "总盈亏",
+  "Volume": "成交量",
+  "Fees": "手续费",
+  "Fee": "手续费",
+};
 
 function readStored(): Language {
   try {

@@ -142,6 +142,7 @@ import {
   type FleetOwner,
 } from "@/lib/agent-attribution";
 import { AgentScopeHeader } from "./AgentScopeHeader";
+import { t } from "@/lib/i18n";
 
 /**
  * What an empty root row is called, read off its id alone (FEAT-108).
@@ -187,9 +188,7 @@ function UnpricedNote({ leaves }: { leaves: PerfLeaf[] }) {
         .map((leaf) => leaf.label)
         .join(", ")}`}
     >
-      {plural(leaves.length, "record")} named no quote currency — counted at face value, not
-      converted
-    </span>
+      {plural(leaves.length, "record")} {t("named no quote currency — counted at face value, not converted")}</span>
   );
 }
 
@@ -1706,7 +1705,7 @@ export function PerfBrowser({
         return (
           <span
             className="h-3.5 w-3.5 animate-spin rounded-full border-[1.5px] border-[var(--color-yellow)] border-t-transparent"
-            title="Stopping…"
+            title={t("Stopping…")}
           />
         );
       }
@@ -1720,13 +1719,12 @@ export function PerfBrowser({
               className="rounded bg-[var(--color-red)] px-1.5 py-0.5 text-[9px] font-semibold text-white transition-opacity hover:opacity-90"
               title={`Stop ${bot.bot_name} — this cancels its orders and shuts the container down`}
             >
-              Stop
-            </button>
+              {t("Stop")}</button>
             <button
               type="button"
               onClick={() => setConfirmStopBot(null)}
               className="rounded p-0.5 text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text)]"
-              title="Cancel"
+              title={t("Cancel")}
             >
               <X className="h-3 w-3" />
             </button>
@@ -2361,8 +2359,7 @@ export function PerfBrowser({
           <div className="flex items-center justify-between px-3 py-2.5">
             {!isCompact && (
               <span className="text-xs font-bold uppercase tracking-wider text-[var(--color-text-muted)]">
-                Scope
-              </span>
+                {t("Scope")}</span>
             )}
             <button
               onClick={() => setIsCompact(!isCompact)}
@@ -2439,7 +2436,7 @@ export function PerfBrowser({
                 type="text"
                 value={filters.pair}
                 onChange={(e) => setFilters((f) => ({ ...f, pair: e.target.value }))}
-                placeholder="Filter pair…"
+                placeholder={t("Filter pair…")}
                 className="rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-2 py-1 text-[11px] transition-colors hover:border-[var(--color-primary)]/50 focus:border-[var(--color-primary)] focus:outline-none"
               />
 
@@ -2454,8 +2451,8 @@ export function PerfBrowser({
                   // "Controller type" rather than "Type": the row under it is
                   // "Executor type", and two rows of bubbles that look alike
                   // need their names to say which is which.
-                  title="Controller type"
-                  hint="The class each controller is — pmm_simple, grid_strike, and so on. Executors are narrowed by the class of the controller that ran them; to pick them by what they are, use Executor type."
+                  title={t("Controller type")}
+                  hint={t("The class each controller is — pmm_simple, grid_strike, and so on. Executors are narrowed by the class of the controller that ran them; to pick them by what they are, use Executor type.")}
                   options={filterOptions.ctrlTypes}
                   selected={filters.ctrlTypes}
                   onChange={(v) => setFilters((f) => ({ ...f, ctrlTypes: v }))}
@@ -2467,8 +2464,8 @@ export function PerfBrowser({
                   narrows whatever is on screen. */}
               {grain !== "controllers" && filterOptions.execTypes.length > 1 && (
                 <BubbleGroup
-                  title="Executor type"
-                  hint="Picking one reports the executors themselves: a controller record covers every type it ever ran, so it steps aside and each row folds the matching executors instead."
+                  title={t("Executor type")}
+                  hint={t("Picking one reports the executors themselves: a controller record covers every type it ever ran, so it steps aside and each row folds the matching executors instead.")}
                   options={filterOptions.execTypes}
                   selected={filters.execTypes}
                   onChange={(v) => setFilters((f) => ({ ...f, execTypes: v }))}
@@ -2480,8 +2477,8 @@ export function PerfBrowser({
                   tree already answers wherever it has grown an agent level. */}
               {filterOptions.agents.length > 1 && (
                 <BubbleGroup
-                  title="Agent"
-                  hint="Which agent's loop owns each record — by the bot's namespace, or by the session an executor was tagged with. Unattributed is everything the fleet map credits to nobody, which on most servers is nearly all of it."
+                  title={t("Agent")}
+                  hint={t("Which agent's loop owns each record — by the bot's namespace, or by the session an executor was tagged with. Unattributed is everything the fleet map credits to nobody, which on most servers is nearly all of it.")}
                   options={filterOptions.agents}
                   selected={filters.agents}
                   onChange={(v) => setFilters((f) => ({ ...f, agents: v }))}
@@ -2493,8 +2490,7 @@ export function PerfBrowser({
                   onClick={() => setFilters({ pair: "", ctrlTypes: [], execTypes: [], agents: [] })}
                   className="self-start text-[10px] text-[var(--color-text-muted)] underline-offset-2 hover:text-[var(--color-text)] hover:underline"
                 >
-                  Clear all filters
-                </button>
+                  {t("Clear all filters")}</button>
               )}
             </div>
           )}
@@ -2537,7 +2533,7 @@ export function PerfBrowser({
                   onClick={() => setScope(rootScope)}
                   aria-pressed={atRoot}
                   {...(atRoot ? { "data-active-scope": true } : {})}
-                  title="Report on everything in scope, combined"
+                  title={t("Report on everything in scope, combined")}
                   className={`ml-auto flex shrink-0 items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] transition-colors ${
                     atRoot
                       ? "border-[var(--color-primary)] bg-[var(--color-primary)]/15 font-semibold text-[var(--color-primary)]"
@@ -2545,8 +2541,7 @@ export function PerfBrowser({
                   }`}
                 >
                   <Layers className="h-3 w-3 shrink-0" />
-                  Select all
-                </button>
+                  {t("Select all")}</button>
               </div>
             )}
           </div>
@@ -2573,22 +2568,20 @@ export function PerfBrowser({
         {!isCompact && paging && paging.loaded > 0 && (
           <div className="shrink-0 border-t border-[var(--color-border)] px-3 py-1.5 text-[10px] text-[var(--color-text-muted)]">
             <div className="flex items-center gap-1.5">
-              <span className="tabular-nums">{paging.loaded.toLocaleString()} executors loaded</span>
-              {paging.loading && <span>· loading…</span>}
-              {paging.done && <span>· all</span>}
+              <span className="tabular-nums">{paging.loaded.toLocaleString()} {t("executors loaded")}</span>
+              {paging.loading && <span>{t("· loading…")}</span>}
+              {paging.done && <span>{t("· all")}</span>}
               {paging.capped && (
                 <button
                   onClick={paging.loadMore}
                   className="ml-auto rounded border border-[var(--color-border)] px-1.5 py-0.5 font-medium hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)]"
                 >
-                  Load more
-                </button>
+                  {t("Load more")}</button>
               )}
             </div>
             {paging.capped && (
               <p className="mt-0.5 text-[var(--color-yellow)]">
-                Cap reached — this tree shows part of the history, not all of it.
-              </p>
+                {t("Cap reached — this tree shows part of the history, not all of it.")}</p>
             )}
           </div>
         )}
@@ -2781,7 +2774,7 @@ export function PerfBrowser({
                 <button
                   type="button"
                   onClick={clearRun}
-                  aria-label="Clear the run filter"
+                  aria-label={t("Clear the run filter")}
                   className="transition-opacity hover:opacity-70"
                 >
                   <X className="h-2.5 w-2.5" />
@@ -2798,7 +2791,7 @@ export function PerfBrowser({
                 onClick={goUp}
                 disabled={navIdx <= 0}
                 className="p-1 text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)] disabled:opacity-30"
-                title="Previous (↑)"
+                title={t("Previous (↑)")}
               >
                 <ChevronUp className="h-3.5 w-3.5" />
               </button>
@@ -2809,7 +2802,7 @@ export function PerfBrowser({
                 onClick={goDown}
                 disabled={navIdx < 0 || navIdx >= navItems.length - 1}
                 className="p-1 text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)] disabled:opacity-30"
-                title="Next (↓)"
+                title={t("Next (↓)")}
               >
                 <ChevronDown className="h-3.5 w-3.5" />
               </button>
@@ -2822,11 +2815,10 @@ export function PerfBrowser({
               <button
                 onClick={() => setShowDeploy(true)}
                 className="flex items-center gap-1.5 rounded px-3 py-1.5 text-xs font-medium text-[var(--color-primary)] transition-colors hover:bg-[var(--color-primary)]/10"
-                title="Deploy a new bot"
+                title={t("Deploy a new bot")}
               >
                 <Rocket className="h-3.5 w-3.5" />
-                Deploy bot
-              </button>
+                {t("Deploy bot")}</button>
             )}
 
             {activeBot && (
@@ -2834,8 +2826,7 @@ export function PerfBrowser({
                 {botStopping ? (
                   <span className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[var(--color-yellow)]">
                     <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-current border-t-transparent" />
-                    Stopping
-                  </span>
+                    {t("Stopping")}</span>
                 ) : stopArmed ? (
                   <span className="flex items-center gap-1.5">
                     <button
@@ -2849,18 +2840,16 @@ export function PerfBrowser({
                       onClick={() => setConfirmStopBot(null)}
                       className="rounded px-2 py-1 text-xs text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text)]"
                     >
-                      Cancel
-                    </button>
+                      {t("Cancel")}</button>
                   </span>
                 ) : (
                   <button
                     onClick={() => setConfirmStopBot(activeBot.bot_name)}
                     className="flex items-center gap-1.5 rounded px-3 py-1.5 text-xs font-medium text-[var(--color-red)] transition-colors hover:bg-[var(--color-red)]/10"
-                    title="Stop bot"
+                    title={t("Stop bot")}
                   >
                     <Square className="h-3.5 w-3.5" />
-                    Stop bot
-                  </button>
+                    {t("Stop bot")}</button>
                 )}
                 {stopFailedHere && (
                   <span
@@ -2871,8 +2860,7 @@ export function PerfBrowser({
                         : "Unknown error"
                     }
                   >
-                    Failed to stop
-                  </span>
+                    {t("Failed to stop")}</span>
                 )}
                 <button
                   onClick={() => setDrawer((d) => (d === "logs" ? null : "logs"))}
@@ -2884,8 +2872,7 @@ export function PerfBrowser({
                   title={openDrawer === "logs" ? "Hide logs" : "Show logs"}
                 >
                   <ScrollText className="h-3.5 w-3.5" />
-                  Logs
-                  {activeBot.error_count > 0 && (
+                  {t("Logs")}{activeBot.error_count > 0 && (
                     <span className="text-[10px] text-[var(--color-yellow)]">
                       {activeBot.error_count}
                     </span>
@@ -2915,8 +2902,7 @@ export function PerfBrowser({
               }
             >
               <Stethoscope className="h-3.5 w-3.5" />
-              Diagnostics
-              {diagnosticsFlagged > 0 && (
+              {t("Diagnostics")}{diagnosticsFlagged > 0 && (
                 <span
                   data-diagnostics-flagged={diagnosticsFlagged}
                   className="text-[10px] text-[var(--color-red)]"
@@ -2930,11 +2916,10 @@ export function PerfBrowser({
               <button
                 onClick={() => setOpenArchive(activeRun)}
                 className="flex items-center gap-1.5 rounded px-3 py-1.5 text-xs font-medium text-[var(--color-primary)] transition-colors hover:bg-[var(--color-primary)]/10"
-                title="Open this run's archived database"
+                title={t("Open this run's archived database")}
               >
                 <Database className="h-3.5 w-3.5" />
-                Open archive
-              </button>
+                {t("Open archive")}</button>
             )}
 
             {activeRun?.bot_run_id && activeRun.deployment_status === "ARCHIVED" && (
@@ -2951,18 +2936,16 @@ export function PerfBrowser({
                     onClick={() => setConfirmDeleteRun(null)}
                     className="rounded px-2 py-1 text-xs text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text)]"
                   >
-                    Cancel
-                  </button>
+                    {t("Cancel")}</button>
                 </span>
               ) : (
                 <button
                   onClick={() => setConfirmDeleteRun(activeRun.bot_name)}
                   className="flex items-center gap-1.5 rounded px-3 py-1.5 text-xs font-medium text-[var(--color-red)] transition-colors hover:bg-[var(--color-red)]/10"
-                  title="Delete this bot run permanently"
+                  title={t("Delete this bot run permanently")}
                 >
                   <Trash2 className="h-3.5 w-3.5" />
-                  Delete run
-                </button>
+                  {t("Delete run")}</button>
               )
             )}
             {deleteRunMutation.isError && activeRun && (
@@ -2974,8 +2957,7 @@ export function PerfBrowser({
                     : "Unknown error"
                 }
               >
-                Failed to delete
-              </span>
+                {t("Failed to delete")}</span>
             )}
 
             {/* Which picture this executor is telling its story with. Drawn
@@ -3010,7 +2992,7 @@ export function PerfBrowser({
                 onClick={() => stop.request([activeExec.id])}
                 disabled={stop.stoppingIds.has(activeExec.id)}
                 className="flex items-center gap-1.5 rounded px-3 py-1.5 text-xs font-medium text-[var(--color-red)] transition-colors hover:bg-[var(--color-red)]/10 disabled:opacity-50"
-                title="Stop this executor"
+                title={t("Stop this executor")}
               >
                 <Square className="h-3.5 w-3.5" />
                 {stop.stoppingIds.has(activeExec.id) ? "Stopping…" : "Stop"}
@@ -3042,8 +3024,7 @@ export function PerfBrowser({
                 title={openDrawer === "config" ? "Hide config" : "Show config"}
               >
                 <SlidersHorizontal className="h-3.5 w-3.5" />
-                Config
-              </button>
+                {t("Config")}</button>
             )}
 
             {/* Controller sources and their configs, over the whole fleet — so
@@ -3051,11 +3032,10 @@ export function PerfBrowser({
             <button
               onClick={openEditor}
               className="flex items-center gap-1.5 rounded px-3 py-1.5 text-xs font-medium text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)]"
-              title="Open the controller & config editor"
+              title={t("Open the controller & config editor")}
             >
               <TerminalSquare className="h-3.5 w-3.5" />
-              Editor
-            </button>
+              {t("Editor")}</button>
           </div>
         </div>
 
@@ -3088,10 +3068,8 @@ export function PerfBrowser({
                     : `${silentBots.length} bots are running but reporting no controllers`}
                 </p>
                 <p className="text-xs text-[var(--color-text-muted)] mt-1">
-                  Controller reports reach the API over its MQTT broker. Check that the broker is
-                  up and that the API is connected to it — on the server,{" "}
-                  <code className="font-mono">make doctor</code> names it.
-                </p>
+                  {t("Controller reports reach the API over its MQTT broker. Check that the broker is up and that the API is connected to it — on the server,")}{" "}
+                  <code className="font-mono">{t("make doctor")}</code> {t("names it.")}</p>
               </div>
             ) : runWithheld ? (
               // A run whose server could not be read filters to nothing, and a
@@ -3105,26 +3083,21 @@ export function PerfBrowser({
               >
                 <p className="text-sm font-medium">{runUnavailable}</p>
                 <p className="mt-1 text-xs text-[var(--color-text-muted)]">
-                  This run's ledger could not be read, so the figures below are withheld rather than a
-                  result — the run may well have traded.
-                </p>
+                  {t("This run's ledger could not be read, so the figures below are withheld rather than a result — the run may well have traded.")}</p>
               </div>
             ) : emptyPopulation ? (
               <div className="shrink-0 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-3">
-                <p className="text-sm font-medium">No bots running</p>
+                <p className="text-sm font-medium">{t("No bots running")}</p>
                 <p className="mt-1 text-xs text-[var(--color-text-muted)]">
-                  Nothing is deployed on this server and no executor is open, so the figures below
-                  are an absence rather than a result. What has already run is under Terminated.
-                </p>
+                  {t("Nothing is deployed on this server and no executor is open, so the figures below are an absence rather than a result. What has already run is under Terminated.")}</p>
                 {scope.kind === "fleet" && (
                   <button
                     onClick={() => setShowDeploy(true)}
                     className="mt-3 flex items-center gap-1.5 rounded border border-[var(--color-primary)]/40 px-3 py-1.5 text-xs font-medium text-[var(--color-primary)] transition-colors hover:bg-[var(--color-primary)]/10"
-                    title="Deploy a new bot"
+                    title={t("Deploy a new bot")}
                   >
                     <Rocket className="h-3.5 w-3.5" />
-                    Deploy bot
-                  </button>
+                    {t("Deploy bot")}</button>
                 )}
               </div>
             ) : null}
@@ -3146,7 +3119,7 @@ export function PerfBrowser({
                   column the tiles are actually in. */}
               <div className="grid grid-cols-[repeat(auto-fit,minmax(104px,1fr))] gap-4">
                 <Kpi
-                  label="Net PnL"
+                  label={t("Net PnL")}
                   value={runWithheld ? "—" : formatCurrencyPnl(totals.net, currencySymbol)}
                   color={runWithheld ? undefined : pnlColor(totals.net)}
                   // The return % is per-leaf — each is measured against its own
@@ -3163,13 +3136,13 @@ export function PerfBrowser({
                     .join(" · ") || undefined}
                 />
                 <Kpi
-                  label="Realized"
+                  label={t("Realized")}
                   value={runWithheld ? "—" : formatCurrencyPnl(totals.realized, currencySymbol)}
                   color={runWithheld ? undefined : pnlColor(totals.realized)}
                   sub={runWithheld ? undefined : perHour(totals.realized, formatCurrencyPnl)}
                 />
                 <Kpi
-                  label="Unrealized"
+                  label={t("Unrealized")}
                   value={runWithheld ? "—" : formatCurrencyPnl(totals.unrealized, currencySymbol)}
                   color={runWithheld ? undefined : pnlColor(totals.unrealized)}
                   // What the unrealized figure is *of*: with no open position
@@ -3189,7 +3162,7 @@ export function PerfBrowser({
                     and a mixed fold quotes the closed subset it was measured
                     over rather than pretending the open ones lost. */}
                 <Kpi
-                  label="Win rate"
+                  label={t("Win rate")}
                   value={
                     runWithheld || totals.winRate === undefined
                       ? "—"
@@ -3204,12 +3177,12 @@ export function PerfBrowser({
                   }
                 />
                 <Kpi
-                  label="Volume"
+                  label={t("Volume")}
                   value={runWithheld ? "—" : formatCurrencyVolume(totals.volume, currencySymbol)}
                   sub={runWithheld ? undefined : perHour(totals.volume, formatCurrencyVolume)}
                 />
                 <Kpi
-                  label="Fees"
+                  label={t("Fees")}
                   value={
                     !runWithheld && totals.fees > 0 ? formatCurrencyVolume(totals.fees, currencySymbol) : "—"
                   }
@@ -3219,7 +3192,7 @@ export function PerfBrowser({
                   // executors' fees. The caption rides on the tile rather than
                   // the number gaining a footnote — a figure that has to be
                   // read with an asterisk is a figure with an asterisk in it.
-                  title="Executor fees only — the controllers payload reports no fee total, so this is a floor, not a total."
+                  title={t("Executor fees only — the controllers payload reports no fee total, so this is a floor, not a total.")}
                   // What the fees ate: the share of gross the venue took, which
                   // is the thing an absolute fee total cannot say on its own.
                   sub={
@@ -3229,7 +3202,7 @@ export function PerfBrowser({
                   }
                 />
                 <Kpi
-                  label="Capital"
+                  label={t("Capital")}
                   value={
                     !runWithheld && totals.capital > 0
                       ? formatCurrencyVolume(totals.capital, currencySymbol)
@@ -3245,7 +3218,7 @@ export function PerfBrowser({
                   }
                 />
                 <Kpi
-                  label="Runtime"
+                  label={t("Runtime")}
                   value={totals.hours > 0 ? formatRuntimeHours(totals.hours) : "—"}
                   // Named in hours, not "2d 9h", because it is the divisor of
                   // every per-hour figure in this row — the reader can check the
@@ -3283,7 +3256,7 @@ export function PerfBrowser({
                   className="mt-3 flex items-center gap-1.5 overflow-x-auto scrollbar-thin border-t border-[var(--color-border)]/60 pt-2"
                 >
                   <span className="shrink-0 text-[10px] uppercase tracking-wider text-[var(--color-text-muted)]">
-                    Closes{" "}
+                    {t("Closes")}{" "}
                     <span className="font-semibold tabular-nums text-[var(--color-text)]">
                       {totals.closeTotal.toLocaleString()}
                     </span>
@@ -3393,7 +3366,7 @@ export function PerfBrowser({
                   // controllers listing whether or not this has landed.
                   <div className="flex h-full items-center justify-center gap-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)]">
                     <Loader2 className="h-4 w-4 animate-spin text-[var(--color-text-muted)]" />
-                    <p className="text-xs text-[var(--color-text-muted)]">Reading this run's history…</p>
+                    <p className="text-xs text-[var(--color-text-muted)]">{t("Reading this run's history…")}</p>
                   </div>
                 ) : (
                   <div className="flex h-full items-center justify-center rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-6">
@@ -3455,7 +3428,7 @@ export function PerfBrowser({
                       whose one instrument and one venue is a true answer. */}
                   {scopedLeaves.length > 0 && (
                     <BandTab
-                      label="Breakdown"
+                      label={t("Breakdown")}
                       open={band === "breakdown"}
                       onClick={() => toggleBand("breakdown")}
                       data-breakdown-toggle

@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import type { RoutineInfo, RoutineInstance } from "@/lib/api";
 import { formatRelativeTime, toMs } from "@/lib/formatters";
 import { formatInterval, formatSlug, routineAgent, routineAgents } from "@/lib/routineUtils";
+import { t } from "@/lib/i18n";
 
 /** What the latest report of a routine says about it, for the card's footer. */
 export interface RoutineReportInfo {
@@ -137,8 +138,7 @@ export function RoutineLibrarySidebar({
       <div className="flex items-center justify-between border-b border-[var(--color-border)] px-3 py-2.5">
         {!compact && (
           <span className="text-xs font-bold uppercase tracking-wider text-[var(--color-text-muted)]">
-            Routines
-          </span>
+            {t("Routines")}</span>
         )}
         <button
           onClick={onToggleCompact}
@@ -158,14 +158,14 @@ export function RoutineLibrarySidebar({
               type="text"
               value={search}
               onChange={(e) => onSearchChange(e.target.value)}
-              placeholder="Search routines…"
+              placeholder={t("Search routines…")}
               className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] py-1 pl-7 pr-6 text-[11px] text-[var(--color-text)] placeholder:text-[var(--color-text-muted)]/70 focus:border-[var(--color-primary)] focus:outline-none"
             />
             {search && (
               <button
                 onClick={() => onSearchChange("")}
                 className="absolute right-3 top-1/2 -translate-y-1/2 rounded p-0.5 text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
-                title="Clear search"
+                title={t("Clear search")}
               >
                 <X className="h-3 w-3" />
               </button>
@@ -288,8 +288,7 @@ export function RoutineLibrarySidebar({
                   </>
                 ) : (
                   <span className="text-[9px] italic text-[var(--color-text-muted)]/40">
-                    No reports yet
-                  </span>
+                    {t("No reports yet")}</span>
                 )}
               </div>
             </button>
@@ -302,7 +301,7 @@ export function RoutineLibrarySidebar({
       {!compact && runs.length > 0 && (
         <div className="max-h-52 shrink-0 overflow-y-auto border-t border-[var(--color-border)] scrollbar-thin">
           <h3 className="sticky top-0 bg-[var(--color-surface)] px-3 pb-1 pt-2 text-[10px] font-bold uppercase tracking-wider text-[var(--color-text-muted)]">
-            Runs <span className="font-medium opacity-60">{runs.length}</span>
+            {t("Runs")}{" "}<span className="font-medium opacity-60">{runs.length}</span>
           </h3>
           <div className="px-2 pb-2">
             {shownRuns.map((inst) => (
@@ -348,7 +347,7 @@ export function RoutineLibrarySidebar({
                     onClick={() => onStopInstance(inst.instance_id)}
                     disabled={stopping}
                     className="rounded p-1 text-[var(--color-text-muted)] opacity-0 transition-all hover:bg-[var(--color-red)]/10 hover:text-[var(--color-red)] group-hover:opacity-100"
-                    title="Stop"
+                    title={t("Stop")}
                   >
                     <Square className="h-2.5 w-2.5" />
                   </button>
@@ -368,8 +367,7 @@ export function RoutineLibrarySidebar({
                 onClick={() => setShowAllRuns(false)}
                 className="mt-1 w-full rounded border border-dashed border-[var(--color-border)] py-1 text-[10px] font-medium text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
               >
-                Show less
-              </button>
+                {t("Show less")}</button>
             )}
           </div>
         </div>

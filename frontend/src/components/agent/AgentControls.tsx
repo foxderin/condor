@@ -15,6 +15,7 @@ import { useState } from "react";
 import { invalidateLifecycle } from "@/components/agent/agentQueries";
 import { useEscapeKey } from "@/hooks/useEscapeKey";
 import { api } from "@/lib/api";
+import { t } from "@/lib/i18n";
 
 // ── Start Session Dialog ──
 
@@ -101,8 +102,8 @@ export function StartSessionDialog({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-[var(--color-text)]">Start New Session</h2>
-          <button onClick={onClose} className="text-[var(--color-text-muted)] hover:text-[var(--color-text)]" title="Close" aria-label="Close">
+          <h2 className="text-lg font-semibold text-[var(--color-text)]">{t("Start New Session")}</h2>
+          <button onClick={onClose} className="text-[var(--color-text-muted)] hover:text-[var(--color-text)]" title={t("Close")} aria-label={t("Close")}>
             <X className="h-4 w-4" />
           </button>
         </div>
@@ -110,7 +111,7 @@ export function StartSessionDialog({
         <div className="space-y-5">
           {/* Execution Mode */}
           <div>
-            <label className={labelClass}>Execution Mode</label>
+            <label className={labelClass}>{t("Execution Mode")}</label>
             <div className="flex gap-1 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-1">
               {([
                 { value: "dry_run", label: "Dry Run", desc: "Simulate" },
@@ -142,15 +143,13 @@ export function StartSessionDialog({
           <div>
             <label className={labelClass}>
               <MessageSquareText className="h-3.5 w-3.5" />
-              Trading Context
-            </label>
+              {t("Trading Context")}</label>
             <p className="mb-2 text-xs text-[var(--color-text-muted)]">
-              Describe what this session should focus on. This guides the agent's trading decisions.
-            </p>
+              {t("Describe what this session should focus on. This guides the agent's trading decisions.")}</p>
             <textarea
               value={context}
               onChange={(e) => setContext(e.target.value)}
-              placeholder="e.g. Focus on SOL meme coins, ride momentum for 5-10% gains, tight stops at 3%..."
+              placeholder={t("e.g. Focus on SOL meme coins, ride momentum for 5-10% gains, tight stops at 3%...")}
               rows={3}
               className={`${inputClass} resize-none`}
               autoFocus
@@ -161,14 +160,13 @@ export function StartSessionDialog({
           <div>
             <label className={labelClass}>
               <Server className="h-3.5 w-3.5" />
-              Server
-            </label>
+              {t("Server")}</label>
             <select
               value={serverName}
               onChange={(e) => setServerName(e.target.value)}
               className={inputClass}
             >
-              <option value="">Auto (current default)</option>
+              <option value="">{t("Auto (current default)")}</option>
               {servers?.map((s) => (
                 <option key={s.name} value={s.name} disabled={!s.online}>
                   {s.name} {s.online ? "" : "(offline)"}
@@ -181,8 +179,7 @@ export function StartSessionDialog({
           <div className={`grid gap-4 ${executionMode === "loop" ? "grid-cols-3" : "grid-cols-2"}`}>
             <div>
               <label className={labelClass}>
-                Total Amount Quote
-              </label>
+                {t("Total Amount Quote")}</label>
               <input
                 type="number"
                 min={1}
@@ -196,8 +193,7 @@ export function StartSessionDialog({
               <div>
                 <label className={labelClass}>
                   <Clock className="h-3.5 w-3.5" />
-                  Frequency (sec)
-                </label>
+                  {t("Frequency (sec)")}</label>
                 <input
                   type="number"
                   min={10}
@@ -208,10 +204,9 @@ export function StartSessionDialog({
               </div>
             )}
             <div>
-              <label className={labelClass} title="Wall-clock budget for one tick's agent session">
+              <label className={labelClass} title={t("Wall-clock budget for one tick's agent session")}>
                 <Clock className="h-3.5 w-3.5" />
-                Tick Timeout (sec)
-              </label>
+                {t("Tick Timeout (sec)")}</label>
               <input
                 type="number"
                 min={30}
@@ -238,13 +233,9 @@ export function StartSessionDialog({
               <span>
                 <span className="flex items-center gap-1.5 text-xs font-medium text-[var(--color-text)]">
                   <Power className="h-3.5 w-3.5" />
-                  Resume after Condor restarts
-                </span>
+                  {t("Resume after Condor restarts")}</span>
                 <span className="mt-1 block text-[11px] leading-snug text-[var(--color-text-muted)]">
-                  A restart otherwise leaves this loop stopped. On, Condor starts
-                  it again in a <strong>fresh session</strong>, from the config as
-                  it stands then — it never resumes the old session&apos;s journal.
-                </span>
+                  {t("A restart otherwise leaves this loop stopped. On, Condor starts it again in a")}<strong>{t("fresh session")}</strong>{t(", from the config as it stands then — it never resumes the old session&apos;s journal.")}</span>
               </span>
             </label>
           )}
@@ -253,11 +244,10 @@ export function StartSessionDialog({
           <div>
             <label className={`${labelClass} mb-3`}>
               <Zap className="h-3.5 w-3.5" />
-              Risk Limits
-            </label>
+              {t("Risk Limits")}</label>
             <div className="grid grid-cols-3 gap-3">
               <div>
-                <span className="mb-1 block text-[10px] text-[var(--color-text-muted)]">Max Position ($)</span>
+                <span className="mb-1 block text-[10px] text-[var(--color-text-muted)]">{t("Max Position ($)")}</span>
                 <input
                   type="number"
                   min={0}
@@ -267,7 +257,7 @@ export function StartSessionDialog({
                 />
               </div>
               <div>
-                <span className="mb-1 block text-[10px] text-[var(--color-text-muted)]">Max Executors</span>
+                <span className="mb-1 block text-[10px] text-[var(--color-text-muted)]">{t("Max Executors")}</span>
                 <input
                   type="number"
                   min={1}
@@ -277,7 +267,7 @@ export function StartSessionDialog({
                 />
               </div>
               <div>
-                <span className="mb-1 block text-[10px] text-[var(--color-text-muted)]">Max Drawdown %</span>
+                <span className="mb-1 block text-[10px] text-[var(--color-text-muted)]">{t("Max Drawdown %")}</span>
                 <input
                   type="number"
                   value={maxDrawdown}
@@ -294,8 +284,7 @@ export function StartSessionDialog({
             onClick={onClose}
             className="rounded-lg px-4 py-2 text-sm text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)]"
           >
-            Cancel
-          </button>
+            {t("Cancel")}</button>
           <button
             onClick={() => startMut.mutate()}
             disabled={startMut.isPending}
@@ -361,8 +350,7 @@ export function AgentControls({ slug, sslug, status, defaultContext, agentConfig
         disabled={stopMut.isPending}
         className="rounded-lg px-3 py-1.5 text-xs text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text)] disabled:opacity-40"
       >
-        Cancel
-      </button>
+        {t("Cancel")}</button>
     </div>
   ) : (
     <button
@@ -370,8 +358,7 @@ export function AgentControls({ slug, sslug, status, defaultContext, agentConfig
       disabled={loading}
       className="flex items-center gap-1.5 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-1.5 text-xs font-semibold text-red-400 transition-all hover:bg-red-500/20 disabled:opacity-40"
     >
-      <Square className="h-3.5 w-3.5" /> Stop
-    </button>
+      <Square className="h-3.5 w-3.5" /> {t("Stop")}</button>
   );
 
   return (
@@ -386,8 +373,7 @@ export function AgentControls({ slug, sslug, status, defaultContext, agentConfig
               disabled={loading}
               className="flex items-center gap-1.5 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-1.5 text-xs font-semibold text-amber-400 transition-all hover:bg-amber-500/20 disabled:opacity-40"
             >
-              <Pause className="h-3.5 w-3.5" /> Pause
-            </button>
+              <Pause className="h-3.5 w-3.5" /> {t("Pause")}</button>
             {stopControls}
           </>
         ) : status === "paused" ? (
@@ -397,8 +383,7 @@ export function AgentControls({ slug, sslug, status, defaultContext, agentConfig
               disabled={loading}
               className="flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white transition-all hover:bg-emerald-500 disabled:opacity-40"
             >
-              <Play className="h-3.5 w-3.5" /> Resume
-            </button>
+              <Play className="h-3.5 w-3.5" /> {t("Resume")}</button>
             {stopControls}
           </>
         ) : (
@@ -406,8 +391,7 @@ export function AgentControls({ slug, sslug, status, defaultContext, agentConfig
             onClick={() => setShowStartDialog(true)}
             className="flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white transition-all hover:bg-emerald-500"
           >
-            <Play className="h-3.5 w-3.5" /> Start
-          </button>
+            <Play className="h-3.5 w-3.5" /> {t("Start")}</button>
         )}
         {controlError && (
           <p className="text-xs text-red-400">{controlError.message}</p>

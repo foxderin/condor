@@ -11,6 +11,7 @@ import {
 import type { AgentActionRow } from "@/lib/agent-attribution";
 import { api } from "@/lib/api";
 import { parseJournal, type TickEntry } from "@/lib/parse-agent";
+import { t } from "@/lib/i18n";
 
 /**
  * The run's ticks, as its navigation.
@@ -147,8 +148,7 @@ export function TickSpine({
         data-spine-empty
         className={`${bare ? "py-2" : "px-4 py-2"} text-[11px] text-[var(--color-text-muted)]`}
       >
-        No ticks recorded for this run.
-      </p>
+        {t("No ticks recorded for this run.")}</p>
     );
   }
 
@@ -187,8 +187,7 @@ export function TickSpine({
             : "text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)]"
         }`}
       >
-        Run
-      </button>
+        {t("Run")}</button>
       {ticks.map((entry, index) => {
         const deeds = byTick.get(entry.tick) ?? [];
         const state = beatState({
@@ -243,8 +242,7 @@ export function TickSpine({
       })}
       {!hasActionsLog && (
         <span className="ml-2 shrink-0 whitespace-nowrap text-[10px] text-[var(--color-text-muted)]/70">
-          no action log for this run
-        </span>
+          {t("no action log for this run")}</span>
       )}
       {hovered && hoveredEntry && (
         <BeatCard
@@ -342,7 +340,7 @@ function BeatCard({
           {entry.summary}
         </p>
       ) : (
-        <p className="text-[var(--color-text-muted)]">No summary written</p>
+        <p className="text-[var(--color-text-muted)]">{t("No summary written")}</p>
       )}
 
       {shown.length > 0 && (
@@ -377,8 +375,7 @@ function BeatCard({
       )}
 
       <p className="border-t border-[var(--color-border)] pt-1.5 text-[10px] text-[var(--color-text-muted)]">
-        Click to open this tick
-      </p>
+        {t("Click to open this tick")}</p>
     </div>,
     document.body,
   );

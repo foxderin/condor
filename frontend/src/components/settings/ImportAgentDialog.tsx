@@ -16,6 +16,7 @@ import {
 } from "@/lib/api";
 
 import { fileSource, type BundleSource } from "./bundleSource";
+import { t } from "@/lib/i18n";
 
 /**
  * How each review category is introduced, most-decisive first (FEAT-144).
@@ -272,8 +273,7 @@ export function ImportAgentDialog({
       {!source && (
         <label className="flex w-fit cursor-pointer items-center gap-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1.5 text-sm font-semibold text-[var(--color-text-muted)] transition-all hover:border-[var(--color-primary)]/50 hover:text-[var(--color-primary)]">
           <Upload className="h-4 w-4" />
-          Choose a bundle
-          <input
+          {t("Choose a bundle")}<input
             type="file"
             accept=".json,application/json"
             className="hidden"
@@ -288,8 +288,7 @@ export function ImportAgentDialog({
 
       {busy && (
         <p className="flex items-center gap-2 text-sm text-[var(--color-text-muted)]">
-          <Loader2 className="h-4 w-4 animate-spin" /> Reading the bundle…
-        </p>
+          <Loader2 className="h-4 w-4 animate-spin" /> {t("Reading the bundle…")}</p>
       )}
 
       {error && (
@@ -302,7 +301,7 @@ export function ImportAgentDialog({
         <div className="flex items-start gap-2 rounded-lg border border-[var(--color-primary)]/30 bg-[var(--color-primary)]/5 p-3 text-sm text-[var(--color-text)]">
           <Check className="mt-0.5 h-4 w-4 shrink-0 text-[var(--color-primary)]" />
           <span data-import-done>
-            Imported <span className="font-mono">{landed.slug}</span>. {landed.next_step}
+            {t("Imported")}{" "}<span className="font-mono">{landed.slug}</span>. {landed.next_step}
           </span>
         </div>
       )}
@@ -311,7 +310,7 @@ export function ImportAgentDialog({
         <div className="flex items-start gap-2 rounded-lg border border-[var(--color-primary)]/30 bg-[var(--color-primary)]/5 p-3 text-sm text-[var(--color-text)]">
           <Check className="mt-0.5 h-4 w-4 shrink-0 text-[var(--color-primary)]" />
           <span data-update-done>
-            Updated <span className="font-mono">{applied.slug}</span> to version{" "}
+            {t("Updated")}{" "}<span className="font-mono">{applied.slug}</span> {t("to version")}{" "}
             {applied.version}. {applied.next_step}
           </span>
         </div>
@@ -325,15 +324,12 @@ export function ImportAgentDialog({
               {plan.description || plan.when_to_consult || "No description."}
             </p>
             <p className="mt-1 text-[11px] text-[var(--color-text-muted)]">
-              Version {plan.version} · exported {plan.exported_at || "at an unknown time"}{" "}
+              {t("Version")}{" "}{plan.version} {t("· exported")}{" "}{plan.exported_at || "at an unknown time"}{" "}
               as <span className="font-mono">{plan.source_slug}</span> ·{" "}
-              {plan.files.length + plan.executables.length} files · {plan.total_bytes} bytes
+              {plan.files.length + plan.executables.length} {t("files ·")}{" "}{plan.total_bytes} bytes
             </p>
             <p data-agent-uid className="text-[11px] text-[var(--color-text-muted)]">
-              Agent id <span className="font-mono">{plan.agent_uid}</span> — the same
-              agent on every install that imported this bundle, whatever it is named
-              there.
-            </p>
+              {t("Agent id")}{" "}<span className="font-mono">{plan.agent_uid}</span> {t("— the same agent on every install that imported this bundle, whatever it is named there.")}</p>
             {plan.notes && (
               <p data-bundle-notes className="mt-1 text-[11px] text-[var(--color-text)]">
                 “{plan.notes}”
@@ -344,7 +340,7 @@ export function ImportAgentDialog({
                 here — it signs no bundle and has no keys to check one with. */}
             {(plan.author.name || plan.author.handle) && (
               <p data-bundle-author className="mt-1 text-[11px] text-[var(--color-text-muted)]">
-                Author (unverified claim):{" "}
+                {t("Author (unverified claim):")}{" "}
                 <span className="text-[var(--color-text)]">
                   {plan.author.name || plan.author.handle}
                 </span>
@@ -356,13 +352,9 @@ export function ImportAgentDialog({
           {plan.unmet.length > 0 && (
             <div className="rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] p-2.5">
               <p className="mb-1 text-xs font-semibold text-[var(--color-text)]">
-                {plan.unmet.length} thing{plan.unmet.length !== 1 ? "s" : ""} this install
-                cannot give it
-              </p>
+                {plan.unmet.length} thing{plan.unmet.length !== 1 ? "s" : ""} {t("this install cannot give it")}</p>
               <p className="mb-2 text-[11px] text-[var(--color-text-muted)]">
-                None of this stops the import — everything arrives muted anyway. It is
-                what will not work until you fix it.
-              </p>
+                {t("None of this stops the import — everything arrives muted anyway. It is what will not work until you fix it.")}</p>
               <ul className="space-y-0.5">
                 {plan.unmet.map((u) => (
                   <li
@@ -372,7 +364,7 @@ export function ImportAgentDialog({
                   >
                     <span className={u.blocking ? "text-amber-400" : ""}>{u.kind}</span>{" "}
                     <span className="font-mono text-[var(--color-text)]">{u.name}</span>
-                    {u.have.length > 0 && <> — you have {u.have.join(", ")}</>}
+                    {u.have.length > 0 && <> {t("— you have")}{" "}{u.have.join(", ")}</>}
                   </li>
                 ))}
               </ul>
@@ -390,15 +382,10 @@ export function ImportAgentDialog({
               className="rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] p-2.5"
             >
               <p className="mb-1 text-xs font-semibold text-[var(--color-text)]">
-                The review found {plan.findings.length} thing
-                {plan.findings.length !== 1 ? "s" : ""} to look at
-              </p>
+                {t("The review found")}{" "}{plan.findings.length} thing
+                {plan.findings.length !== 1 ? "s" : ""} {t("to look at")}</p>
               <p className="mb-2 text-[11px] text-[var(--color-text-muted)]">
-                A bundle from someone you do not trust is untrusted code, and there is
-                no sandbox here. Every file it would write is named on this screen
-                before anything is written, and this is what a scan of their contents
-                found. It warns; it does not prevent.
-              </p>
+                {t("A bundle from someone you do not trust is untrusted code, and there is no sandbox here. Every file it would write is named on this screen before anything is written, and this is what a scan of their contents found. It warns; it does not prevent.")}</p>
               <div className="space-y-2">
                 {categoriesOf(plan.findings).map((category) => {
                   const rows = plan.findings.filter((f) => f.category === category);
@@ -456,14 +443,10 @@ export function ImportAgentDialog({
             <div className="rounded-md border border-amber-500/30 bg-amber-500/5 p-2.5">
               <p className="mb-1 flex items-center gap-1.5 text-xs font-semibold text-amber-400">
                 <AlertTriangle className="h-3.5 w-3.5" />
-                {plan.executables.length} executable file
-                {plan.executables.length !== 1 ? "s" : ""}
+                {plan.executables.length} {t("executable file")}{plan.executables.length !== 1 ? "s" : ""}
               </p>
               <p className="mb-2 text-[11px] text-[var(--color-text-muted)]">
-                A bundle from someone you do not trust is untrusted code: an imported
-                routine runs inside Condor with no sandbox. These arrive muted — read
-                each one before you switch it on.
-              </p>
+                {t("A bundle from someone you do not trust is untrusted code: an imported routine runs inside Condor with no sandbox. These arrive muted — read each one before you switch it on.")}</p>
               <ul className="space-y-0.5">
                 {plan.executables.map((f) => (
                   <li
@@ -482,7 +465,7 @@ export function ImportAgentDialog({
 
           <details>
             <summary className="cursor-pointer text-xs text-[var(--color-text-muted)]">
-              {plan.files.length} other file{plan.files.length !== 1 ? "s" : ""}
+              {plan.files.length} {t("other file")}{plan.files.length !== 1 ? "s" : ""}
             </summary>
             <ul className="mt-1 space-y-0.5">
               {plan.files.map((f) => (
@@ -498,8 +481,7 @@ export function ImportAgentDialog({
           </details>
 
           <p className="text-[11px] text-[var(--color-text-muted)]">
-            Lands as <span className="font-mono">{plan.slug}</span>, owned by you, with no
-            server pin. Muted on arrival:{" "}
+            {t("Lands as")}{" "}<span className="font-mono">{plan.slug}</span>{t(", owned by you, with no server pin. Muted on arrival:")}{" "}
             {[...plan.mutes.routines, ...plan.mutes.skills].join(", ") || "nothing"}.
             {plan.agent_key_inherited &&
               ` Its model is not configured here, so it will use yours (${plan.agent_key}).`}
@@ -520,33 +502,26 @@ export function ImportAgentDialog({
                    rename stays available underneath (FEAT-145). */
                 <div data-update-offer className="space-y-1.5">
                   <p className="text-xs text-[var(--color-text)]">
-                    This is a newer version of{" "}
-                    <span className="font-mono">{plan.collision}</span>, the agent you
-                    already have — version {plan.version} against the one installed.
-                    Updating keeps its memory, its config, its mutes and anything you
-                    edited here.
-                  </p>
+                    {t("This is a newer version of")}{" "}
+                    <span className="font-mono">{plan.collision}</span>{t(", the agent you already have — version")}{plan.version} {t("against the one installed. Updating keeps its memory, its config, its mutes and anything you edited here.")}</p>
                   <button
                     onClick={() => active && reviewUpdate(active, plan.collision)}
                     disabled={busy}
                     className="flex items-center gap-1.5 rounded-lg border border-[var(--color-primary)]/40 bg-[var(--color-primary)]/10 px-3 py-1.5 text-sm font-semibold text-[var(--color-primary)] transition-all hover:bg-[var(--color-primary)]/20 disabled:cursor-not-allowed disabled:opacity-40"
                   >
                     <RefreshCw className="h-4 w-4" />
-                    Review the changes
-                  </button>
+                    {t("Review the changes")}</button>
                   <p className="text-[11px] text-[var(--color-text-muted)]">
-                    Or import it as a second agent under another name:
-                  </p>
+                    {t("Or import it as a second agent under another name:")}</p>
                 </div>
               ) : (
                 <p role="alert" className="text-xs text-[var(--color-red)]">
-                  An agent called <span className="font-mono">{plan.collision}</span>{" "}
-                  already exists. Import never replaces one — give it another name.
-                </p>
+                  {t("An agent called")}{" "}<span className="font-mono">{plan.collision}</span>{" "}
+                  {t("already exists. Import never replaces one — give it another name.")}</p>
               )}
               <div className="flex items-center gap-2">
                 <input
-                  aria-label="Import as"
+                  aria-label={t("Import as")}
                   value={asSlug}
                   placeholder={plan.suggested_slug}
                   onChange={(e) => setAsSlug(e.target.value)}
@@ -557,8 +532,7 @@ export function ImportAgentDialog({
                   disabled={busy}
                   className="rounded-md border border-[var(--color-border)] px-3 py-1.5 text-xs font-semibold text-[var(--color-text-muted)] hover:text-[var(--color-text)] disabled:opacity-50"
                 >
-                  Check name
-                </button>
+                  {t("Check name")}</button>
               </div>
             </div>
           )}
@@ -569,7 +543,7 @@ export function ImportAgentDialog({
             className="flex items-center gap-1.5 rounded-lg border border-[var(--color-primary)]/40 bg-[var(--color-primary)]/10 px-3 py-1.5 text-sm font-semibold text-[var(--color-primary)] transition-all hover:bg-[var(--color-primary)]/20 disabled:cursor-not-allowed disabled:opacity-40"
           >
             <Upload className="h-4 w-4" />
-            Import {plan.slug}
+            {t("Import")}{" "}{plan.slug}
           </button>
         </div>
       )}
@@ -581,14 +555,11 @@ export function ImportAgentDialog({
         >
           <div>
             <p className="text-sm font-semibold text-[var(--color-text)]">
-              Updating <span className="font-mono">{update.slug}</span> — version{" "}
+              {t("Updating")}{" "}<span className="font-mono">{update.slug}</span> {t("— version")}{" "}
               {update.installed_version || "?"} → {update.version}
             </p>
             <p className="text-[11px] text-[var(--color-text-muted)]">
-              Its memory, config, mutes, journals and session output are untouched.
-              Nothing is started, and every routine that changes has to be read and
-              allowed again before it can run.
-            </p>
+              {t("Its memory, config, mutes, journals and session output are untouched. Nothing is started, and every routine that changes has to be read and allowed again before it can run.")}</p>
           </div>
 
           {update.blockers.map((b) => (
@@ -653,12 +624,10 @@ export function ImportAgentDialog({
               </ul>
 
               <p className="text-[11px] text-[var(--color-text-muted)]">
-                Muted on arrival:{" "}
+                {t("Muted on arrival:")}{" "}
                 {[...update.mutes.routines, ...update.mutes.skills].join(", ") ||
                   "nothing new"}
-                . The previous bytes of every replaced or deleted file are kept
-                beside the agent, out of its library.
-              </p>
+                {t(". The previous bytes of every replaced or deleted file are kept beside the agent, out of its library.")}</p>
 
               <button
                 onClick={confirmUpdate}
@@ -666,7 +635,7 @@ export function ImportAgentDialog({
                 className="flex items-center gap-1.5 rounded-lg border border-[var(--color-primary)]/40 bg-[var(--color-primary)]/10 px-3 py-1.5 text-sm font-semibold text-[var(--color-primary)] transition-all hover:bg-[var(--color-primary)]/20 disabled:cursor-not-allowed disabled:opacity-40"
               >
                 <RefreshCw className="h-4 w-4" />
-                Update {update.slug}
+                {t("Update")}{" "}{update.slug}
               </button>
             </>
           )}

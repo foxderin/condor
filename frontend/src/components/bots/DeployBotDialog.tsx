@@ -18,6 +18,7 @@ import {
   api,
   type ControllerConfigSummary,
 } from "@/lib/api";
+import { t } from "@/lib/i18n";
 
 // ── Helpers ──
 
@@ -112,7 +113,7 @@ export function ConfigEditor({
       <div className="rounded-lg border border-[var(--color-border)] p-4">
         <div className="flex items-center gap-2 text-sm text-[var(--color-text-muted)]">
           <div className="h-4 w-4 animate-spin rounded-full border-2 border-[var(--color-border)] border-t-[var(--color-primary)]" />
-          Loading {configId}...
+          {t("Loading")}{" "}{configId}...
         </div>
       </div>
     );
@@ -149,7 +150,7 @@ export function ConfigEditor({
           <button
             onClick={() => onRemove(configId)}
             className="px-3 py-3 text-[var(--color-text-muted)] hover:text-[var(--color-red)] transition-colors"
-            title="Remove config"
+            title={t("Remove config")}
           >
             <X className="h-3.5 w-3.5" />
           </button>
@@ -167,8 +168,7 @@ export function ConfigEditor({
                 className="flex items-center gap-1 text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
               >
                 <RotateCcw className="h-3 w-3" />
-                Reset all
-              </button>
+                {t("Reset all")}</button>
             </div>
           )}
           <div className="grid gap-2 p-4 pt-2">
@@ -237,7 +237,7 @@ export function ConfigEditor({
                       <button
                         onClick={() => handleReset(key)}
                         className="mt-1 p-1 rounded text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
-                        title="Reset to original"
+                        title={t("Reset to original")}
                       >
                         <RotateCcw className="h-3 w-3" />
                       </button>
@@ -408,14 +408,13 @@ export function DeployBotDialog({
           <div className="flex items-center gap-3">
             <Rocket className="h-5 w-5 text-[var(--color-primary)]" />
             <h2 className="text-lg font-semibold text-[var(--color-text)]">
-              Deploy Bot
-            </h2>
+              {t("Deploy Bot")}</h2>
           </div>
           <button
             onClick={handleClose}
             className="p-1 rounded hover:bg-[var(--color-surface-hover)] transition-colors"
-            title="Close"
-            aria-label="Close"
+            title={t("Close")}
+            aria-label={t("Close")}
           >
             <X className="h-4 w-4" />
           </button>
@@ -428,7 +427,7 @@ export function DeployBotDialog({
           {hasSelected && (
             <div>
               <h3 className="mb-2 text-xs font-semibold uppercase tracking-wider text-[var(--color-text-muted)]">
-                Selected ({selected.size})
+                {t("Selected (")}{selected.size})
               </h3>
               <div className="space-y-2">
                 {Array.from(selected).map((id) => (
@@ -455,7 +454,7 @@ export function DeployBotDialog({
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search configs..."
+                placeholder={t("Search configs...")}
                 className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] pl-10 pr-3 py-2 text-sm text-[var(--color-text)] placeholder-[var(--color-text-muted)]/50 outline-none transition-colors focus:border-[var(--color-primary)]"
                 autoFocus
               />
@@ -505,7 +504,7 @@ export function DeployBotDialog({
               className="flex items-center gap-2 text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
             >
               <Settings className="h-3.5 w-3.5" />
-              <span className="font-medium">Advanced Settings</span>
+              <span className="font-medium">{t("Advanced Settings")}</span>
               {showAdvanced ? (
                 <ChevronDown className="h-3 w-3" />
               ) : (
@@ -516,7 +515,7 @@ export function DeployBotDialog({
             {showAdvanced && (
               <div className="mt-3 space-y-3">
                 <div>
-                  <label className="mb-1 block text-xs text-[var(--color-text-muted)]">Bot Name</label>
+                  <label className="mb-1 block text-xs text-[var(--color-text-muted)]">{t("Bot Name")}</label>
                   <input
                     type="text"
                     value={botName}
@@ -526,7 +525,7 @@ export function DeployBotDialog({
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="mb-1 block text-xs text-[var(--color-text-muted)]">Account</label>
+                    <label className="mb-1 block text-xs text-[var(--color-text-muted)]">{t("Account")}</label>
                     <input
                       type="text"
                       value={accountName}
@@ -535,7 +534,7 @@ export function DeployBotDialog({
                     />
                   </div>
                   <div>
-                    <label className="mb-1 block text-xs text-[var(--color-text-muted)]">Image</label>
+                    <label className="mb-1 block text-xs text-[var(--color-text-muted)]">{t("Image")}</label>
                     <input
                       type="text"
                       value={image}
@@ -546,22 +545,22 @@ export function DeployBotDialog({
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="mb-1 block text-xs text-[var(--color-text-muted)]">Max Global Drawdown</label>
+                    <label className="mb-1 block text-xs text-[var(--color-text-muted)]">{t("Max Global Drawdown")}</label>
                     <input
                       type="number"
                       value={maxGlobalDrawdown}
                       onChange={(e) => setMaxGlobalDrawdown(e.target.value)}
-                      placeholder="Optional"
+                      placeholder={t("Optional")}
                       className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2 text-sm text-[var(--color-text)] placeholder-[var(--color-text-muted)]/50 outline-none transition-colors focus:border-[var(--color-primary)]"
                     />
                   </div>
                   <div>
-                    <label className="mb-1 block text-xs text-[var(--color-text-muted)]">Max Controller Drawdown</label>
+                    <label className="mb-1 block text-xs text-[var(--color-text-muted)]">{t("Max Controller Drawdown")}</label>
                     <input
                       type="number"
                       value={maxControllerDrawdown}
                       onChange={(e) => setMaxControllerDrawdown(e.target.value)}
-                      placeholder="Optional"
+                      placeholder={t("Optional")}
                       className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2 text-sm text-[var(--color-text)] placeholder-[var(--color-text-muted)]/50 outline-none transition-colors focus:border-[var(--color-primary)]"
                     />
                   </div>
@@ -577,8 +576,7 @@ export function DeployBotDialog({
                 onClick={() => { setDeployError(null); deployMutation.mutate(); }}
                 className="mt-2 text-xs font-medium text-[var(--color-red)] underline"
               >
-                Retry
-              </button>
+                {t("Retry")}</button>
             </div>
           )}
         </div>
@@ -594,8 +592,7 @@ export function DeployBotDialog({
               onClick={handleClose}
               className="rounded-lg px-4 py-2 text-sm text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)]"
             >
-              Cancel
-            </button>
+              {t("Cancel")}</button>
             <button
               onClick={() => deployMutation.mutate()}
               disabled={!hasSelected || !botName.trim() || deployMutation.isPending}

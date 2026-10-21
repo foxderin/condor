@@ -21,6 +21,7 @@ import type {
   RunningInstance,
   StrategySummary,
 } from "@/lib/api";
+import { t } from "@/lib/i18n";
 
 /**
  * What the loop is doing, above whatever you are reading (FEAT-103).
@@ -86,7 +87,7 @@ export function LoopBar({
     <div className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-[var(--color-border)] px-4 py-1.5 text-xs">
       {strategies.length > 0 && (
         <Picker
-          label="Loop"
+          label={t("Loop")}
           value={sslug ?? ""}
           onChange={onSelectStrategy}
           options={strategies.map((s) => ({ value: s.slug, label: s.name }))}
@@ -95,7 +96,7 @@ export function LoopBar({
 
       {run && (
         <Picker
-          label="Run"
+          label={t("Run")}
           value={run.run_id}
           onChange={onSelectRun}
           options={runs.map((r) => ({
@@ -195,7 +196,7 @@ export function LoopBar({
             title={`This session is still running its start-time config. Restart to apply:\n${drift.join("\n")}`}
             className="rounded bg-amber-400/15 px-1.5 py-0.5 font-medium text-amber-400"
           >
-            config drifted ({drift.length})
+            {t("config drifted (")}{drift.length})
           </span>
         </>
       )}

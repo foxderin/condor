@@ -24,6 +24,7 @@ import {
   formatPct,
   isExecutorActive,
 } from "@/lib/formatters";
+import { t } from "@/lib/i18n";
 
 // ── Sort types ──
 
@@ -226,7 +227,7 @@ const ExecutorRow = memo(function ExecutorRow({
             onClick={() => onStop(ex.id)}
             disabled={isStopping}
             className="p-1 rounded hover:bg-[var(--color-red)]/10 text-[var(--color-text-muted)] hover:text-[var(--color-red)] transition-colors disabled:opacity-50"
-            title="Stop executor"
+            title={t("Stop executor")}
           >
             <Square className="h-3.5 w-3.5" />
           </button>
@@ -321,16 +322,16 @@ export function ExecutorTable({
                 </th>
               )}
               <SortHeader label="ID" sortKey="id" currentKey={sortKey} currentDir={sortDir} onSort={onSort} />
-              <SortHeader label="Type" sortKey="type" currentKey={sortKey} currentDir={sortDir} onSort={onSort} />
-              <SortHeader label="Connector" sortKey="connector" currentKey={sortKey} currentDir={sortDir} onSort={onSort} />
-              <SortHeader label="Pair" sortKey="trading_pair" currentKey={sortKey} currentDir={sortDir} onSort={onSort} />
-              <SortHeader label="Side" sortKey="side" currentKey={sortKey} currentDir={sortDir} onSort={onSort} />
-              <SortHeader label="PnL" sortKey="pnl" currentKey={sortKey} currentDir={sortDir} onSort={onSort} align="right" />
-              <SortHeader label="PnL%" sortKey="net_pnl_pct" currentKey={sortKey} currentDir={sortDir} onSort={onSort} align="right" />
-              <SortHeader label="Volume" sortKey="volume" currentKey={sortKey} currentDir={sortDir} onSort={onSort} align="right" />
-              <SortHeader label="Fees" sortKey="cum_fees_quote" currentKey={sortKey} currentDir={sortDir} onSort={onSort} align="right" />
-              <SortHeader label="Close Type" sortKey="close_type" currentKey={sortKey} currentDir={sortDir} onSort={onSort} />
-              <SortHeader label="Age" sortKey="timestamp" currentKey={sortKey} currentDir={sortDir} onSort={onSort} align="right" />
+              <SortHeader label={t("Type")} sortKey="type" currentKey={sortKey} currentDir={sortDir} onSort={onSort} />
+              <SortHeader label={t("Connector")} sortKey="connector" currentKey={sortKey} currentDir={sortDir} onSort={onSort} />
+              <SortHeader label={t("Pair")} sortKey="trading_pair" currentKey={sortKey} currentDir={sortDir} onSort={onSort} />
+              <SortHeader label={t("Side")} sortKey="side" currentKey={sortKey} currentDir={sortDir} onSort={onSort} />
+              <SortHeader label={t("PnL")} sortKey="pnl" currentKey={sortKey} currentDir={sortDir} onSort={onSort} align="right" />
+              <SortHeader label={t("PnL%")} sortKey="net_pnl_pct" currentKey={sortKey} currentDir={sortDir} onSort={onSort} align="right" />
+              <SortHeader label={t("Volume")} sortKey="volume" currentKey={sortKey} currentDir={sortDir} onSort={onSort} align="right" />
+              <SortHeader label={t("Fees")} sortKey="cum_fees_quote" currentKey={sortKey} currentDir={sortDir} onSort={onSort} align="right" />
+              <SortHeader label={t("Close Type")} sortKey="close_type" currentKey={sortKey} currentDir={sortDir} onSort={onSort} />
+              <SortHeader label={t("Age")} sortKey="timestamp" currentKey={sortKey} currentDir={sortDir} onSort={onSort} align="right" />
               <th className="px-3 py-3 w-10" />
             </tr>
           </thead>
@@ -356,13 +357,13 @@ export function ExecutorTable({
       {remaining > 0 && (
         <div className="flex items-center justify-center gap-3 border-t border-[var(--color-border)] px-4 py-2.5">
           <span className="text-xs text-[var(--color-text-muted)] tabular-nums">
-            Showing {visible.length} of {sorted.length}
+            {t("Showing")}{" "}{visible.length} of {sorted.length}
           </span>
           <button
             onClick={() => setVisibleCount((c) => c + VISIBLE_STEP)}
             className="rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1.5 text-xs font-medium hover:bg-[var(--color-surface-hover)] transition-colors"
           >
-            Show {Math.min(VISIBLE_STEP, remaining)} more
+            {t("Show")}{" "}{Math.min(VISIBLE_STEP, remaining)} more
           </button>
         </div>
       )}
@@ -464,8 +465,7 @@ export function DetailPanel({
               className="flex items-center gap-1.5 rounded-md bg-[var(--color-surface)] border border-[var(--color-border)] px-3 py-1.5 text-xs font-medium hover:bg-[var(--color-surface-hover)] transition-colors"
             >
               <TrendingUp className="h-3 w-3" />
-              Trade
-            </button>
+              {t("Trade")}</button>
             {onStop && isExecutorActive(executor.status) && (
               <button
                 onClick={() => onStop(executor.id)}
@@ -479,8 +479,8 @@ export function DetailPanel({
             <button
               onClick={onClose}
               className="p-1 rounded hover:bg-[var(--color-surface-hover)] transition-colors"
-              title="Close"
-              aria-label="Close"
+              title={t("Close")}
+              aria-label={t("Close")}
             >
               <X className="h-4 w-4" />
             </button>
@@ -516,8 +516,7 @@ export function DetailPanel({
           {executor.controller_id && (
             <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 space-y-1">
               <h3 className="text-xs font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
-                Controller
-              </h3>
+                {t("Controller")}</h3>
               <div className="text-sm font-medium font-mono">{executor.controller_id}</div>
             </div>
           )}
@@ -537,18 +536,17 @@ export function DetailPanel({
           {(executor.entry_price > 0 || executor.current_price > 0) && (
             <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 space-y-3">
               <h3 className="text-xs font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
-                Price Info
-              </h3>
+                {t("Price Info")}</h3>
               <div className="grid grid-cols-2 gap-3 text-sm">
                 {executor.entry_price > 0 && (
                   <div>
-                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">Entry</div>
+                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">{t("Entry")}</div>
                     <div className="font-medium tabular-nums">{formatPrice(executor.entry_price)}</div>
                   </div>
                 )}
                 {executor.current_price > 0 && (
                   <div>
-                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">Current</div>
+                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">{t("Current")}</div>
                     <div className="font-medium tabular-nums">{formatPrice(executor.current_price)}</div>
                   </div>
                 )}
@@ -559,17 +557,16 @@ export function DetailPanel({
           {/* PnL Breakdown */}
           <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 space-y-3">
             <h3 className="text-xs font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
-              PnL & Volume
-            </h3>
+              {t("PnL & Volume")}</h3>
             <div className="grid grid-cols-4 gap-3 text-sm">
               <div>
-                <div className="text-[var(--color-text-muted)] text-xs mb-0.5">Net PnL</div>
+                <div className="text-[var(--color-text-muted)] text-xs mb-0.5">{t("Net PnL")}</div>
                 <div className="font-medium tabular-nums" style={{ color: pnlColor(executor.pnl) }}>
                   {fmtPnl(executor.pnl)}
                 </div>
               </div>
               <div>
-                <div className="text-[var(--color-text-muted)] text-xs mb-0.5">PnL %</div>
+                <div className="text-[var(--color-text-muted)] text-xs mb-0.5">{t("PnL %")}</div>
                 <div
                   className="font-medium tabular-nums"
                   style={{ color: executor.net_pnl_pct ? pnlColor(executor.net_pnl_pct) : undefined }}
@@ -578,11 +575,11 @@ export function DetailPanel({
                 </div>
               </div>
               <div>
-                <div className="text-[var(--color-text-muted)] text-xs mb-0.5">Volume</div>
+                <div className="text-[var(--color-text-muted)] text-xs mb-0.5">{t("Volume")}</div>
                 <div className="font-medium tabular-nums">{fmtVal(executor.volume)}</div>
               </div>
               <div>
-                <div className="text-[var(--color-text-muted)] text-xs mb-0.5">Fees</div>
+                <div className="text-[var(--color-text-muted)] text-xs mb-0.5">{t("Fees")}</div>
                 <div className="font-medium tabular-nums">
                   {executor.cum_fees_quote ? fmtDet(executor.cum_fees_quote) : "\u2014"}
                 </div>
@@ -594,12 +591,11 @@ export function DetailPanel({
           {isPosition && (
             <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 space-y-3">
               <h3 className="text-xs font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
-                Position Details
-              </h3>
+                {t("Position Details")}</h3>
               <div className="grid grid-cols-2 gap-3 text-sm">
                 {config.stop_loss != null && Number(config.stop_loss) !== -1 && (
                   <div>
-                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">Stop Loss</div>
+                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">{t("Stop Loss")}</div>
                     <div className="font-medium tabular-nums text-[var(--color-red)]">
                       {(Number(config.stop_loss) * 100).toFixed(2)}%
                     </div>
@@ -607,7 +603,7 @@ export function DetailPanel({
                 )}
                 {config.take_profit != null && Number(config.take_profit) !== -1 && (
                   <div>
-                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">Take Profit</div>
+                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">{t("Take Profit")}</div>
                     <div className="font-medium tabular-nums text-[var(--color-green)]">
                       {(Number(config.take_profit) * 100).toFixed(2)}%
                     </div>
@@ -615,13 +611,13 @@ export function DetailPanel({
                 )}
                 {config.leverage != null && (
                   <div>
-                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">Leverage</div>
+                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">{t("Leverage")}</div>
                     <div className="font-medium tabular-nums">{String(config.leverage)}x</div>
                   </div>
                 )}
                 {config.total_amount_quote != null && (
                   <div>
-                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">Amount</div>
+                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">{t("Amount")}</div>
                     <div className="font-medium tabular-nums">{fmtDet(Number(config.total_amount_quote))}</div>
                   </div>
                 )}
@@ -633,42 +629,41 @@ export function DetailPanel({
           {isGrid && (
             <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 space-y-3">
               <h3 className="text-xs font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
-                Grid Details
-              </h3>
+                {t("Grid Details")}</h3>
               <div className="grid grid-cols-2 gap-3 text-sm">
                 {config.start_price != null && (
                   <div>
-                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">Start Price</div>
+                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">{t("Start Price")}</div>
                     <div className="font-medium tabular-nums">{formatPrice(Number(config.start_price))}</div>
                   </div>
                 )}
                 {config.end_price != null && (
                   <div>
-                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">End Price</div>
+                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">{t("End Price")}</div>
                     <div className="font-medium tabular-nums">{formatPrice(Number(config.end_price))}</div>
                   </div>
                 )}
                 {config.limit_price != null && (
                   <div>
-                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">Limit Price</div>
+                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">{t("Limit Price")}</div>
                     <div className="font-medium tabular-nums">{formatPrice(Number(config.limit_price))}</div>
                   </div>
                 )}
                 {config.leverage != null && (
                   <div>
-                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">Leverage</div>
+                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">{t("Leverage")}</div>
                     <div className="font-medium tabular-nums">{String(config.leverage)}x</div>
                   </div>
                 )}
                 {config.total_amount_quote != null && (
                   <div>
-                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">Amount</div>
+                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">{t("Amount")}</div>
                     <div className="font-medium tabular-nums">{fmtDet(Number(config.total_amount_quote))}</div>
                   </div>
                 )}
                 {tripleBarrier.take_profit != null && (
                   <div>
-                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">Take Profit</div>
+                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">{t("Take Profit")}</div>
                     <div className="font-medium tabular-nums text-[var(--color-green)]">
                       {(Number(tripleBarrier.take_profit) * 100).toFixed(2)}%
                     </div>
@@ -676,19 +671,19 @@ export function DetailPanel({
                 )}
                 {config.keep_position != null && (
                   <div>
-                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">Keep Position</div>
+                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">{t("Keep Position")}</div>
                     <div className="font-medium">{String(config.keep_position) === "true" ? "Yes" : "No"}</div>
                   </div>
                 )}
                 {tripleBarrier.open_order_type != null && (
                   <div>
-                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">Open Order Type</div>
+                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">{t("Open Order Type")}</div>
                     <div className="font-medium text-xs">{String(tripleBarrier.open_order_type)}</div>
                   </div>
                 )}
                 {tripleBarrier.take_profit_order_type != null && (
                   <div>
-                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">TP Order Type</div>
+                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">{t("TP Order Type")}</div>
                     <div className="font-medium text-xs">{String(tripleBarrier.take_profit_order_type)}</div>
                   </div>
                 )}
@@ -700,24 +695,23 @@ export function DetailPanel({
           {isLp && (
             <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 space-y-3">
               <h3 className="text-xs font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
-                LP Details
-              </h3>
+                {t("LP Details")}</h3>
               <div className="grid grid-cols-2 gap-3 text-sm">
                 {lpLower != null && (
                   <div>
-                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">Lower Price</div>
+                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">{t("Lower Price")}</div>
                     <div className="font-medium tabular-nums">{formatPrice(Number(lpLower))}</div>
                   </div>
                 )}
                 {lpUpper != null && (
                   <div>
-                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">Upper Price</div>
+                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">{t("Upper Price")}</div>
                     <div className="font-medium tabular-nums">{formatPrice(Number(lpUpper))}</div>
                   </div>
                 )}
                 {config.lower_limit_price != null && (
                   <div>
-                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">Lower Limit</div>
+                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">{t("Lower Limit")}</div>
                     <div className="font-medium tabular-nums text-[var(--color-red)]">
                       {formatPrice(Number(config.lower_limit_price))}
                     </div>
@@ -725,7 +719,7 @@ export function DetailPanel({
                 )}
                 {config.upper_limit_price != null && (
                   <div>
-                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">Upper Limit</div>
+                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">{t("Upper Limit")}</div>
                     <div className="font-medium tabular-nums text-[var(--color-red)]">
                       {formatPrice(Number(config.upper_limit_price))}
                     </div>
@@ -733,37 +727,37 @@ export function DetailPanel({
                 )}
                 {config.lp_provider != null && (
                   <div>
-                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">Provider</div>
+                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">{t("Provider")}</div>
                     <div className="font-medium text-xs">{String(config.lp_provider)}</div>
                   </div>
                 )}
                 {custom.in_range != null && (
                   <div>
-                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">Range Status</div>
+                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">{t("Range Status")}</div>
                     <div className="font-medium text-xs">{String(custom.in_range)}</div>
                   </div>
                 )}
                 {config.base_amount != null && Number(config.base_amount) > 0 && (
                   <div>
-                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">Base Amount</div>
+                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">{t("Base Amount")}</div>
                     <div className="font-medium tabular-nums">{String(config.base_amount)}</div>
                   </div>
                 )}
                 {config.quote_amount != null && Number(config.quote_amount) > 0 && (
                   <div>
-                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">Quote Amount</div>
+                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">{t("Quote Amount")}</div>
                     <div className="font-medium tabular-nums">{String(config.quote_amount)}</div>
                   </div>
                 )}
                 {config.pool_address != null && (
                   <div className="col-span-2">
-                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">Pool</div>
+                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">{t("Pool")}</div>
                     <div className="font-mono text-[11px] break-all">{String(config.pool_address)}</div>
                   </div>
                 )}
                 {config.keep_position != null && (
                   <div>
-                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">Keep Position</div>
+                    <div className="text-[var(--color-text-muted)] text-xs mb-0.5">{t("Keep Position")}</div>
                     <div className="font-medium">{String(config.keep_position) === "true" ? "Yes" : "No"}</div>
                   </div>
                 )}
@@ -775,18 +769,17 @@ export function DetailPanel({
           {executor.timestamp > 0 && (
             <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 space-y-1">
               <h3 className="text-xs font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
-                Timing
-              </h3>
+                {t("Timing")}</h3>
               <div className="text-sm">
                 <div className="flex justify-between py-0.5">
-                  <span className="text-[var(--color-text-muted)]">Created</span>
+                  <span className="text-[var(--color-text-muted)]">{t("Created")}</span>
                   <span className="font-medium tabular-nums">
                     {new Date(executor.timestamp * 1000).toLocaleString()} ({formatAge(executor.timestamp)} ago)
                   </span>
                 </div>
                 {executor.close_timestamp > 0 && (
                   <div className="flex justify-between py-0.5">
-                    <span className="text-[var(--color-text-muted)]">Closed</span>
+                    <span className="text-[var(--color-text-muted)]">{t("Closed")}</span>
                     <span className="font-medium tabular-nums">
                       {new Date(executor.close_timestamp * 1000).toLocaleString()}
                     </span>
@@ -800,8 +793,7 @@ export function DetailPanel({
           {customEntries.length > 0 && (
             <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 space-y-2">
               <h3 className="text-xs font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
-                Custom Info
-              </h3>
+                {t("Custom Info")}</h3>
               <div className="space-y-1 text-xs">
                 {customEntries.map(([key, val]) => (
                   <div key={key} className="flex justify-between gap-3 py-0.5">
@@ -821,7 +813,7 @@ export function DetailPanel({
           {configEntries.length > 0 && (
             <details className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)]">
               <summary className="px-4 py-3 text-xs font-medium uppercase tracking-wider text-[var(--color-text-muted)] cursor-pointer select-none hover:text-[var(--color-text)]">
-                Raw Config ({configEntries.length} fields)
+                {t("Raw Config (")}{configEntries.length} fields)
               </summary>
               <div className="px-4 pb-3 space-y-1 text-xs">
                 {configEntries.map(([key, val]) => {

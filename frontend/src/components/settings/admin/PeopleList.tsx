@@ -6,6 +6,7 @@ import { ADMIN_PEOPLE_KEY, type AdminPerson, adminApi } from "@/lib/admin-api";
 
 import { displayName } from "./identity";
 import { PersonRow } from "./PersonRow";
+import { t } from "@/lib/i18n";
 
 /**
  * The list of people, filtered and searchable (FEAT-088).
@@ -94,8 +95,8 @@ export function PeopleList({
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="name, @handle or id"
-            aria-label="Search people"
+            placeholder={t("name, @handle or id")}
+            aria-label={t("Search people")}
             className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] py-1.5 pl-8 pr-3 text-sm text-[var(--color-text)] placeholder:text-[var(--color-text-muted)] focus:border-[var(--color-primary)] focus:outline-none"
           />
         </div>

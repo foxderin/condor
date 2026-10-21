@@ -1,5 +1,6 @@
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
+import { t } from "@/lib/i18n";
 
 const PRESETS = [
   { label: "1m", sec: 60 },
@@ -28,8 +29,7 @@ export function ScheduleDropdown({ onSchedule, disabled }: Props) {
         onClick={() => setOpen(!open)}
         className="flex items-center gap-1 rounded border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1.5 text-xs font-medium text-[var(--color-text)] transition-colors hover:bg-[var(--color-surface-hover)] disabled:opacity-50"
       >
-        Schedule
-        <ChevronDown className="h-3 w-3" />
+        {t("Schedule")}<ChevronDown className="h-3 w-3" />
       </button>
       {open && (
         <div className="absolute right-0 z-10 mt-1 w-28 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] py-1 shadow-lg">
@@ -43,7 +43,7 @@ export function ScheduleDropdown({ onSchedule, disabled }: Props) {
               }}
               className="block w-full px-3 py-1.5 text-left text-xs text-[var(--color-text)] hover:bg-[var(--color-surface-hover)]"
             >
-              Every {p.label}
+              {t("Every")}{" "}{p.label}
             </button>
           ))}
         </div>

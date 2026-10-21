@@ -5,6 +5,7 @@ import { Loader2, Mic, Paperclip, Send, Square, X } from "lucide-react";
 import { api } from "@/lib/api";
 import { authFetch } from "@/lib/auth-token";
 import { readDraft, writeDraft } from "@/lib/chatDrafts";
+import { t } from "@/lib/i18n";
 
 /** What the composer will accept, and what the store will keep. Kept in step
  *  with `condor/runtime/attachments.py` — the backend refuses anything else. */
@@ -457,20 +458,18 @@ export function ChatInput({
                 {formatDuration(recordingDuration)}
               </span>
               <span className="flex-1 text-xs text-[var(--color-text-muted)]">
-                Recording...{" "}
+                {t("Recording...")}{" "}
                 <kbd className="ml-1 rounded bg-[var(--color-bg)] px-1 py-0.5 text-[10px] font-mono border border-[var(--color-border)]">
                   ⌘M
                 </kbd>{" "}
-                to stop
-              </span>
+                {t("to stop")}</span>
             </div>
           ) : isTranscribing ? (
             // Transcribing UI
             <div className="flex flex-1 items-center gap-3 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2 @max-sm:order-first @max-sm:basis-full">
               <Loader2 className="h-4 w-4 animate-spin text-[var(--color-primary)]" />
               <span className="text-sm text-[var(--color-text-muted)]">
-                Transcribing audio...
-              </span>
+                {t("Transcribing audio...")}</span>
             </div>
           ) : (
             // Normal text input
@@ -534,8 +533,8 @@ export function ChatInput({
                   onClick={() => fileInputRef.current?.click()}
                   disabled={disabled}
                   className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)] disabled:opacity-40"
-                  title="Attach an image"
-                  aria-label="Attach an image"
+                  title={t("Attach an image")}
+                  aria-label={t("Attach an image")}
                 >
                   <Paperclip className="h-4 w-4" />
                 </button>
@@ -547,7 +546,7 @@ export function ChatInput({
               <button
                 onClick={stopRecording}
                 className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-red-500 text-white transition-opacity hover:opacity-90"
-                title="Stop recording (⌘M)"
+                title={t("Stop recording (⌘M)")}
               >
                 <Square className="h-3.5 w-3.5" />
               </button>
@@ -560,7 +559,7 @@ export function ChatInput({
                 onClick={startRecording}
                 disabled={disabled}
                 className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)] disabled:opacity-40"
-                title="Record voice message (⌘M)"
+                title={t("Record voice message (⌘M)")}
               >
                 <Mic className="h-4 w-4" />
               </button>
@@ -573,8 +572,8 @@ export function ChatInput({
               <button
                 onClick={onAbort}
                 className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-red-500 text-white transition-opacity hover:opacity-90"
-                title="Stop generation (Esc)"
-                aria-label="Stop generation"
+                title={t("Stop generation (Esc)")}
+                aria-label={t("Stop generation")}
               >
                 <Square className="h-3.5 w-3.5" />
               </button>
@@ -598,7 +597,7 @@ export function ChatInput({
                   ? "Send — interrupts the current answer"
                   : "Send message"
               }
-              aria-label="Send message"
+              aria-label={t("Send message")}
             >
               <Send className="h-4 w-4" />
             </button>

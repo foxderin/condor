@@ -1,4 +1,5 @@
 import { Pencil, Plus, Save, Trash2, Wand2, X } from "lucide-react";
+import { t } from "@/lib/i18n";
 
 // ── Shared bits ──
 //
@@ -317,8 +318,7 @@ export function EditorShell({
             onClick={onCancel}
             className="flex items-center gap-1 rounded px-2 py-1.5 text-[11px] text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text)]"
           >
-            <X className="h-3 w-3" /> Cancel
-          </button>
+            <X className="h-3 w-3" /> {t("Cancel")}</button>
           <button
             onClick={onSave}
             disabled={!canSave || isPending}

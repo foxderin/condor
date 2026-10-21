@@ -14,6 +14,7 @@ import { copyText } from "@/lib/clipboard";
 
 import { displayName, handle, initials, roleLabel } from "./identity";
 import { PersonDetail } from "./PersonDetail";
+import { t } from "@/lib/i18n";
 
 /**
  * One person in the list, expanding in place into their detail panel.
@@ -136,7 +137,7 @@ export function PersonRow({
             {!person.known && (
               <AlertTriangle
                 className="h-3.5 w-3.5 shrink-0 text-amber-400"
-                aria-label="Holds access with no user record"
+                aria-label={t("Holds access with no user record")}
               />
             )}
           </span>
@@ -150,7 +151,7 @@ export function PersonRow({
         <button
           type="button"
           onClick={copyId}
-          title="Copy user id"
+          title={t("Copy user id")}
           aria-label={`Copy user id ${person.user_id}`}
           className="flex shrink-0 items-center gap-1 rounded px-1.5 py-1 font-mono text-[11px] text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)]"
         >
@@ -169,8 +170,7 @@ export function PersonRow({
             disabled={roleMut.isPending}
             className="shrink-0 rounded-md border border-[var(--color-border)] px-3 py-1.5 text-xs font-medium text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)] disabled:opacity-50"
           >
-            Approve
-          </button>
+            {t("Approve")}</button>
         )}
 
         <button
@@ -208,7 +208,7 @@ export function PersonRow({
       <ConfirmDialog
         open={confirmBlock}
         title={`Block ${name}?`}
-        confirmLabel="Block"
+        confirmLabel={t("Block")}
         pendingLabel="Blocking..."
         isPending={roleMut.isPending}
         isError={roleMut.isError}
@@ -216,15 +216,12 @@ export function PersonRow({
         onConfirm={() => roleMut.mutate("blocked")}
         onClose={() => setConfirmBlock(false)}
       >
-        They lose access to the bot and the dashboard immediately. Their server
-        grants are kept, but unblocking returns them to <em>pending</em> — you will
-        have to approve them again.
-      </ConfirmDialog>
+        {t("They lose access to the bot and the dashboard immediately. Their server grants are kept, but unblocking returns them to")}<em>pending</em> {t("— you will have to approve them again.")}</ConfirmDialog>
 
       <ConfirmDialog
         open={confirmCodeRun}
         title={`Grant code_run to ${name}?`}
-        confirmLabel="Grant"
+        confirmLabel={t("Grant")}
         pendingLabel="Granting..."
         isPending={codeRunMut.isPending}
         isError={codeRunMut.isError}
@@ -232,11 +229,7 @@ export function PersonRow({
         onConfirm={() => codeRunMut.mutate(true)}
         onClose={() => setConfirmCodeRun(false)}
       >
-        This lets them execute arbitrary Python in the bot process: every configured
-        server&apos;s credentials, the dashboard&apos;s JWT secret and the environment
-        are readable, and the process is writable. It is admin-equivalent in practice.
-        Only grant it to someone you would make an admin.
-      </ConfirmDialog>
+        {t("This lets them execute arbitrary Python in the bot process: every configured server&apos;s credentials, the dashboard&apos;s JWT secret and the environment are readable, and the process is writable. It is admin-equivalent in practice. Only grant it to someone you would make an admin.")}</ConfirmDialog>
     </div>
   );
 }

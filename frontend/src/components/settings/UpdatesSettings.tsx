@@ -26,6 +26,7 @@ import {
   isLive,
   updatesApi,
 } from "@/lib/updates-api";
+import { t } from "@/lib/i18n";
 
 /**
  * Everything `/update` can do in Telegram, for an admin in the browser (FEAT-071).
@@ -167,8 +168,8 @@ export function UpdatesSettings() {
         />
         <ConfirmDialog
           open={confirmDiscard !== null}
-          title="Discard local changes?"
-          confirmLabel="Discard"
+          title={t("Discard local changes?")}
+          confirmLabel={t("Discard")}
           pendingLabel="Discarding..."
           isPending={resolveMut.isPending}
           isError={resolveMut.isError}
@@ -183,17 +184,13 @@ export function UpdatesSettings() {
           onClose={() => setConfirmDiscard(null)}
         >
           <p>
-            Your changes to these files will be thrown away and the files reset
-            to the last commit. This cannot be undone.{" "}
+            {t("Your changes to these files will be thrown away and the files reset to the last commit. This cannot be undone.")}{" "}
             {confirmDiscard?.resolutions.includes("keep-mine") ? (
               <>
-                <strong>Keep my version</strong> moves them somewhere updates
-                leave alone; <strong>Stash</strong> parks them in git.
-              </>
+                <strong>{t("Keep my version")}</strong> {t("moves them somewhere updates leave alone;")}<strong>{t("Stash")}</strong> {t("parks them in git.")}</>
             ) : (
               <>
-                <strong>Stash</strong> parks them in git instead.
-              </>
+                <strong>{t("Stash")}</strong> {t("parks them in git instead.")}</>
             )}
           </p>
           <ul className="mt-3 max-h-40 space-y-0.5 overflow-y-auto font-mono text-xs">
@@ -211,10 +208,7 @@ export function UpdatesSettings() {
     <div className="space-y-4">
       <div className="flex items-center justify-between gap-3">
         <p className="text-xs leading-relaxed text-[var(--color-text-muted)]">
-          Updating the API recreates its containers. Updating Condor does not
-          restart it: the new code lands on disk and you relaunch when it suits
-          you.
-        </p>
+          {t("Updating the API recreates its containers. Updating Condor does not restart it: the new code lands on disk and you relaunch when it suits you.")}</p>
         <button
           onClick={() => checkMut.mutate()}
           disabled={checkMut.isPending}
@@ -223,8 +217,7 @@ export function UpdatesSettings() {
           <RefreshCw
             className={`h-3.5 w-3.5 ${checkMut.isPending ? "animate-spin" : ""}`}
           />
-          Refresh
-        </button>
+          {t("Refresh")}</button>
       </div>
 
       {status.isError && (
@@ -248,7 +241,7 @@ export function UpdatesSettings() {
           disabled={preflightMut.isPending}
           className="w-full rounded-lg bg-[var(--color-primary)]/15 px-3 py-2 text-sm font-medium text-[var(--color-primary)] transition-opacity hover:opacity-80 disabled:opacity-50"
         >
-          Update all ({stale.length})
+          {t("Update all (")}{stale.length})
         </button>
       )}
 
@@ -289,8 +282,7 @@ function ComponentCard({
         {component.up_to_date ? (
           <span className="flex shrink-0 items-center gap-1.5 text-xs text-[var(--color-text-muted)]">
             <CheckCircle2 className="h-3.5 w-3.5" />
-            Up to date
-          </span>
+            {t("Up to date")}</span>
         ) : (
           <button
             onClick={onUpdate}
@@ -298,8 +290,7 @@ function ComponentCard({
             className="flex shrink-0 items-center gap-1.5 rounded-md bg-[var(--color-primary)]/15 px-3 py-1.5 text-xs font-medium text-[var(--color-primary)] transition-opacity hover:opacity-80 disabled:opacity-50"
           >
             <ArrowUpCircle className="h-3.5 w-3.5" />
-            Update
-          </button>
+            {t("Update")}</button>
         )}
       </div>
 
@@ -334,8 +325,7 @@ function ComponentCard({
               {facet.detail.length > 0 && (
                 <details className="mt-1 pl-14">
                   <summary className="cursor-pointer text-[var(--color-text-muted)] hover:text-[var(--color-text)]">
-                    What&apos;s new
-                  </summary>
+                    {t("What&apos;s new")}</summary>
                   <ul className="mt-1 space-y-0.5 text-[var(--color-text-muted)]">
                     {facet.detail.map((line, i) => (
                       <li key={i} className="truncate font-mono">
@@ -388,8 +378,7 @@ function PreflightView({
     <div className="space-y-4">
       <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
         <h3 className="text-sm font-semibold text-[var(--color-text)]">
-          This will run
-        </h3>
+          {t("This will run")}</h3>
         <ol className="mt-2 space-y-1 text-xs text-[var(--color-text-muted)]">
           {preflight.steps.map((step, i) => (
             <li key={i} className="flex gap-2">
@@ -457,8 +446,7 @@ function PreflightView({
           onClick={onCancel}
           className="rounded-md px-3 py-2 text-sm text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)]"
         >
-          Cancel
-        </button>
+          {t("Cancel")}</button>
         <button
           onClick={onStart}
           disabled={!preflight.ok || isStarting}
@@ -483,15 +471,13 @@ function RunningView({ run, offline }: { run: Run; offline: boolean }) {
         <div className="flex items-start gap-2 rounded-lg border border-[var(--color-primary)]/40 bg-[var(--color-primary)]/10 p-3 text-xs text-[var(--color-text)]">
           <Loader2 className="mt-0.5 h-3.5 w-3.5 shrink-0 animate-spin text-[var(--color-primary)]" />
           <span>
-            Not getting an answer right now — this page keeps trying and picks
-            the run back up on its own.
-          </span>
+            {t("Not getting an answer right now — this page keeps trying and picks the run back up on its own.")}</span>
         </div>
       )}
 
       <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
         <h3 className="text-sm font-semibold text-[var(--color-text)]">
-          Updating {run.components.join(", ")}
+          {t("Updating")}{" "}{run.components.join(", ")}
         </h3>
         <ul className="mt-3 space-y-2">
           {run.steps.map((step) => (
@@ -521,8 +507,7 @@ function StepRow({ step }: { step: Step }) {
       {(step.state === "failed" || step.state === "warned") && step.output_tail && (
         <details className="mt-1 pl-6">
           <summary className="cursor-pointer text-[var(--color-text-muted)] hover:text-[var(--color-text)]">
-            Output
-          </summary>
+            {t("Output")}</summary>
           <pre className="mt-1 overflow-x-auto whitespace-pre-wrap rounded bg-[var(--color-bg)] p-2 font-mono text-[11px] text-[var(--color-text-muted)]">
             {step.output_tail}
           </pre>
@@ -608,13 +593,9 @@ function FinishedView({
         <div className="flex items-start gap-2 rounded-lg border border-[var(--color-yellow)]/40 bg-[var(--color-yellow)]/10 p-3 text-xs leading-relaxed text-[var(--color-text)]">
           <RotateCw className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[var(--color-yellow)]" />
           <span>
-            Condor is still running{" "}
-            <span className="font-mono">{relaunch.from_commit}</span>. It is
-            restarting to come up on{" "}
-            <span className="font-mono">{relaunch.target_commit}</span> — see the
-            banner at the top of the page, which counts down and can be
-            cancelled. Bots and open positions are untouched.
-          </span>
+            {t("Condor is still running")}{" "}
+            <span className="font-mono">{relaunch.from_commit}</span>{t(". It is restarting to come up on")}{" "}
+            <span className="font-mono">{relaunch.target_commit}</span> {t("— see the banner at the top of the page, which counts down and can be cancelled. Bots and open positions are untouched.")}</span>
         </div>
       )}
 

@@ -12,6 +12,7 @@ import type { PoolSummary } from "@/lib/api";
 import { useDexFavorites } from "@/lib/dexFavorites";
 
 import { num, pct, poolLabel, usdCompact } from "./format";
+import { t } from "@/lib/i18n";
 
 type SortKey =
   | "name"
@@ -146,7 +147,7 @@ export function PoolBrowser({
   const pager =
     !hasMore && page <= 1 ? null : (
       <div className="flex items-center justify-between border-t border-[var(--color-border)] px-4 py-2 text-xs text-[var(--color-text-muted)]">
-        <span>Page {page}</span>
+        <span>{t("Page")}{" "}{page}</span>
         <div className="flex items-center gap-1">
           <button
             onClick={() => onPageChange(page - 1)}
@@ -154,15 +155,13 @@ export function PoolBrowser({
             className="flex items-center gap-1 rounded-md border border-[var(--color-border)] px-2 py-1 transition-colors hover:bg-[var(--color-surface-hover)] disabled:cursor-not-allowed disabled:opacity-40"
           >
             <ChevronLeft className="h-3 w-3" />
-            Prev
-          </button>
+            {t("Prev")}</button>
           <button
             onClick={() => onPageChange(page + 1)}
             disabled={!hasMore}
             className="flex items-center gap-1 rounded-md border border-[var(--color-border)] px-2 py-1 transition-colors hover:bg-[var(--color-surface-hover)] disabled:cursor-not-allowed disabled:opacity-40"
           >
-            Next
-            <ChevronRight className="h-3 w-3" />
+            {t("Next")}<ChevronRight className="h-3 w-3" />
           </button>
         </div>
       </div>
@@ -171,8 +170,7 @@ export function PoolBrowser({
   if (isLoading) {
     return (
       <div className="px-4 py-10 text-center text-sm text-[var(--color-text-muted)]">
-        Loading pools…
-      </div>
+        {t("Loading pools…")}</div>
     );
   }
 
@@ -195,7 +193,7 @@ export function PoolBrowser({
             <tr className="border-b border-[var(--color-border)] bg-[var(--color-surface)]">
               <th className="w-8 px-2 py-3" />
               <SortTh
-                label="Pair"
+                label={t("Pair")}
                 col="name"
                 sortKey={sortKey}
                 sortDir={sortDir}
@@ -217,7 +215,7 @@ export function PoolBrowser({
                 align="right"
               />
               <SortTh
-                label="Vol 24h"
+                label={t("Vol 24h")}
                 col="volume_24h"
                 sortKey={sortKey}
                 sortDir={sortDir}
@@ -237,13 +235,13 @@ export function PoolBrowser({
                   {/* Meteora's `apr` is the day's fees over TVL, not an annual
                       rate — labelling it APR next to a 170% APY reads as broken. */}
                   <SortTh
-                    label="Fee/TVL"
+                    label={t("Fee/TVL")}
                     col="apr"
                     sortKey={sortKey}
                     sortDir={sortDir}
                     onSort={handleSort}
                     align="right"
-                    title="Last 24h of fees over TVL. A ~ marks a figure derived from volume and the fee tier because the connector reports none."
+                    title={t("Last 24h of fees over TVL. A ~ marks a figure derived from volume and the fee tier because the connector reports none.")}
                   />
                   <SortTh
                     label="APY"
@@ -252,11 +250,10 @@ export function PoolBrowser({
                     sortDir={sortDir}
                     onSort={handleSort}
                     align="right"
-                    title="Annualized yield. A ~ marks a figure derived from volume and the fee tier because the connector reports none."
+                    title={t("Annualized yield. A ~ marks a figure derived from volume and the fee tier because the connector reports none.")}
                   />
                   <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
-                    Bin
-                  </th>
+                    {t("Bin")}</th>
                 </>
               )}
               <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
@@ -314,8 +311,7 @@ export function PoolBrowser({
                     {poolLabel(p)}
                     {!p.tradable && (
                       <span className="ml-2 text-[10px] font-normal text-[var(--color-text-muted)]">
-                        not on Gateway
-                      </span>
+                        {t("not on Gateway")}</span>
                     )}
                   </td>
                   <td className="px-4 py-2.5 text-[var(--color-text-muted)]">
@@ -366,8 +362,7 @@ export function PoolBrowser({
                       </span>
                     ) : (
                       <span className="text-[10px] text-[var(--color-text-muted)]">
-                        swap only
-                      </span>
+                        {t("swap only")}</span>
                     )}
                   </td>
                 </tr>

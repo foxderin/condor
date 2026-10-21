@@ -3,6 +3,7 @@ import { useMemo } from "react";
 
 import { useCondorWebSocket } from "@/hooks/useWebSocket";
 import { api, type OrderBookLevel, type OrderBookResponse } from "@/lib/api";
+import { t } from "@/lib/i18n";
 
 interface OrderBookProps {
   server: string;
@@ -101,8 +102,7 @@ export function OrderBook({ server, connector, pair }: OrderBookProps) {
   if (!pair) {
     return (
       <div className="flex h-full items-center justify-center text-xs text-[var(--color-text-muted)]">
-        Select a pair
-      </div>
+        {t("Select a pair")}</div>
     );
   }
 
@@ -111,21 +111,19 @@ export function OrderBook({ server, connector, pair }: OrderBookProps) {
       {/* Header */}
       <div className="border-b border-[var(--color-border)] px-3 py-2">
         <h3 className="text-xs font-semibold uppercase tracking-wider text-[var(--color-text-muted)]">
-          Order Book
-        </h3>
+          {t("Order Book")}</h3>
       </div>
 
       {/* Column headers */}
       <div className="grid grid-cols-3 gap-1 border-b border-[var(--color-border)] px-3 py-1.5 text-[10px] font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
-        <span>Price</span>
-        <span className="text-right">Amount</span>
-        <span className="text-right">Total</span>
+        <span>{t("Price")}</span>
+        <span className="text-right">{t("Amount")}</span>
+        <span className="text-right">{t("Total")}</span>
       </div>
 
       {!data ? (
         <div className="flex flex-1 items-center justify-center text-xs text-[var(--color-text-muted)]">
-          Loading...
-        </div>
+          {t("Loading...")}</div>
       ) : (
         <div className="flex flex-col overflow-hidden">
           {/* Asks (reversed: highest at top) */}
@@ -149,8 +147,7 @@ export function OrderBook({ server, connector, pair }: OrderBookProps) {
               {spread.toFixed(pDecimals)}
             </span>
             <span className="text-[10px] text-[var(--color-text-muted)]">
-              {spreadPct.toFixed(3)}% spread
-            </span>
+              {spreadPct.toFixed(3)}{t("% spread")}</span>
           </div>
 
           {/* Bids */}

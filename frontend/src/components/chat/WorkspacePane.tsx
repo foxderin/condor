@@ -8,6 +8,7 @@ import {
   type WorkspacePane,
 } from "@/hooks/useWorkspacePane";
 import { PANE_FRAC_KEY, PANE_FRAC_TUNE_KEY } from "@/lib/sessionState";
+import { t } from "@/lib/i18n";
 
 /**
  * Below this the workspace has no room for another column, so a sheet keeps its
@@ -227,7 +228,7 @@ function PaneResizeHandle({
     <div
       role="separator"
       aria-orientation="vertical"
-      aria-label="Resize workspace pane"
+      aria-label={t("Resize workspace pane")}
       aria-valuenow={Math.round(frac * 100)}
       aria-valuemin={Math.round(MIN_FRAC * 100)}
       aria-valuemax={Math.round(MAX_FRAC * 100)}
@@ -235,7 +236,7 @@ function PaneResizeHandle({
       onMouseDown={onMouseDown}
       onKeyDown={onKeyDown}
       onDoubleClick={() => setFrac(defaultFrac)}
-      title="Drag to resize — double-click to reset"
+      title={t("Drag to resize — double-click to reset")}
       className={`w-1.5 shrink-0 cursor-col-resize transition-colors hover:bg-[var(--color-primary)]/30 focus:outline-none focus-visible:bg-[var(--color-primary)]/30 ${
         isDragging ? "bg-[var(--color-primary)]/30" : ""
       }`}
@@ -268,7 +269,7 @@ export function WorkspacePaneOutlet() {
       )}
       <aside
         ref={setHost}
-        aria-label="Workspace pane"
+        aria-label={t("Workspace pane")}
         // `flex-grow` against the chat's `flex-1`: the two grow in the ratio the
         // reader left them in, whatever width the row turns out to have. Inline,
         // so it overrides the `flex-1` shorthand's own grow.

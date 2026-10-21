@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 
 import { api } from "@/lib/api";
 import type { VoicePrefs } from "@/lib/api";
+import { t } from "@/lib/i18n";
 
 export function VoiceSettings() {
   const qc = useQueryClient();
@@ -57,11 +58,9 @@ export function VoiceSettings() {
       <section>
         <h3 className="mb-1 text-sm font-semibold text-[var(--color-text)]">
           <Volume2 className="mr-1.5 inline h-4 w-4" />
-          Whisper Model
-        </h3>
+          {t("Whisper Model")}</h3>
         <p className="mb-3 text-xs text-[var(--color-text-muted)]">
-          Larger models are more accurate but slower to transcribe.
-        </p>
+          {t("Larger models are more accurate but slower to transcribe.")}</p>
         <div className="space-y-1">
           {Object.entries(models).map(([key, label]) => (
             <label
@@ -90,11 +89,9 @@ export function VoiceSettings() {
       <section>
         <h3 className="mb-1 text-sm font-semibold text-[var(--color-text)]">
           <Mic className="mr-1.5 inline h-4 w-4" />
-          Language
-        </h3>
+          {t("Language")}</h3>
         <p className="mb-3 text-xs text-[var(--color-text-muted)]">
-          Auto-detect works well for most cases. Fix the language for better accuracy if you always speak the same language.
-        </p>
+          {t("Auto-detect works well for most cases. Fix the language for better accuracy if you always speak the same language.")}</p>
         <select
           value={form.language ?? ""}
           onChange={(e) =>
@@ -121,11 +118,9 @@ export function VoiceSettings() {
           />
           <div>
             <span className="text-sm font-medium text-[var(--color-text)]">
-              Auto-send after transcription
-            </span>
+              {t("Auto-send after transcription")}</span>
             <p className="text-xs text-[var(--color-text-muted)]">
-              Send the message immediately after voice transcription completes. When off, the transcribed text is placed in the input for editing.
-            </p>
+              {t("Send the message immediately after voice transcription completes. When off, the transcribed text is placed in the input for editing.")}</p>
           </div>
         </label>
       </section>
@@ -133,9 +128,8 @@ export function VoiceSettings() {
       {/* Shortcut hint */}
       <section className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-3">
         <p className="text-xs text-[var(--color-text-muted)]">
-          <span className="font-medium text-[var(--color-text)]">Keyboard shortcut:</span>{" "}
-          Press <kbd className="rounded bg-[var(--color-bg)] px-1.5 py-0.5 text-[10px] font-mono border border-[var(--color-border)]">⌘M</kbd> to start/stop voice recording from anywhere in the chat.
-        </p>
+          <span className="font-medium text-[var(--color-text)]">{t("Keyboard shortcut:")}</span>{" "}
+          {t("Press")}{" "}<kbd className="rounded bg-[var(--color-bg)] px-1.5 py-0.5 text-[10px] font-mono border border-[var(--color-border)]">⌘M</kbd> {t("to start/stop voice recording from anywhere in the chat.")}</p>
       </section>
 
       {/* Save button */}
@@ -149,8 +143,7 @@ export function VoiceSettings() {
         ) : saved ? (
           <>
             <Check className="h-4 w-4" />
-            Saved
-          </>
+            {t("Saved")}</>
         ) : (
           "Save Voice Settings"
         )}
@@ -158,7 +151,7 @@ export function VoiceSettings() {
 
       {mutation.isError && (
         <p className="text-xs text-[var(--color-red)]">
-          Failed to save: {(mutation.error as Error).message}
+          {t("Failed to save:")}{" "}{(mutation.error as Error).message}
         </p>
       )}
     </div>

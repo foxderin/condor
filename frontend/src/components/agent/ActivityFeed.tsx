@@ -16,6 +16,7 @@ import {
 } from "@/components/agent/delegationStatus";
 import { api, type DelegationKind, type DelegationSummary } from "@/lib/api";
 import { formatDuration } from "@/lib/formatters";
+import { t } from "@/lib/i18n";
 
 /** How a kind reads in a row: its glyph and what to call it. */
 const KIND: Record<DelegationKind, { icon: typeof Send; label: string }> = {
@@ -181,12 +182,11 @@ export function ActivityFeed({
     body = (
       <div className="flex items-center gap-2 px-1 py-3 text-xs text-[var(--color-text-muted)]">
         <Loader2 className="h-3 w-3 animate-spin" />
-        Loading history…
-      </div>
+        {t("Loading history…")}</div>
     );
   } else if (error) {
     body = (
-      <p className="px-1 py-3 text-xs text-red-400">Could not load the history.</p>
+      <p className="px-1 py-3 text-xs text-red-400">{t("Could not load the history.")}</p>
     );
   } else if (rows.length === 0) {
     body = (
@@ -204,8 +204,8 @@ export function ActivityFeed({
           <span>
             {summary.total} {summary.total === 1 ? "run" : "runs"}
           </span>
-          {summary.doneShare !== null && <span>· {summary.doneShare}% done</span>}
-          {summary.median && <span>· median {summary.median}</span>}
+          {summary.doneShare !== null && <span>· {summary.doneShare}{t("% done")}</span>}
+          {summary.median && <span>{t("· median")}{" "}{summary.median}</span>}
           {/* The number labels the window it actually measured, never the whole
               history: this is the page that was fetched, and there may be more. */}
           <span className="ml-auto">last {summary.total} shown</span>

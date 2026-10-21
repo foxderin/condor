@@ -32,6 +32,7 @@ import {
 import { formatCurrency, formatCurrencyPnl, formatCurrencyVolume, isExecutorActive } from "@/lib/formatters";
 import { agentsQuery, EXECUTORS_REFETCH_MS, executorsQuery } from "@/lib/queryClient";
 import { getThemeColors } from "@/lib/theme-colors";
+import { t } from "@/lib/i18n";
 
 // ── Formatters ──
 
@@ -151,7 +152,7 @@ function DashboardStrip({
     <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] overflow-hidden">
       <div className="flex items-stretch divide-x divide-[var(--color-border)]">
         <KpiCell
-          label="Portfolio"
+          label={t("Portfolio")}
           mainValue={formatCurrency(convertFromUsd(totalUsd), currencySymbol)}
           pnl={portfolioPnl != null ? convertFromUsd(portfolioPnl) : undefined}
           details={`${totalTokens} assets · ${connectorCount} connector${connectorCount !== 1 ? "s" : ""}`}
@@ -159,7 +160,7 @@ function DashboardStrip({
         />
 
         <KpiCell
-          label="Bots"
+          label={t("Bots")}
           mainValue={botCount}
           pnl={botPnl}
           details={`${controllerCount} controller${controllerCount !== 1 ? "s" : ""} · vol ${formatCurrencyVolume(botVolume, currencySymbol)}`}
@@ -167,7 +168,7 @@ function DashboardStrip({
         />
 
         <KpiCell
-          label="Executors"
+          label={t("Executors")}
           mainValue={`${activeExecutorCount} active`}
           pnl={execStats ? convertFromUsd(execStats.pnl) : undefined}
           details={
@@ -179,7 +180,7 @@ function DashboardStrip({
         />
 
         <KpiCell
-          label="Agents"
+          label={t("Agents")}
           mainValue={activeAgents.length}
           pnl={convertFromUsd(agentPnl)}
           details={`${agents.length} total · ${agentSessions} session${agentSessions !== 1 ? "s" : ""}`}
@@ -205,12 +206,10 @@ function DashboardStrip({
           </div>
           <button onClick={() => onNavigate("/settings?tab=keys")} className={btnClass}>
             <KeyRound className="h-3 w-3" />
-            Keys
-          </button>
+            {t("Keys")}</button>
           <button onClick={() => onNavigate("/settings?tab=servers")} className={btnClass}>
             <Server className="h-3 w-3" />
-            Servers
-          </button>
+            {t("Servers")}</button>
         </div>
       </div>
     </div>
@@ -561,19 +560,19 @@ function PortfolioEvolution({ server, range, convertFromUsd, currencySymbol }: {
   return (
     <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-4 h-full">
       <div className="flex items-center justify-between mb-3">
-        <h3 className="text-sm font-medium text-[var(--color-text-muted)]">Portfolio Evolution</h3>
+        <h3 className="text-sm font-medium text-[var(--color-text-muted)]">{t("Portfolio Evolution")}</h3>
         <div className="flex gap-0.5 rounded border border-[var(--color-border)] p-0.5">
           <button
             onClick={() => setStacked(false)}
             className={`p-1 rounded transition-colors ${!stacked ? "bg-[var(--color-accent)] text-white" : "text-[var(--color-text-muted)] hover:text-[var(--color-text)]"}`}
-            title="Line chart"
+            title={t("Line chart")}
           >
             <BarChart3 className="h-3.5 w-3.5" />
           </button>
           <button
             onClick={() => setStacked(true)}
             className={`p-1 rounded transition-colors ${stacked ? "bg-[var(--color-accent)] text-white" : "text-[var(--color-text-muted)] hover:text-[var(--color-text)]"}`}
-            title="Stacked area chart"
+            title={t("Stacked area chart")}
           >
             <Layers className="h-3.5 w-3.5" />
           </button>
@@ -582,12 +581,10 @@ function PortfolioEvolution({ server, range, convertFromUsd, currencySymbol }: {
 
       {isLoading ? (
         <div className="flex items-center justify-center h-[250px] text-[var(--color-text-muted)] text-sm">
-          Loading...
-        </div>
+          {t("Loading...")}</div>
       ) : points.length === 0 ? (
         <div className="flex items-center justify-center h-[250px] text-[var(--color-text-muted)] text-sm">
-          No history data available
-        </div>
+          {t("No history data available")}</div>
       ) : (
         <>
           <svg
@@ -891,7 +888,7 @@ export function Portfolio() {
   );
 
   if (!server) {
-    return <NoServerCard message="Select a server from the sidebar to view your portfolio." />;
+    return <NoServerCard message={t("Select a server from the sidebar to view your portfolio.")} />;
   }
 
   if (isLoading && !data) {
@@ -926,7 +923,7 @@ export function Portfolio() {
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="rounded-lg border border-red-500/30 bg-[var(--color-surface)] p-8 text-center max-w-sm">
           <AlertCircle className="h-10 w-10 mx-auto mb-3 text-[var(--color-red)]" />
-          <h2 className="text-lg font-semibold mb-1">Failed to Load Portfolio</h2>
+          <h2 className="text-lg font-semibold mb-1">{t("Failed to Load Portfolio")}</h2>
           <p className="text-sm text-[var(--color-text-muted)]">
             {error instanceof Error ? error.message : "An unexpected error occurred."}
           </p>
@@ -996,7 +993,7 @@ export function Portfolio() {
         </div>
         {connectors.length > 0 && topTokens.length > 0 && (
           <div className="lg:flex-1 min-w-0">
-            <TokenBarChart tokens={topTokens} title="Top Holdings" totalPortfolioValue={totalUsd} />
+            <TokenBarChart tokens={topTokens} title={t("Top Holdings")} totalPortfolioValue={totalUsd} />
           </div>
         )}
       </div>
@@ -1041,7 +1038,7 @@ export function Portfolio() {
         {connectors.length === 0 ? (
           <div className="flex flex-col items-center gap-2 py-16 text-[var(--color-text-muted)]">
             <Wallet className="h-10 w-10" />
-            <p>No balances found</p>
+            <p>{t("No balances found")}</p>
           </div>
         ) : (
           <div className="overflow-hidden rounded-lg border border-[var(--color-border)]">
@@ -1049,20 +1046,15 @@ export function Portfolio() {
               <thead>
                 <tr className="border-b border-[var(--color-border)] bg-[var(--color-surface)]">
                   <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
-                    Token
-                  </th>
+                    {t("Token")}</th>
                   <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
-                    Amount
-                  </th>
+                    {t("Amount")}</th>
                   <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
-                    Price
-                  </th>
+                    {t("Price")}</th>
                   <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
-                    Value
-                  </th>
+                    {t("Value")}</th>
                   <th className="px-4 py-3 text-xs font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
-                    Allocation
-                  </th>
+                    {t("Allocation")}</th>
                 </tr>
               </thead>
               <tbody>

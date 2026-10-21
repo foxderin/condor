@@ -63,6 +63,7 @@ import {
 } from "@/lib/gridExecutor";
 import { formatConnectorName, formatPriceSig } from "@/lib/formatters";
 import { useViewFacts } from "@/lib/viewFacts";
+import { t } from "@/lib/i18n";
 
 // ── Type tabs config ──
 
@@ -601,7 +602,7 @@ export function CreateExecutor() {
   });
 
   if (!server) {
-    return <NoServerCard message="Select a server from the sidebar to create an executor." />;
+    return <NoServerCard message={t("Select a server from the sidebar to create an executor.")} />;
   }
 
   return (
@@ -671,12 +672,11 @@ export function CreateExecutor() {
               the list is open, where the key it teaches would do nothing. */}
           {browseHint.visible && !browserOpen && (
             <HintBubble>
-              Tip: press{" "}
+              {t("Tip: press")}{" "}
               <kbd className="rounded border border-[var(--color-border)] px-1 font-mono text-[10px] leading-4">
                 /
               </kbd>{" "}
-              to browse markets.
-            </HintBubble>
+              {t("to browse markets.")}</HintBubble>
           )}
         </div>
 
@@ -710,7 +710,7 @@ export function CreateExecutor() {
           </div>
 
           <div className="flex items-center gap-1.5">
-            <span className="text-[10px] text-[var(--color-text-muted)]">Range:</span>
+            <span className="text-[10px] text-[var(--color-text-muted)]">{t("Range:")}</span>
             <div className="flex overflow-hidden rounded-md border border-[var(--color-border)]">
               {LOOKBACK_OPTIONS.map((opt) => (
                 <button
@@ -835,8 +835,7 @@ export function CreateExecutor() {
               }`}
             >
               <Settings2 className="h-3.5 w-3.5" />
-              Execute
-            </button>
+              {t("Execute")}</button>
             {caps.hasOrderBook && (
             <button
               onClick={() => setRightPanel("depth")}
@@ -847,8 +846,7 @@ export function CreateExecutor() {
               }`}
             >
               <BarChart3 className="h-3.5 w-3.5" />
-              Data
-            </button>
+              {t("Data")}</button>
             )}
           </div>
 
@@ -916,7 +914,7 @@ export function CreateExecutor() {
                     ) : (
                       <Rocket className="h-4 w-4" />
                     )}
-                    Create {TYPE_LABELS[executorType]}
+                    {t("Create")}{" "}{TYPE_LABELS[executorType]}
                   </button>
                 </div>
 

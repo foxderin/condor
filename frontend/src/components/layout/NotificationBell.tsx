@@ -10,6 +10,7 @@ import { setAppBadge } from "@/lib/appBadge";
 import { useAuth } from "@/lib/auth";
 import { formatRelativeTime } from "@/lib/formatters";
 import { onPushNavigate } from "@/lib/push";
+import { t } from "@/lib/i18n";
 
 const KIND_ICON: Record<string, typeof Bell> = {
   delegation: Workflow,
@@ -136,24 +137,21 @@ export function NotificationBell() {
       >
         <div className="flex items-center justify-between px-3 py-1.5">
           <span className="text-[10px] font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
-            Notifications
-          </span>
+            {t("Notifications")}</span>
           {items.length > 0 && (
             <button
               onClick={() => markRead.mutate(undefined)}
               className="flex items-center gap-1 text-[10px] text-[var(--color-text-muted)] hover:text-[var(--color-accent)]"
-              title="Mark all as read"
+              title={t("Mark all as read")}
             >
               <CheckCheck className="h-3 w-3" />
-              Mark all read
-            </button>
+              {t("Mark all read")}</button>
           )}
         </div>
 
         {items.length === 0 && (
           <div className="px-3 py-6 text-center text-xs text-[var(--color-text-muted)]">
-            Nothing yet. Finished tasks show up here.
-          </div>
+            {t("Nothing yet. Finished tasks show up here.")}</div>
         )}
 
         {items.map((n) => {

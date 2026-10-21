@@ -39,6 +39,7 @@ import {
 import { quoteConverter, runningLeaves } from "@/lib/perf-population";
 import { UNATTACHED_BOT, controllerNodeId, type PerfLeaf } from "@/lib/perf-tree";
 import { agentsQuery } from "@/lib/queryClient";
+import { t } from "@/lib/i18n";
 
 /**
  * The columns, left to right — the header row and every body row read from it.
@@ -310,8 +311,7 @@ export function DockExecution({
       onClick={() => navigate("/bots")}
       className="flex w-full items-center gap-1 px-3 py-1.5 text-left text-[11px] text-[var(--color-primary)] transition-colors hover:bg-[var(--color-surface-hover)]"
     >
-      Open execution
-      <ArrowRight className="h-3 w-3" />
+      {t("Open execution")}<ArrowRight className="h-3 w-3" />
     </button>
   );
 
@@ -319,8 +319,7 @@ export function DockExecution({
     return (
       <div className="flex flex-col">
         <p className="px-3 py-2 text-[11px] text-[var(--color-red)]">
-          Could not read {server}&apos;s fleet.
-        </p>
+          {t("Could not read")}{" "}{server}{t("&apos;s fleet.")}</p>
         {footer}
       </div>
     );
@@ -329,7 +328,7 @@ export function DockExecution({
   if (fleet.isLoading && fleet.controllers.length === 0) {
     return (
       <p className="px-3 py-2 text-[11px] text-[var(--color-text-muted)]">
-        Reading {server}…
+        {t("Reading")}{" "}{server}…
       </p>
     );
   }
@@ -338,7 +337,7 @@ export function DockExecution({
     return (
       <div className="flex flex-col">
         <p className="px-3 py-2 text-[11px] text-[var(--color-text-muted)]">
-          No controllers deployed on {server}.
+          {t("No controllers deployed on")}{" "}{server}.
         </p>
         {footer}
       </div>
@@ -358,7 +357,7 @@ export function DockExecution({
         data-testid="execution-counts"
       >
         <span className="min-w-0 flex-1 truncate">
-          {looping} looping · {deployedCount} controller
+          {looping} {t("looping ·")}{" "}{deployedCount} controller
           {deployedCount === 1 ? "" : "s"}
           {/* Said here rather than left to be counted down the rows: how much
               of a fleet is actually quoting is the first thing this panel is
@@ -469,7 +468,7 @@ export function DockExecution({
         <button
           type="button"
           onClick={() => navigate("/bots?population=running")}
-          title="Live executors no running controller claims"
+          title={t("Live executors no running controller claims")}
           className="flex w-full items-baseline gap-2 border-t border-[var(--color-border)] px-3 py-1 text-left text-[11px] transition-colors hover:bg-[var(--color-surface-hover)]"
         >
           <span className="min-w-0 flex-1 truncate text-[var(--color-text-muted)]">
@@ -654,7 +653,7 @@ function AgentRow({
                 <Link
                   to={decisionHref(live)}
                   data-agent-decision
-                  title="Read the whole tick this came from"
+                  title={t("Read the whole tick this came from")}
                   className={`min-w-0 truncate transition-colors hover:underline ${
                     live.lastDid.ok ? "" : "text-[var(--color-red)]"
                   }`}

@@ -12,6 +12,7 @@ import {
 import { ORDER_TYPE_OPTIONS } from "@/components/executor/field-options";
 import { autoFillGridPrices, gridConfigErrors, gridPriceFieldValid } from "@/lib/gridExecutor";
 import type { GridState, GridAction } from "@/lib/gridExecutor";
+import { t } from "@/lib/i18n";
 
 interface GridConfigPanelProps {
   state: GridState;
@@ -78,7 +79,7 @@ export function GridConfigPanel({ state, dispatch, currentPrice, isSpot = false,
     <div className="flex flex-col gap-4 overflow-y-auto p-3">
       {/* ── Direction ── */}
       <div>
-        <SectionHeader>Direction</SectionHeader>
+        <SectionHeader>{t("Direction")}</SectionHeader>
         <div className="mt-1.5 flex gap-1">
           <button
             onClick={() => dispatch({ type: "SET_FIELD", field: "side", value: 1 })}
@@ -106,20 +107,19 @@ export function GridConfigPanel({ state, dispatch, currentPrice, isSpot = false,
       {/* ── Prices ── */}
       <div className="space-y-2.5">
         <div className="flex items-center justify-between">
-          <SectionHeader>Prices</SectionHeader>
+          <SectionHeader>{t("Prices")}</SectionHeader>
           <button
             onClick={handleAutoFill}
             disabled={!currentPrice}
             className="flex items-center gap-1 rounded border border-[var(--color-border)] bg-[var(--color-surface)] px-2 py-1 text-[10px] text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-surface-hover)] disabled:opacity-40"
-            title="Auto-fill from current price"
+            title={t("Auto-fill from current price")}
           >
             <Sparkles className="h-3 w-3" />
-            Auto-fill
-          </button>
+            {t("Auto-fill")}</button>
         </div>
 
         <PriceField
-          label="Lower Price (grid start)"
+          label={t("Lower Price (grid start)")}
           value={state.start_price}
           field="start_price"
           activePickField={state.activePickField}
@@ -127,7 +127,7 @@ export function GridConfigPanel({ state, dispatch, currentPrice, isSpot = false,
           valid={gridPriceFieldValid("start", state)}
         />
         <PriceField
-          label="Upper Price (grid end)"
+          label={t("Upper Price (grid end)")}
           value={state.end_price}
           field="end_price"
           activePickField={state.activePickField}
@@ -147,7 +147,7 @@ export function GridConfigPanel({ state, dispatch, currentPrice, isSpot = false,
 
       {/* ── Grid Structure ── */}
       <div className="space-y-2.5">
-        <SectionHeader>Grid Structure</SectionHeader>
+        <SectionHeader>{t("Grid Structure")}</SectionHeader>
         <NumberField
           label={`Total Amount (${quoteCurrency})`}
           value={state.total_amount_quote}
@@ -167,7 +167,7 @@ export function GridConfigPanel({ state, dispatch, currentPrice, isSpot = false,
           suffix={quoteCurrency}
         />
         <NumberField
-          label="Min Spread Between Orders"
+          label={t("Min Spread Between Orders")}
           value={state.min_spread_between_orders}
           field="min_spread_between_orders"
           dispatch={dispatch}
@@ -178,21 +178,21 @@ export function GridConfigPanel({ state, dispatch, currentPrice, isSpot = false,
         {(validation.levels > 0 || totalRange > 0) && (
           <div className="space-y-1 rounded bg-[var(--color-bg)] px-2.5 py-1.5 text-[10px] text-[var(--color-text-muted)]">
             {totalRange > 0 && (
-              <p>Range: {totalRange.toFixed(2)}%</p>
+              <p>{t("Range:")}{" "}{totalRange.toFixed(2)}%</p>
             )}
             {validation.levels > 0 && (
               <>
                 <p>
-                  ~{validation.levels} levels &middot; ~${perLevel.toFixed(2)}/level
+                  ~{validation.levels} {t("levels &middot; ~$")}{perLevel.toFixed(2)}/level
                   {validation.levelConstraint === "amount" && (
-                    <span className="ml-1 text-amber-400">(limited by amount)</span>
+                    <span className="ml-1 text-amber-400">{t("(limited by amount)")}</span>
                   )}
                   {validation.levelConstraint === "spread" && (
-                    <span className="ml-1 text-[var(--color-text-muted)]">(limited by spread)</span>
+                    <span className="ml-1 text-[var(--color-text-muted)]">{t("(limited by spread)")}</span>
                   )}
                 </p>
                 {validation.levels > 1 && (
-                  <p>Step: {(totalRange / (validation.levels - 1)).toFixed(3)}%</p>
+                  <p>{t("Step:")}{" "}{(totalRange / (validation.levels - 1)).toFixed(3)}%</p>
                 )}
               </>
             )}
@@ -203,9 +203,9 @@ export function GridConfigPanel({ state, dispatch, currentPrice, isSpot = false,
 
       {/* ── Take Profit ── */}
       <div className="space-y-2.5">
-        <SectionHeader>Take Profit</SectionHeader>
+        <SectionHeader>{t("Take Profit")}</SectionHeader>
         <NumberField
-          label="Take Profit"
+          label={t("Take Profit")}
           value={state.take_profit}
           field="take_profit"
           dispatch={dispatch}
@@ -214,13 +214,13 @@ export function GridConfigPanel({ state, dispatch, currentPrice, isSpot = false,
           suffix="%"
         />
         <ToggleField
-          label="Keep Position"
+          label={t("Keep Position")}
           value={state.keep_position}
           field="keep_position"
           dispatch={dispatch}
         />
         <ToggleField
-          label="Coerce TP to Step"
+          label={t("Coerce TP to Step")}
           value={state.coerce_tp_to_step}
           field="coerce_tp_to_step"
           dispatch={dispatch}
@@ -233,15 +233,14 @@ export function GridConfigPanel({ state, dispatch, currentPrice, isSpot = false,
           onClick={() => dispatch({ type: "SET_FIELD", field: "showAdvanced", value: !state.showAdvanced })}
           className="flex w-full items-center justify-between rounded px-1 py-1.5 text-xs font-medium uppercase tracking-wider text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
         >
-          Advanced
-          {state.showAdvanced ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
+          {t("Advanced")}{state.showAdvanced ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
         </button>
 
         {state.showAdvanced && (
           <div className="mt-2 space-y-2.5">
             <div className="grid grid-cols-2 gap-2">
               <NumberField
-                label="Max Open Orders"
+                label={t("Max Open Orders")}
                 value={state.max_open_orders}
                 field="max_open_orders"
                 dispatch={dispatch}
@@ -249,7 +248,7 @@ export function GridConfigPanel({ state, dispatch, currentPrice, isSpot = false,
                 min={1}
               />
               <NumberField
-                label="Max Orders/Batch"
+                label={t("Max Orders/Batch")}
                 value={state.max_orders_per_batch}
                 field="max_orders_per_batch"
                 dispatch={dispatch}
@@ -258,7 +257,7 @@ export function GridConfigPanel({ state, dispatch, currentPrice, isSpot = false,
               />
             </div>
             <NumberField
-              label="Order Frequency"
+              label={t("Order Frequency")}
               value={state.order_frequency}
               field="order_frequency"
               dispatch={dispatch}
@@ -267,7 +266,7 @@ export function GridConfigPanel({ state, dispatch, currentPrice, isSpot = false,
               suffix="s"
             />
             <NumberField
-              label="Activation Bounds"
+              label={t("Activation Bounds")}
               value={state.activation_bounds}
               field="activation_bounds"
               dispatch={dispatch}
@@ -276,14 +275,14 @@ export function GridConfigPanel({ state, dispatch, currentPrice, isSpot = false,
               suffix="%"
             />
             <SelectField
-              label="Open Order Type"
+              label={t("Open Order Type")}
               value={state.open_order_type}
               field="open_order_type"
               dispatch={dispatch}
               options={ORDER_TYPE_OPTIONS}
             />
             <SelectField
-              label="Take Profit Order Type"
+              label={t("Take Profit Order Type")}
               value={state.take_profit_order_type}
               field="take_profit_order_type"
               dispatch={dispatch}

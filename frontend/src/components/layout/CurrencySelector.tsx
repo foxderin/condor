@@ -8,6 +8,7 @@ import {
   CURRENCY_SYMBOLS,
   type DisplayCurrency,
 } from "@/hooks/useDisplayCurrency";
+import { t } from "@/lib/i18n";
 
 export function CurrencySelector() {
   const { currency, setCurrency } = useDisplayCurrency();
@@ -23,7 +24,7 @@ export function CurrencySelector() {
         aria-expanded={open}
         aria-haspopup="listbox"
         className="flex items-center gap-1.5 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-2 py-1.5 text-sm hover:bg-[var(--color-surface-hover)] transition-colors"
-        title="Display currency"
+        title={t("Display currency")}
       >
         <DollarSign className="h-3.5 w-3.5 shrink-0 text-[var(--color-text-muted)]" />
         <span className="text-xs font-medium">{currency}</span>
@@ -40,8 +41,7 @@ export function CurrencySelector() {
         className="min-w-[140px] py-1"
       >
         <div className="px-3 py-1.5 text-[10px] font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
-          Display Currency
-        </div>
+          {t("Display Currency")}</div>
         {CURRENCY_OPTIONS.map((c: DisplayCurrency) => (
           <button
             key={c}

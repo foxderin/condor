@@ -1,6 +1,7 @@
 import type { ExecutorInfo } from "./api";
 import { escapeHtml, formatPriceSig } from "./formatters";
 import { getThemeColors, pnlHexColor, sideColor } from "./theme-colors";
+import { t } from "@/lib/i18n";
 
 // ── Overlay Model ──
 
@@ -253,7 +254,7 @@ function computePositionOverlay(executor: ExecutorInfo): ExecutorOverlay {
     const pnlPositive = side === "buy" ? closePrice > entry : closePrice < entry;
     lines.push({
       price: closePrice,
-      label: "Close",
+      label: t("Close (price)"),
       color: pnlHexColor(pnlPositive ? 1 : -1),
       style: "dashed",
     });
@@ -532,7 +533,7 @@ function computeGenericOverlay(executor: ExecutorInfo): ExecutorOverlay {
   }
   if (closePrice > 0 && closePrice !== entryPrice) {
     const pnlPositive = side === "buy" ? closePrice > entryPrice : closePrice < entryPrice;
-    lines.push({ price: closePrice, label: "Close", color: pnlHexColor(pnlPositive ? 1 : -1), style: "dashed" });
+    lines.push({ price: closePrice, label: t("Close (price)"), color: pnlHexColor(pnlPositive ? 1 : -1), style: "dashed" });
   }
 
   // Segment
@@ -754,7 +755,7 @@ export function renderOverlayTooltipHtml(
   } else if (entryPrice && entryPrice > 0) {
     addRow("Entry", formatPriceSig(entryPrice));
     if (exitPrice && exitPrice > 0 && exitPrice !== entryPrice) {
-      addRow(active ? "Current" : "Close", formatPriceSig(exitPrice));
+      addRow(active ? t("Current") : t("Close (price)"), formatPriceSig(exitPrice));
     }
   }
 

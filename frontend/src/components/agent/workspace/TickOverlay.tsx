@@ -7,6 +7,7 @@ import { SnapshotDetail } from "@/components/agent/session/Snapshot";
 import { snapshotQueryOptions } from "@/hooks/useSnapshotBubbles";
 import { api } from "@/lib/api";
 import { parseJournal } from "@/lib/parse-agent";
+import { t } from "@/lib/i18n";
 
 /** True when a key press belongs to whatever has focus, not to the overlay. */
 function isTypingTarget(target: EventTarget | null): boolean {
@@ -96,8 +97,8 @@ export function TickOverlay({
             data-tick-prev
             onClick={() => prev !== null && onSelectTick(prev)}
             disabled={prev === null}
-            aria-label="Previous tick"
-            title="Previous tick (←)"
+            aria-label={t("Previous tick")}
+            title={t("Previous tick (←)")}
             className={stepButton}
           >
             <ChevronLeft className="h-4 w-4" />
@@ -107,14 +108,14 @@ export function TickOverlay({
             data-tick-next
             onClick={() => next !== null && onSelectTick(next)}
             disabled={next === null}
-            aria-label="Next tick"
-            title="Next tick (→)"
+            aria-label={t("Next tick")}
+            title={t("Next tick (→)")}
             className={stepButton}
           >
             <ChevronRight className="h-4 w-4" />
           </button>
           <span className="ml-1 truncate text-xs font-bold uppercase tracking-widest text-[var(--color-text-muted)]">
-            Tick #{tick} · session {sessionNum}
+            {t("Tick #")}{tick} {t("· session")}{" "}{sessionNum}
           </span>
           {index >= 0 && (
             <span
@@ -128,7 +129,7 @@ export function TickOverlay({
         <button
           type="button"
           onClick={onClose}
-          aria-label="Close tick"
+          aria-label={t("Close tick")}
           className="rounded p-1 text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)]"
         >
           <X className="h-4 w-4" />

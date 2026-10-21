@@ -11,6 +11,7 @@ import {
 
 import { type BundleSource } from "./bundleSource";
 import { ImportAgentDialog } from "./ImportAgentDialog";
+import { t } from "@/lib/i18n";
 
 /**
  * A listing, as the four calls the review dialog makes (FEAT-146).
@@ -114,10 +115,10 @@ export function HubBrowser({ onInstalled }: { onInstalled: () => void }) {
         className="flex items-center gap-2"
       >
         <input
-          aria-label="Search the hub"
+          aria-label={t("Search the hub")}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search agents…"
+          placeholder={t("Search agents…")}
           className="w-64 rounded-md border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-1.5 text-sm text-[var(--color-text)] focus:border-[var(--color-primary)] focus:outline-none"
         />
         <button
@@ -126,14 +127,12 @@ export function HubBrowser({ onInstalled }: { onInstalled: () => void }) {
           className="flex items-center gap-1.5 rounded-md border border-[var(--color-border)] px-3 py-1.5 text-xs font-semibold text-[var(--color-text-muted)] hover:text-[var(--color-text)] disabled:opacity-50"
         >
           <Search className="h-3.5 w-3.5" />
-          Search
-        </button>
+          {t("Search")}</button>
       </form>
 
       {isLoading && (
         <p className="flex items-center gap-2 text-sm text-[var(--color-text-muted)]">
-          <Loader2 className="h-4 w-4 animate-spin" /> Asking the hub…
-        </p>
+          <Loader2 className="h-4 w-4 animate-spin" /> {t("Asking the hub…")}</p>
       )}
 
       {/* The hub is a service that can be down, and that is not Condor being
@@ -146,15 +145,13 @@ export function HubBrowser({ onInstalled }: { onInstalled: () => void }) {
             onClick={() => refetch()}
             className="underline hover:text-[var(--color-text)]"
           >
-            Try again
-          </button>
+            {t("Try again")}</button>
         </p>
       )}
 
       {data && data.listings.length === 0 && !error && (
         <p className="text-sm text-[var(--color-text-muted)]">
-          The hub has nothing matching that.
-        </p>
+          {t("The hub has nothing matching that.")}</p>
       )}
 
       {data && data.listings.length > 0 && (
@@ -176,7 +173,7 @@ export function HubBrowser({ onInstalled }: { onInstalled: () => void }) {
                   {listing.description || "No description."}
                 </span>
                 <span className="block text-[11px] text-[var(--color-text-muted)]">
-                  <span className="font-mono">{listing.slug}</span> · version{" "}
+                  <span className="font-mono">{listing.slug}</span> {t("· version")}{" "}
                   {listing.version} · {listing.bytes} bytes
                   {listing.published_at && ` · published ${listing.published_at}`}
                 </span>
@@ -193,17 +190,14 @@ export function HubBrowser({ onInstalled }: { onInstalled: () => void }) {
                     <span className="text-[var(--color-text)]">
                       {listing.author.handle || listing.author.name}
                     </span>{" "}
-                    — an account the hub authenticated, not a signature over
-                    this file.
-                  </span>
+                    {t("— an account the hub authenticated, not a signature over this file.")}</span>
                 )}
               </span>
               <button
                 onClick={() => setChosen(listing)}
                 className="shrink-0 rounded-lg border border-[var(--color-border)] px-3 py-1.5 text-xs font-semibold text-[var(--color-text-muted)] transition-all hover:border-[var(--color-primary)]/50 hover:text-[var(--color-primary)]"
               >
-                Review
-              </button>
+                {t("Review")}</button>
             </li>
           ))}
         </ul>

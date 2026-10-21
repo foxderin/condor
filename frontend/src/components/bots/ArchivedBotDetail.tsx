@@ -22,6 +22,7 @@ import type {
   ArchivedExecutor,
 } from "@/lib/api";
 import { formatCurrencyPnl, formatCurrencyVolume, pnlTextClass } from "@/lib/formatters";
+import { t } from "@/lib/i18n";
 
 /**
  * The symbol every figure on this page is drawn behind.
@@ -52,9 +53,7 @@ function ConversionNote({ perf }: { perf: ArchivedBotPerformance }) {
   if (!perf.converted) {
     return (
       <p className="text-[10px] text-amber-500/90">
-        No USD rate for {perf.quote_currency || "this run's quote"} — figures are
-        shown in their own quote currency, not dollars.
-      </p>
+        {t("No USD rate for")}{" "}{perf.quote_currency || "this run's quote"} {t("— figures are shown in their own quote currency, not dollars.")}</p>
     );
   }
 
@@ -63,7 +62,7 @@ function ConversionNote({ perf }: { perf: ArchivedBotPerformance }) {
 
   return (
     <p className="text-[10px] text-[var(--color-text-muted)]">
-      Converted from {perf.quote_currency} at 1 USD ={" "}
+      {t("Converted from")}{" "}{perf.quote_currency} {t("at 1 USD =")}{" "}
       {(1 / rate).toLocaleString(undefined, { maximumFractionDigits: 4 })}{" "}
       {perf.quote_currency}
     </p>
@@ -177,7 +176,7 @@ function ExecutorTable({
   return (
     <div>
       <h3 className="text-xs font-medium text-[var(--color-text-muted)] mb-2 uppercase tracking-wider">
-        Executors ({total})
+        {t("Executors (")}{total})
       </h3>
       <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] overflow-auto">
         {isLoading ? (
@@ -189,24 +188,24 @@ function ExecutorTable({
             <thead>
               <tr className="border-b border-[var(--color-border)] text-[var(--color-text-muted)]">
                 <th className="px-3 py-2 text-left font-medium">ID</th>
-                <th className="px-3 py-2 text-left font-medium">Type</th>
-                <th className="px-3 py-2 text-left font-medium">Pair</th>
-                <th className="px-3 py-2 text-left font-medium">Side</th>
-                <th className="px-3 py-2 text-left font-medium">Close Type</th>
-                <th className="px-3 py-2 text-right font-medium">Entry</th>
-                <th className="px-3 py-2 text-right font-medium">Exit</th>
+                <th className="px-3 py-2 text-left font-medium">{t("Type")}</th>
+                <th className="px-3 py-2 text-left font-medium">{t("Pair")}</th>
+                <th className="px-3 py-2 text-left font-medium">{t("Side")}</th>
+                <th className="px-3 py-2 text-left font-medium">{t("Close Type")}</th>
+                <th className="px-3 py-2 text-right font-medium">{t("Entry")}</th>
+                <th className="px-3 py-2 text-right font-medium">{t("Exit")}</th>
                 <th
                   className="px-3 py-2 text-right font-medium cursor-pointer hover:text-[var(--color-text)]"
                   onClick={() => toggleSort("pnl")}
                 >
-                  PnL{sortIndicator("pnl")}
+                  {t("PnL")}{sortIndicator("pnl")}
                 </th>
-                <th className="px-3 py-2 text-right font-medium">Fees</th>
+                <th className="px-3 py-2 text-right font-medium">{t("Fees")}</th>
                 <th
                   className="px-3 py-2 text-right font-medium cursor-pointer hover:text-[var(--color-text)]"
                   onClick={() => toggleSort("volume")}
                 >
-                  Volume{sortIndicator("volume")}
+                  {t("Volume")}{sortIndicator("volume")}
                 </th>
               </tr>
             </thead>
@@ -339,19 +338,19 @@ function ControllerTable({
   return (
     <div>
       <h3 className="text-xs font-medium text-[var(--color-text-muted)] mb-2 uppercase tracking-wider">
-        Controllers ({controllers.length})
+        {t("Controllers (")}{controllers.length})
       </h3>
       <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] overflow-auto">
         <table className="w-full text-xs">
           <thead>
             <tr className="border-b border-[var(--color-border)] text-[var(--color-text-muted)]">
-              <th className="px-3 py-2 text-left font-medium">Controller</th>
-              <th className="px-3 py-2 text-left font-medium">Pairs</th>
-              <th className="px-3 py-2 text-right font-medium">PnL</th>
-              <th className="px-3 py-2 text-right font-medium">Volume</th>
-              <th className="px-3 py-2 text-right font-medium">Fees</th>
-              <th className="px-3 py-2 text-right font-medium">Executors</th>
-              <th className="px-3 py-2 text-right font-medium">Chart</th>
+              <th className="px-3 py-2 text-left font-medium">{t("Controller")}</th>
+              <th className="px-3 py-2 text-left font-medium">{t("Pairs")}</th>
+              <th className="px-3 py-2 text-right font-medium">{t("PnL")}</th>
+              <th className="px-3 py-2 text-right font-medium">{t("Volume")}</th>
+              <th className="px-3 py-2 text-right font-medium">{t("Fees")}</th>
+              <th className="px-3 py-2 text-right font-medium">{t("Executors")}</th>
+              <th className="px-3 py-2 text-right font-medium">{t("Chart")}</th>
             </tr>
           </thead>
           <tbody>
@@ -369,8 +368,7 @@ function ControllerTable({
                   <td className="px-3 py-1.5 font-mono">
                     {c.controller_id || (
                       <span className="text-[var(--color-text-muted)] italic">
-                        no controller
-                      </span>
+                        {t("no controller")}</span>
                     )}
                   </td>
                   <td className="px-3 py-1.5">{c.trading_pairs.join(", ") || "—"}</td>
@@ -407,10 +405,7 @@ function ControllerTable({
       </div>
       {!reconciles && (
         <p className="mt-1.5 text-[10px] text-[var(--color-text-muted)]">
-          Rolled up from this run's executors. The cards above come from its
-          trade rows, which carry no controller — for this run the two do not
-          total the same.
-        </p>
+          {t("Rolled up from this run's executors. The cards above come from its trade rows, which carry no controller — for this run the two do not total the same.")}</p>
       )}
     </div>
   );
@@ -445,15 +440,14 @@ function ArchivedReportPanel({
     <div>
       <div className="flex items-center justify-between mb-2">
         <h3 className="text-xs font-medium text-[var(--color-text-muted)] uppercase tracking-wider">
-          Chart — {label}
+          {t("Chart —")}{" "}{label}
         </h3>
         {reportId && !isRunning && (
           <button
             onClick={regenerate}
             className="flex items-center gap-1 text-[11px] text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
           >
-            <RefreshCw className="h-3 w-3" /> Regenerate
-          </button>
+            <RefreshCw className="h-3 w-3" /> {t("Regenerate")}</button>
         )}
       </div>
 
@@ -462,7 +456,7 @@ function ArchivedReportPanel({
           <div className="flex flex-col items-center justify-center h-48 gap-3">
             <Loader2 className="h-5 w-5 animate-spin text-[var(--color-text-muted)]" />
             <p className="text-xs text-[var(--color-text-muted)]">
-              Charting {label}…
+              {t("Charting")}{" "}{label}…
             </p>
           </div>
         ) : reportId ? (
@@ -479,14 +473,13 @@ function ArchivedReportPanel({
         ) : (
           <div className="flex flex-col items-center justify-center h-48 gap-3">
             <p className="text-xs text-[var(--color-text-muted)]">
-              No chart for {label} yet.
+              {t("No chart for")}{" "}{label} yet.
             </p>
             <button
               onClick={chart}
               className="flex items-center gap-2 rounded px-3 py-1.5 text-xs bg-[var(--color-primary)]/20 text-[var(--color-primary)] border border-[var(--color-primary)]/40 hover:bg-[var(--color-primary)]/30"
             >
-              <BarChart3 className="h-3.5 w-3.5" /> Chart
-            </button>
+              <BarChart3 className="h-3.5 w-3.5" /> {t("Chart")}</button>
             {error && <p className="text-[10px] text-[var(--color-red)]">{error}</p>}
           </div>
         )}
@@ -537,8 +530,7 @@ export function ArchivedBotDetail({ dbPath, botName, onBack }: Props) {
       onClick={onBack}
       className="flex items-center gap-2 text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
     >
-      <ArrowLeft className="h-4 w-4" /> Back to runs
-    </button>
+      <ArrowLeft className="h-4 w-4" /> {t("Back to runs")}</button>
   );
 
   if (isLoading) {
@@ -550,7 +542,7 @@ export function ArchivedBotDetail({ dbPath, botName, onBack }: Props) {
         </div>
         <div className="flex flex-col items-center justify-center h-48 gap-3">
           <Loader2 className="h-6 w-6 animate-spin text-[var(--color-text-muted)]" />
-          <p className="text-xs text-[var(--color-text-muted)]">Reading archived database…</p>
+          <p className="text-xs text-[var(--color-text-muted)]">{t("Reading archived database…")}</p>
         </div>
       </div>
     );
@@ -564,8 +556,7 @@ export function ArchivedBotDetail({ dbPath, botName, onBack }: Props) {
           <h2 className="text-lg font-semibold">{botName}</h2>
         </div>
         <div className="flex items-center justify-center h-48 text-[var(--color-red)]">
-          Failed to load performance data
-        </div>
+          {t("Failed to load performance data")}</div>
       </div>
     );
   }
@@ -593,18 +584,18 @@ export function ArchivedBotDetail({ dbPath, botName, onBack }: Props) {
       {/* Stats row */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
         <StatCard
-          label="Total PnL"
+          label={t("Total PnL")}
           value={formatCurrencyPnl(perf.total_pnl, symbol)}
           className={pnlTextClass(perf.total_pnl)}
         />
-        <StatCard label="Volume" value={formatCurrencyVolume(perf.total_volume, symbol)} />
-        <StatCard label="Fees" value={formatCurrencyVolume(perf.total_fees, symbol)} />
+        <StatCard label={t("Volume")} value={formatCurrencyVolume(perf.total_volume, symbol)} />
+        <StatCard label={t("Fees")} value={formatCurrencyVolume(perf.total_fees, symbol)} />
         <StatCard
           label={perf.stats_source === "executors" ? "Executors" : "Trades"}
           value={perf.trade_count.toLocaleString()}
         />
-        <StatCard label="Buy / Sell" value={`${perf.buy_count} / ${perf.sell_count}`} />
-        <StatCard label="Pairs" value={String(perf.trading_pairs.length)} />
+        <StatCard label={t("Buy / Sell")} value={`${perf.buy_count} / ${perf.sell_count}`} />
+        <StatCard label={t("Pairs")} value={String(perf.trading_pairs.length)} />
       </div>
 
       <ConversionNote perf={perf} />
@@ -634,8 +625,7 @@ export function ArchivedBotDetail({ dbPath, botName, onBack }: Props) {
       {pnlPairs.length > 0 && (
         <div>
           <h3 className="text-xs font-medium text-[var(--color-text-muted)] mb-2 uppercase tracking-wider">
-            PnL by Trading Pair
-          </h3>
+            {t("PnL by Trading Pair")}</h3>
           <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-3 space-y-2">
             {pnlPairs.map(([pair, pnl]) => (
               <PnlByPairBar key={pair} pair={pair} pnl={pnl} maxAbs={maxAbsPnl} symbol={symbol} />

@@ -1,5 +1,6 @@
 import { Search, X } from "lucide-react";
 import { useMemo, useState } from "react";
+import { t } from "@/lib/i18n";
 
 /**
  * One thing a bubble group can filter on, and how much of the population it
@@ -104,7 +105,7 @@ export function BubbleGroup({
             onClick={() => onChange([])}
             disabled={selected.length === 0}
             className="rounded px-1 py-0.5 hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)] disabled:opacity-30 disabled:hover:bg-transparent"
-            title="Clear this filter — everything comes back"
+            title={t("Clear this filter — everything comes back")}
           >
             none
           </button>
@@ -126,7 +127,7 @@ export function BubbleGroup({
               type="button"
               onClick={() => setQuery("")}
               className="absolute right-1 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
-              title="Clear search"
+              title={t("Clear search")}
             >
               <X className="h-2.5 w-2.5" />
             </button>

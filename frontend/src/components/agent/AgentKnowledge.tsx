@@ -48,6 +48,7 @@ import {
 } from "@/lib/api";
 import { agentQuery } from "@/lib/queryClient";
 import { formatRoutineName } from "@/lib/routineUtils";
+import { t } from "@/lib/i18n";
 
 /**
  * One plugin list for every render (PERF-393): a fresh `[remarkGfm]` is a new
@@ -418,7 +419,7 @@ export const AgentKnowledge = memo(function AgentKnowledge({
     <div
       role="tablist"
       aria-orientation="horizontal"
-      aria-label="Sections"
+      aria-label={t("Sections")}
       className="flex shrink-0 items-stretch gap-1 overflow-x-auto border-b border-[var(--color-border)] px-2 py-1.5"
     >
       {tabs.map((t) => {
@@ -481,8 +482,7 @@ export const AgentKnowledge = memo(function AgentKnowledge({
     <>
       {isLoading && (
         <div className="flex items-center gap-2 py-8 text-xs text-[var(--color-text-muted)]">
-          <Loader2 className="h-3.5 w-3.5 animate-spin" /> Reading the brain…
-        </div>
+          <Loader2 className="h-3.5 w-3.5 animate-spin" /> {t("Reading the brain…")}</div>
       )}
       {error && !brain && (
         <p className="py-8 text-xs text-[var(--color-red)]">
@@ -635,27 +635,25 @@ export const AgentKnowledge = memo(function AgentKnowledge({
       >
         {deleting?.kind === "memory" ? (
           <>
-            Make this agent forget{" "}
+            {t("Make this agent forget")}{" "}
             <strong className="text-[var(--color-text)]">
               {deleting.card.name}
             </strong>
-            ? It drops out of every future conversation.
-          </>
+            {t("? It drops out of every future conversation.")}</>
         ) : (
           <>
-            Delete{" "}
+            {t("Delete")}{" "}
             <strong className="text-[var(--color-text)]">
               {deleting?.kind === "skill" ? deleting.card.name : ""}
             </strong>
-            ? The agent stops reading it. This cannot be undone.
-          </>
+            {t("? The agent stops reading it. This cannot be undone.")}</>
         )}
       </ConfirmDialog>
 
       {/* An unsaved editor is worth flagging even where the host cannot guard
           its own close — a tab click drops the text without ceremony. */}
       {dirty && (
-        <p className="mt-3 text-[10px] text-amber-400">Unsaved changes.</p>
+        <p className="mt-3 text-[10px] text-amber-400">{t("Unsaved changes.")}</p>
       )}
     </>
   );
@@ -752,10 +750,9 @@ function BrainTab({
           onClick={onDone}
           className="mb-3 flex items-center gap-1 text-[11px] text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text)]"
         >
-          <ArrowLeft className="h-3 w-3" /> Back to the brain
-        </button>
+          <ArrowLeft className="h-3 w-3" /> {t("Back to the brain")}</button>
         <MarkdownEditor
-          label="Brain"
+          label={t("Brain")}
           sublabel="AGENT.md — identity & domain knowledge"
           content={brain.agent_md}
           // The agent page reads the same file under its own key, so a save
@@ -792,8 +789,7 @@ function BrainTab({
       {brain.when_to_consult && (
         <div className="mb-4 rounded border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2">
           <p className="mb-0.5 text-[10px] uppercase tracking-wider text-[var(--color-text-muted)]">
-            When Condor routes to it
-          </p>
+            {t("When Condor routes to it")}</p>
           <p className="text-xs text-[var(--color-text)]">
             {brain.when_to_consult}
           </p>
@@ -802,8 +798,7 @@ function BrainTab({
 
       <div className="mb-1 flex items-center justify-between gap-3">
         <p className="text-[10px] uppercase tracking-wider text-[var(--color-text-muted)]">
-          AGENT.md — identity &amp; domain knowledge
-        </p>
+          {t("AGENT.md — identity &amp; domain knowledge")}</p>
         <EditButton onClick={onEdit} />
       </div>
       {prose ? (
@@ -811,7 +806,7 @@ function BrainTab({
           <ReactMarkdown remarkPlugins={GFM}>{prose}</ReactMarkdown>
         </div>
       ) : (
-        <Empty>This agent has no AGENT.md yet.</Empty>
+        <Empty>{t("This agent has no AGENT.md yet.")}</Empty>
       )}
     </div>
   );
@@ -852,8 +847,7 @@ function ProposedSkill({
   return (
     <div className="rounded border border-dashed border-[var(--color-primary)]/40 bg-[var(--color-surface)] px-3 py-2">
       <div className="flex items-center gap-1.5 text-[10px] text-[var(--color-primary)]">
-        <Sparkles className="h-3 w-3" /> Proposed from a conversation
-      </div>
+        <Sparkles className="h-3 w-3" /> {t("Proposed from a conversation")}</div>
       <p className="mt-1 text-xs font-medium text-[var(--color-text)]">
         {proposal.name}
       </p>
@@ -891,15 +885,13 @@ function ProposedSkill({
           ) : (
             <Check className="h-3 w-3" />
           )}
-          Accept
-        </button>
+          {t("Accept")}</button>
         <button
           onClick={() => discard.mutate()}
           disabled={busy}
           className="flex items-center gap-1 rounded border border-[var(--color-border)] px-2 py-1 text-[11px] text-[var(--color-text-muted)] transition-colors hover:border-[var(--color-red)]/50 hover:text-[var(--color-red)] disabled:opacity-50"
         >
-          <X className="h-3 w-3" /> Discard
-        </button>
+          <X className="h-3 w-3" /> {t("Discard")}</button>
       </div>
       {failure && (
         <p className="mt-1.5 text-[11px] text-[var(--color-red)]">
@@ -939,12 +931,8 @@ function SkillsTab({
     <div className="space-y-1.5">
       <div className="flex items-start justify-between gap-3">
         <p className="text-[11px] text-[var(--color-text-muted)]">
-          Playbooks the agent reads before hand-rolling a known flow. Click one
-          to read it exactly as the agent does. Switch one off and it leaves
-          this agent's context — from its next tick, or from your next message
-          in a chat that is already open.
-        </p>
-        <AddButton onClick={onCreate} label="New playbook" />
+          {t("Playbooks the agent reads before hand-rolling a known flow. Click one to read it exactly as the agent does. Switch one off and it leaves this agent's context — from its next tick, or from your next message in a chat that is already open.")}</p>
+        <AddButton onClick={onCreate} label={t("New playbook")} />
       </div>
       {brain.skill_proposal && (
         <ProposedSkill
@@ -957,7 +945,7 @@ function SkillsTab({
         // A pending proposal is already the whole tab: an empty-library notice
         // under its card reads as a contradiction.
         brain.skill_proposal ? null : (
-          <Empty>No playbooks in this agent's library.</Empty>
+          <Empty>{t("No playbooks in this agent's library.")}</Empty>
         )
       ) : (
         brain.skills.map((s) => (
@@ -1062,13 +1050,11 @@ function MemoriesTab({
     <div className="space-y-1.5">
       <div className="flex items-start justify-between gap-3">
         <p className="text-[11px] text-[var(--color-text-muted)]">
-          What this agent remembers about you — yours alone, and separate from
-          every other agent's.
-        </p>
-        <AddButton onClick={onCreate} label="New memory" />
+          {t("What this agent remembers about you — yours alone, and separate from every other agent's.")}</p>
+        <AddButton onClick={onCreate} label={t("New memory")} />
       </div>
       {brain.memories.length === 0 ? (
-        <Empty>Nothing remembered in this domain yet.</Empty>
+        <Empty>{t("Nothing remembered in this domain yet.")}</Empty>
       ) : (
         brain.memories.map((m) => (
           <Row
@@ -1126,17 +1112,14 @@ function ToolsTab({
   return (
     <div className="space-y-1.5">
       <p className="text-[11px] text-[var(--color-text-muted)]">
-        Every tool this agent's seat mounts. Switch one off and the model is no
-        longer told it exists — from the next tick, or from your next message in
-        an open chat.
-      </p>
+        {t("Every tool this agent's seat mounts. Switch one off and the model is no longer told it exists — from the next tick, or from your next message in an open chat.")}</p>
       <p className="text-[11px] text-[var(--color-text-muted)]">
         {brain.tools_unrestricted
           ? "AGENT.md names no allowlist, so nothing narrows this further. Naming tools there limits the agent to exactly those — edit it in the Brain tab, where it is written."
           : "AGENT.md names an allowlist: only the tools marked allowlisted are mounted, and the rest are never offered to the agent. Edit it in the Brain tab, where it is written."}
       </p>
       {brain.tools.length === 0 ? (
-        <Empty>No tools mounted on this agent's seat.</Empty>
+        <Empty>{t("No tools mounted on this agent's seat.")}</Empty>
       ) : (
         grouped.map((group) => (
           <div key={group.id} className="space-y-1.5 pt-1">
@@ -1217,24 +1200,15 @@ function RoutinesTab({
     <div className="space-y-1.5">
       <div className="flex items-start justify-between gap-3">
         <p className="text-[11px] text-[var(--color-text-muted)]">
-          Scripts this agent can run on demand or on a schedule. Its own library
-          first, then the shared one every agent reads. Switching one off takes
-          it out of this agent from its next tick, or from your next message in
-          a chat that is already open — /routines still lists and runs it.
-        </p>
+          {t("Scripts this agent can run on demand or on a schedule. Its own library first, then the shared one every agent reads. Switching one off takes it out of this agent from its next tick, or from your next message in a chat that is already open — /routines still lists and runs it.")}</p>
         {action}
       </div>
       {anyPending && (
         <p className="rounded border border-amber-500/40 bg-amber-500/5 px-2.5 py-1.5 text-[11px] text-amber-400">
-          Some of these routines came from an imported bundle and have not run
-          here yet. A routine runs as Python inside the Condor process, with no
-          sandbox — open it, read it, then Allow it. Allowing is separate from
-          the on/off switch: the switch says whether this agent may use it, Allow
-          says whether its code may run at all.
-        </p>
+          {t("Some of these routines came from an imported bundle and have not run here yet. A routine runs as Python inside the Condor process, with no sandbox — open it, read it, then Allow it. Allowing is separate from the on/off switch: the switch says whether this agent may use it, Allow says whether its code may run at all.")}</p>
       )}
       {brain.routines.length === 0 ? (
-        <Empty>No routines this agent can run.</Empty>
+        <Empty>{t("No routines this agent can run.")}</Empty>
       ) : (
         brain.routines.map((r) => (
           <Row

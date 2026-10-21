@@ -35,6 +35,7 @@ import {
   type StrategyDetail,
 } from "@/lib/api";
 import { agentQuery } from "@/lib/queryClient";
+import { t } from "@/lib/i18n";
 
 /**
  * How many runs one page of the rail holds (FEAT-111).
@@ -368,8 +369,7 @@ export function AgentRunScreen({
           />
         ) : (
           <p className="py-8 text-center text-sm text-[var(--color-text-muted)]">
-            Loading this loop's playbook…
-          </p>
+            {t("Loading this loop's playbook…")}</p>
         );
     }
   };
@@ -459,8 +459,7 @@ export function AgentRunScreen({
       >
         {!sslug ? (
           <p className="py-8 text-center text-sm text-[var(--color-text-muted)]">
-            This agent has no loops yet, so there is nothing to look at.
-          </p>
+            {t("This agent has no loops yet, so there is nothing to look at.")}</p>
         ) : section === "now" ? (
           <div className={isPane ? "p-4" : "mx-auto w-full max-w-6xl p-6"}>
             {nowBody}
@@ -499,7 +498,7 @@ function PaneTabs({
 }) {
   return (
     <nav
-      aria-label="Sections"
+      aria-label={t("Sections")}
       role="tablist"
       data-pane-tabs
       // No border of its own: the row it shares with the spine draws it.

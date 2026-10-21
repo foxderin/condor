@@ -52,6 +52,7 @@ import {
 } from "@/lib/pnl-chart";
 import { useActivityPane } from "@/lib/pnl-chart-pane";
 import { getThemeColors } from "@/lib/theme-colors";
+import { t } from "@/lib/i18n";
 
 /**
  * A scope's PnL, one line per child of it (FEAT-112, rehosted by FEAT-116).
@@ -360,7 +361,7 @@ export function OwnerPnlChart({
               <span
                 className="ml-2 font-mono text-[10px] normal-case tracking-normal opacity-70"
                 data-owner-stem
-                title="Every line's name starts with this; the legend prints what differs."
+                title={t("Every line's name starts with this; the legend prints what differs.")}
               >
                 {stem}…
               </span>
@@ -397,7 +398,7 @@ export function OwnerPnlChart({
 
         <div className="mt-1 flex min-w-0 flex-wrap items-center gap-x-2 gap-y-0.5">
           <LegendChip
-            label="Total"
+            label={t("Total")}
             color={tc.up}
             // A dash, never a number, when the Total is one of the series
             // Relative cannot measure: `rebaseRows` removes the field rather
@@ -446,7 +447,7 @@ export function OwnerPnlChart({
           data-owner-unplottable
           className="border-b border-[var(--color-border)] px-3 py-1 text-[10px] text-[var(--color-text-muted)]"
         >
-          Not plotted in Relative — no declared capital to measure against:{" "}
+          {t("Not plotted in Relative — no declared capital to measure against:")}{" "}
           {unplottable
             .map((u) => (u.key === "total" ? "Total" : (fullLabels.get(u.key) ?? u.key)))
             .join(", ")}
@@ -458,12 +459,10 @@ export function OwnerPnlChart({
         <p
           data-owner-gap
           className="border-b border-[var(--color-border)] px-3 py-1 text-[10px] text-[var(--color-yellow)]"
-          title="Records with no controller history — a standalone executor, for instance — are in the fold and cannot be in the line."
+          title={t("Records with no controller history — a standalone executor, for instance — are in the fold and cannot be in the line.")}
         >
-          The line ends {formatCurrencyPnl(-gap, symbol)} from the strip's net:{" "}
-          {formatCurrencyPnl(gap, symbol)} of the fold has no controller history to
-          be drawn from.
-        </p>
+          {t("The line ends")}{" "}{formatCurrencyPnl(-gap, symbol)} {t("from the strip's net:")}{" "}
+          {formatCurrencyPnl(gap, symbol)} {t("of the fold has no controller history to be drawn from.")}</p>
       )}
 
       {drawnRows.length === 0 ? (
@@ -471,8 +470,7 @@ export function OwnerPnlChart({
           data-owner-chart-empty
           className="px-3 py-12 text-center text-sm text-[var(--color-text-muted)]"
         >
-          No performance history yet.
-        </p>
+          {t("No performance history yet.")}</p>
       ) : (
         <>
           <div
@@ -730,9 +728,7 @@ export function OwnerPnlChart({
                 second line would have said — point at a line for its share of
                 the bars — the tooltip says instead, where it is being asked. */}
             {bucketLabel ? `Bars are volume traded per ${bucketLabel} bucket. ` : ""}
-            The lines are folded from controller performance history, one call per
-            line — the same fold this page draws when you walk into one of them
-            with <code className="font-mono">?scope=</code>.
+            {t("The lines are folded from controller performance history, one call per line — the same fold this page draws when you walk into one of them with")}<code className="font-mono">?scope=</code>.
           </p>
         </>
       )}
@@ -985,7 +981,7 @@ function OwnerTooltip({
         )}
         {showTotal && focused !== "total" && typeof total === "number" && (
           <p className="font-mono text-[10px] text-[var(--color-text-muted)]">
-            Total {format(total)}
+            {t("Total")}{" "}{format(total)}
           </p>
         )}
       </div>
@@ -1008,7 +1004,7 @@ function OwnerTooltip({
       {when}
       {showTotal && typeof total === "number" && (
         <p className={`font-mono font-semibold ${pnlTextClass(total)}`}>
-          Total {format(total)}
+          {t("Total")}{" "}{format(total)}
         </p>
       )}
       {shown.map(([key, value]) => (
@@ -1019,8 +1015,7 @@ function OwnerTooltip({
       ))}
       {rest > 0 && (
         <p className="font-mono text-[10px] text-[var(--color-text-muted)]">
-          +{rest} more — point at a line to read it and its share of the bars
-        </p>
+          +{rest} {t("more — point at a line to read it and its share of the bars")}</p>
       )}
     </div>
   );
@@ -1071,21 +1066,21 @@ function Attribution({
     <>
       {typeof traded === "number" && traded > 0 && (
         <p data-owner-tooltip-volume className="font-mono text-[10px] text-[var(--color-text-muted)]">
-          Traded{bucketLabel ? ` ${bucketLabel}` : ""}{" "}
+          {t("Traded")}{bucketLabel ? ` ${bucketLabel}` : ""}{" "}
           <span style={{ color: PNL_SERIES_COLORS.volume }}>
             {formatCurrencyVolume(traded, symbol)}
           </span>
           {share !== null && (
             <>
               {" · "}
-              {share}% of {formatCurrencyVolume(bucket, symbol)}
+              {share}{t("% of")}{" "}{formatCurrencyVolume(bucket, symbol)}
             </>
           )}
         </p>
       )}
       {hasPosition && typeof book === "number" && book !== 0 && (
         <p data-owner-tooltip-position className="font-mono text-[10px] text-[var(--color-text-muted)]">
-          Book{" "}
+          {t("Book")}{" "}
           <span style={{ color: PNL_SERIES_COLORS.position }}>
             {formatCurrencyVolume(book, symbol)}
           </span>

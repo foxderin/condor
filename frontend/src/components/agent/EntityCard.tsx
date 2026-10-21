@@ -7,6 +7,7 @@ import { useSeconds } from "@/hooks/useSeconds";
 import { countdown } from "@/lib/agent-attribution";
 import type { RunningInstance } from "@/lib/api";
 import { formatAge } from "@/lib/formatters";
+import { t } from "@/lib/i18n";
 
 // ── Entity Card ──
 //
@@ -118,12 +119,12 @@ export function EntityCard({
 
         <div className="grid grid-cols-4 gap-2 border-t border-[var(--color-border)]/50 pt-3">
           <Fact
-            label="Last tick"
+            label={t("Last tick")}
             value={lastTickAt > 0 ? `${formatAge(lastTickAt)} ago` : "\u2014"}
           />
-          <Fact label="Ticks" value={String(ticks)} />
+          <Fact label={t("Ticks")} value={String(ticks)} />
           <Fact
-            label="Next tick"
+            label={t("Next tick")}
             // An overdue tick is named as overdue rather than printed as a
             // negative countdown — the same call the pulse and the fleet band
             // both make.
@@ -137,7 +138,7 @@ export function EntityCard({
             sub={live ? `every ${countdown(live.frequency_sec)}` : undefined}
           />
           <Fact
-            label="Runs"
+            label={t("Runs")}
             value={String(entity.session_count)}
             chip={
               entity.experiment_count ? (
@@ -155,7 +156,7 @@ export function EntityCard({
       </div>
 
       <div className="flex items-center justify-end border-t border-[var(--color-border)]/30 px-4 py-2 text-[var(--color-text-muted)] opacity-0 transition-opacity group-hover:opacity-100">
-        <span className="text-[11px]">Open</span>
+        <span className="text-[11px]">{t("Open")}</span>
         <ChevronRight className="h-3.5 w-3.5" />
       </div>
     </button>

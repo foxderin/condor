@@ -3,6 +3,7 @@ import { Bell, Check, ChevronDown, Loader2, Plus, Send, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { type RoutineHooks, api } from "@/lib/api";
+import { t } from "@/lib/i18n";
 
 interface Props {
   routineName: string;
@@ -89,11 +90,10 @@ function TagsInput({
           onClick={commit}
           disabled={!draft.trim()}
           className="flex items-center gap-0.5 rounded px-1.5 py-0.5 text-[10px] font-semibold text-[var(--color-primary)] hover:bg-[var(--color-surface-hover)] disabled:opacity-40"
-          title="Add"
+          title={t("Add")}
         >
           <Plus className="h-3 w-3" />
-          Add
-        </button>
+          {t("Add")}</button>
       </div>
       {hint && (
         <p className="text-[10px] text-[var(--color-text-muted)]">{hint}</p>
@@ -142,14 +142,13 @@ function HooksForm({ routineName }: { routineName: string }) {
   return (
     <div className="space-y-4">
       <p className="text-[11px] text-[var(--color-text-muted)]">
-        Send the report to these Telegram chats after the routine runs.
-      </p>
+        {t("Send the report to these Telegram chats after the routine runs.")}</p>
 
       {/* Telegram */}
       <div className="space-y-1.5">
         <div className="flex items-center gap-2">
           <Send className="h-3.5 w-3.5 text-[var(--color-text-muted)]" />
-          <span className="text-xs font-medium text-[var(--color-text)]">Telegram</span>
+          <span className="text-xs font-medium text-[var(--color-text)]">{t("Telegram")}</span>
           <div className="ml-auto">
             <Toggle
               on={hooks.telegram.enabled}
@@ -165,15 +164,15 @@ function HooksForm({ routineName }: { routineName: string }) {
         <TagsInput
           values={hooks.telegram.chat_ids}
           onChange={(v) => setHooks((h) => ({ ...h, telegram: { ...h.telegram, chat_ids: v } }))}
-          placeholder="-1001234567890 (group) or user id"
-          hint="Add multiple chats — press Enter, comma, or Add after each id."
+          placeholder={t("-1001234567890 (group) or user id")}
+          hint={t("Add multiple chats — press Enter, comma, or Add after each id.")}
           validate={(v) => /^-?\d+$/.test(v)}
         />
       </div>
 
       {/* Trigger + Save (compact row) */}
       <div className="space-y-1.5">
-        <span className="text-xs font-medium text-[var(--color-text)]">Send when</span>
+        <span className="text-xs font-medium text-[var(--color-text)]">{t("Send when")}</span>
         <div className="flex items-center gap-2">
           <div className="relative flex-1">
             <select
@@ -183,9 +182,9 @@ function HooksForm({ routineName }: { routineName: string }) {
               }
               className="w-full appearance-none rounded border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1.5 pr-8 text-sm text-[var(--color-text)] focus:border-[var(--color-primary)] focus:outline-none"
             >
-              <option value="success">On success only</option>
-              <option value="always">Always (success or error)</option>
-              <option value="failure">On error only</option>
+              <option value="success">{t("On success only")}</option>
+              <option value="always">{t("Always (success or error)")}</option>
+              <option value="failure">{t("On error only")}</option>
             </select>
             <ChevronDown className="pointer-events-none absolute right-2 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[var(--color-text-muted)]" />
           </div>
@@ -200,8 +199,7 @@ function HooksForm({ routineName }: { routineName: string }) {
             ) : saveMutation.isSuccess ? (
               <Check className="h-3.5 w-3.5" />
             ) : null}
-            Save
-          </button>
+            {t("Save")}</button>
         </div>
         {saveMutation.isError && (
           <span className="text-xs text-[var(--color-red)]">
@@ -229,8 +227,7 @@ export function RoutineHooksPanel({ routineName, collapsible = true }: Props) {
       >
         <Bell className="h-3.5 w-3.5 text-[var(--color-text-muted)]" />
         <span className="text-xs font-bold uppercase tracking-wider text-[var(--color-text-muted)]">
-          Notifications
-        </span>
+          {t("Notifications")}</span>
         <ChevronDown
           className={`ml-auto h-4 w-4 text-[var(--color-text-muted)] transition-transform ${open ? "rotate-180" : ""}`}
         />

@@ -19,6 +19,7 @@ import { CREDENTIAL_FIELD_PATTERNS } from "@/lib/credential-fields";
 import { credentialsQuery, gatewayWalletsQuery, invalidateCredentialQueries } from "@/lib/queryClient";
 import { ConnectHyperliquid } from "./ConnectHyperliquid";
 import { ImportGatewayWallet, type WalletChain } from "./ImportGatewayWallet";
+import { t } from "@/lib/i18n";
 
 type Step =
   | "list"
@@ -251,8 +252,7 @@ export function ApiKeysSettings() {
   if (!server) {
     return (
       <p className="py-8 text-center text-sm text-[var(--color-text-muted)]">
-        Select a server first.
-      </p>
+        {t("Select a server first.")}</p>
     );
   }
 
@@ -265,9 +265,8 @@ export function ApiKeysSettings() {
           onClick={() => setFlow(INITIAL_FLOW)}
           className="flex items-center gap-1.5 text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
         >
-          <ArrowLeft className="h-3.5 w-3.5" /> Back
-        </button>
-        <h3 className="text-sm font-semibold text-[var(--color-text)]">Select Connector Type</h3>
+          <ArrowLeft className="h-3.5 w-3.5" /> {t("Back")}</button>
+        <h3 className="text-sm font-semibold text-[var(--color-text)]">{t("Select Connector Type")}</h3>
         <div className="grid grid-cols-2 gap-3">
           {["spot", "perpetual"].map((type) => (
             <button
@@ -291,7 +290,7 @@ export function ApiKeysSettings() {
           className="flex w-full items-center justify-between rounded-lg border border-[#5ce0c6]/40 bg-[#5ce0c6]/5 p-4 text-left transition-colors hover:border-[var(--color-border-hover)] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-[#5ce0c6]/40"
         >
           <span>
-            <span className="text-sm font-medium text-[var(--color-text)]">Connect Hyperliquid</span>
+            <span className="text-sm font-medium text-[var(--color-text)]">{t("Connect Hyperliquid")}</span>
             <p className="mt-1 text-xs text-[var(--color-text-muted)]">
               {hyperliquidConnected
                 ? "Already connected — remove the existing Hyperliquid keys to reconnect."
@@ -301,7 +300,7 @@ export function ApiKeysSettings() {
           {hyperliquidConnected ? (
             <Check className="h-7 w-7 shrink-0 text-[var(--color-primary)]" />
           ) : (
-            <img src="/hyperliquid.png" alt="Hyperliquid" className="h-7 w-7 shrink-0 rounded-full" />
+            <img src="/hyperliquid.png" alt={t("Hyperliquid")} className="h-7 w-7 shrink-0 rounded-full" />
           )}
         </button>
       </div>
@@ -330,15 +329,11 @@ export function ApiKeysSettings() {
           onClick={() => setFlow(INITIAL_FLOW)}
           className="flex items-center gap-1.5 text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
         >
-          <ArrowLeft className="h-3.5 w-3.5" /> Back
-        </button>
+          <ArrowLeft className="h-3.5 w-3.5" /> {t("Back")}</button>
         <div>
-          <h2 className="text-lg font-semibold text-[var(--color-text)]">Add Wallet to Gateway</h2>
+          <h2 className="text-lg font-semibold text-[var(--color-text)]">{t("Add Wallet to Gateway")}</h2>
           <p className="mt-1 text-xs text-[var(--color-text-muted)]">
-            Gateway signs DEX transactions on your server, so it needs the wallet's private key.
-            Browser wallets never share private keys with apps — export the key manually and paste
-            it below.
-          </p>
+            {t("Gateway signs DEX transactions on your server, so it needs the wallet's private key. Browser wallets never share private keys with apps — export the key manually and paste it below.")}</p>
         </div>
 
         {/* Chain tabs */}
@@ -383,15 +378,12 @@ export function ApiKeysSettings() {
           onClick={() => setFlow({ ...flow, step: "select-type", connectorType: "" })}
           className="flex items-center gap-1.5 text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
         >
-          <ArrowLeft className="h-3.5 w-3.5" /> Back
-        </button>
+          <ArrowLeft className="h-3.5 w-3.5" /> {t("Back")}</button>
         <h3 className="text-sm font-semibold text-[var(--color-text)]">
-          Select {flow.connectorType} Exchange
-        </h3>
+          {t("Select")}{" "}{flow.connectorType} {t("Exchange")}</h3>
         {loadingConnectors ? (
           <div className="flex items-center gap-2 py-4 text-xs text-[var(--color-text-muted)]">
-            <Loader2 className="h-4 w-4 animate-spin" /> Loading connectors...
-          </div>
+            <Loader2 className="h-4 w-4 animate-spin" /> {t("Loading connectors...")}</div>
         ) : (
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
             {connectors.map((c) => {
@@ -425,8 +417,7 @@ export function ApiKeysSettings() {
             })}
             {connectors.length === 0 && (
               <p className="col-span-full py-4 text-center text-xs text-[var(--color-text-muted)]">
-                No {flow.connectorType} connectors available.
-              </p>
+                No {flow.connectorType} {t("connectors available.")}</p>
             )}
           </div>
         )}
@@ -441,23 +432,21 @@ export function ApiKeysSettings() {
           onClick={() => setFlow({ ...flow, step: "select-exchange", connectorName: "", values: {} })}
           className="flex items-center gap-1.5 text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
         >
-          <ArrowLeft className="h-3.5 w-3.5" /> Back
-        </button>
+          <ArrowLeft className="h-3.5 w-3.5" /> {t("Back")}</button>
         <h3 className="flex items-center gap-2 text-sm font-semibold text-[var(--color-text)]">
-          Configure {flow.connectorName}
+          {t("Configure")}{" "}{flow.connectorName}
           <a
             href={`https://hummingbot.org/exchanges/${flow.connectorName.replace(/_(perpetual|spot)$/, "")}/#how-to-connect`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1 text-xs font-normal text-[var(--color-primary)] hover:underline"
           >
-            How to connect <ExternalLink className="h-3 w-3" />
+            {t("How to connect")}{" "}<ExternalLink className="h-3 w-3" />
           </a>
         </h3>
         {loadingConfigMap ? (
           <div className="flex items-center gap-2 py-4 text-xs text-[var(--color-text-muted)]">
-            <Loader2 className="h-4 w-4 animate-spin" /> Loading fields...
-          </div>
+            <Loader2 className="h-4 w-4 animate-spin" /> {t("Loading fields...")}</div>
         ) : (
           <div className="space-y-3">
             {configFields.map((f) => (
@@ -466,7 +455,7 @@ export function ApiKeysSettings() {
                   {f.key}
                   {f.required ? (
                     <span
-                      title="Required"
+                      title={t("Required")}
                       aria-label="required"
                       className="text-base font-bold leading-none text-[var(--color-red)]"
                     >
@@ -498,8 +487,7 @@ export function ApiKeysSettings() {
 
             {configFields.length === 0 && (
               <p className="text-xs text-[var(--color-text-muted)]">
-                No configuration fields found for this connector.
-              </p>
+                {t("No configuration fields found for this connector.")}</p>
             )}
 
             <div className="flex items-center gap-2 pt-2">
@@ -509,14 +497,12 @@ export function ApiKeysSettings() {
                 className="flex items-center gap-1.5 rounded-md bg-[var(--color-primary)] px-4 py-1.5 text-xs font-medium text-white transition-colors hover:bg-[var(--color-primary)]/80 disabled:opacity-50"
               >
                 {addMut.isPending && <Loader2 className="h-3 w-3 animate-spin" />}
-                Add Credential
-              </button>
+                {t("Add Credential")}</button>
               <button
                 onClick={() => setFlow(INITIAL_FLOW)}
                 className="rounded-md px-3 py-1.5 text-xs text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)]"
               >
-                Cancel
-              </button>
+                {t("Cancel")}</button>
             </div>
 
             {addMut.error && (
@@ -553,16 +539,14 @@ export function ApiKeysSettings() {
             }
             className="flex items-center gap-1.5 rounded-md border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1.5 text-xs font-medium text-[var(--color-text)] transition-colors hover:border-[var(--color-border-hover)] hover:bg-[var(--color-surface-hover)] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-[var(--color-border)] disabled:hover:bg-[var(--color-surface)]"
           >
-            <Wallet className="h-3.5 w-3.5" /> Add Wallet
-          </button>
+            <Wallet className="h-3.5 w-3.5" /> {t("Add Wallet")}</button>
           <button
             onClick={() => setFlow({ ...INITIAL_FLOW, step: "select-type" })}
             disabled={!isOwner}
             title={isOwner ? undefined : OWNER_ONLY_HINT}
             className="flex items-center gap-1.5 rounded-md bg-[var(--color-primary)] px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-[var(--color-primary)]/80 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-[var(--color-primary)]"
           >
-            <Plus className="h-3.5 w-3.5" /> Add API Key
-          </button>
+            <Plus className="h-3.5 w-3.5" /> {t("Add API Key")}</button>
         </div>
       </div>
 
@@ -578,8 +562,7 @@ export function ApiKeysSettings() {
         </div>
       ) : credentials.length === 0 ? (
         <p className="py-8 text-center text-sm text-[var(--color-text-muted)]">
-          No API keys configured. Add one to start trading.
-        </p>
+          {t("No API keys configured. Add one to start trading.")}</p>
       ) : (
         <div className="space-y-4">
           {Object.entries(grouped)
@@ -631,16 +614,13 @@ export function ApiKeysSettings() {
       {/* ── Gateway wallets ── */}
       <div>
         <h3 className="mb-2 text-xs font-semibold uppercase tracking-wider text-[var(--color-text-muted)]">
-          Wallets
-        </h3>
+          {t("Wallets")}</h3>
         {walletsError ? (
           <p className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-3 text-xs text-[var(--color-text-muted)]">
-            Gateway is not reachable — start it from the Gateway tab to manage wallets.
-          </p>
+            {t("Gateway is not reachable — start it from the Gateway tab to manage wallets.")}</p>
         ) : wallets.length === 0 ? (
           <p className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-3 text-xs text-[var(--color-text-muted)]">
-            No wallets in Gateway. Add one to trade on DEXs.
-          </p>
+            {t("No wallets in Gateway. Add one to trade on DEXs.")}</p>
         ) : (
           <div className="space-y-2">
             {wallets.map((w) => {
@@ -662,7 +642,7 @@ export function ApiKeysSettings() {
                         {w.isDefault && (
                           <span
                             className="flex items-center gap-0.5 rounded bg-[var(--color-primary)]/10 px-1.5 py-0.5 text-[10px] font-medium text-[var(--color-primary)]"
-                            title="Default wallet for this chain"
+                            title={t("Default wallet for this chain")}
                           >
                             <Star className="h-2.5 w-2.5" /> default
                           </span>
@@ -699,7 +679,7 @@ export function ApiKeysSettings() {
                       triggerLabel={
                         isOwner ? "Remove wallet from Gateway" : OWNER_ONLY_HINT
                       }
-                      confirmLabel="Confirm remove"
+                      confirmLabel={t("Confirm remove")}
                       cancelLabel="Cancel remove"
                     />
                   </div>

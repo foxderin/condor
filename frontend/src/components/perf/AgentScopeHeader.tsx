@@ -17,6 +17,7 @@ import { shortBotName } from "@/lib/formatters";
 import { useSeconds } from "@/hooks/useSeconds";
 
 import { StatusDot } from "./ScopeTree";
+import { t } from "@/lib/i18n";
 
 /**
  * What the agent driving this scope is doing right now (FEAT-096).
@@ -191,8 +192,7 @@ export function AgentScopeHeader({
                 : `Open ${owner.strategySlug}`
             }
           >
-            Open session
-            <ExternalLink className="h-2.5 w-2.5" />
+            {t("Open session")}<ExternalLink className="h-2.5 w-2.5" />
           </button>
         )}
       </h2>
@@ -205,7 +205,7 @@ export function AgentScopeHeader({
         <span
           data-loop-liveness
           className="block truncate text-[10px] tabular-nums text-[var(--color-text-muted)]"
-          title="When this loop last obtained a reading, and last completed a call that changed the market. Both are outcomes — a tick that achieved nothing moves neither."
+          title={t("When this loop last obtained a reading, and last completed a call that changed the market. Both are outcomes — a tick that achieved nothing moves neither.")}
         >
           {liveness.join(" · ")}
         </span>
@@ -248,7 +248,7 @@ export function AgentScopeHeader({
       )}
       {live?.lastError && (
         <span className="block truncate text-[10px] text-amber-500/90" title={live.lastError}>
-          Last tick errored: {live.lastError}
+          {t("Last tick errored:")}{" "}{live.lastError}
         </span>
       )}
       {legacyBots.length > 0 && (
@@ -256,7 +256,7 @@ export function AgentScopeHeader({
           className="block truncate text-[10px] text-amber-500/90"
           title={`These were configured before this loop's namespace existed, so this scope folds their whole record: ${legacyBots.join(", ")}`}
         >
-          includes trading from before this loop adopted {legacyBots.join(", ")}
+          {t("includes trading from before this loop adopted")}{" "}{legacyBots.join(", ")}
         </span>
       )}
       {children}

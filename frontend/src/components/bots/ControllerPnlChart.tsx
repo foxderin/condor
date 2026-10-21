@@ -13,6 +13,7 @@ import { aggregatePnlSeries, samplingIntervalSince } from "@/lib/pnl-chart";
 import { controllerPerfHistoryQuery } from "@/lib/queryClient";
 import type { ConvertFn } from "@/lib/rates";
 import { PnlEvolutionChart } from "./PnlEvolutionChart";
+import { t } from "@/lib/i18n";
 
 // ── Component ──
 
@@ -115,8 +116,7 @@ export function ControllerPnlChart({ server, controllerId, botName, deployedAt, 
       <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] flex items-center justify-center" style={{ height }}>
         <div className="flex items-center gap-2 text-xs text-[var(--color-text-muted)]">
           <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-current border-t-transparent" />
-          Loading performance history...
-        </div>
+          {t("Loading performance history...")}</div>
       </div>
     );
   }
@@ -124,7 +124,7 @@ export function ControllerPnlChart({ server, controllerId, botName, deployedAt, 
   if (data.length === 0) {
     return (
       <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] flex items-center justify-center" style={{ height }}>
-        <p className="text-xs text-[var(--color-text-muted)]">No performance history available</p>
+        <p className="text-xs text-[var(--color-text-muted)]">{t("No performance history available")}</p>
       </div>
     );
   }
@@ -134,7 +134,7 @@ export function ControllerPnlChart({ server, controllerId, botName, deployedAt, 
   return (
     <PnlEvolutionChart
       data={data}
-      title="PnL Evolution"
+      title={t("PnL Evolution")}
       pnlHeight={pnlH}
       volumeHeight={height - pnlH}
       currencySymbol={currencySymbol}

@@ -5,6 +5,7 @@ import { formatConnectorName } from "@/lib/formatters";
 import type { FavoriteMarket } from "@/lib/marketFavorites";
 import { useMarketFavorites } from "@/lib/marketFavorites";
 import type { MarketPick } from "./MarketBrowser";
+import { t } from "@/lib/i18n";
 
 interface FavoritesStripProps {
   /** Whose stars these are: a favourite belongs to one server, never to all. */
@@ -125,7 +126,7 @@ export function FavoritesStrip({
   return (
     <div
       role="toolbar"
-      aria-label="Starred markets"
+      aria-label={t("Starred markets")}
       className="flex items-center gap-1 overflow-x-auto border-b border-[var(--color-border)] bg-[var(--color-surface)] px-2 py-1 scrollbar-none"
     >
       <Star className="h-3 w-3 shrink-0 fill-[var(--color-yellow)] text-[var(--color-yellow)]" />
@@ -217,7 +218,7 @@ export function FavoritesStrip({
               <button
                 onClick={() => toggle({ connector: f.connector, pair: f.pair })}
                 aria-label={`Unstar ${f.pair} on ${formatConnectorName(f.connector)}`}
-                title="Unstar"
+                title={t("Unstar")}
                 className="px-1 py-0.5 text-[var(--color-text-muted)] opacity-0 transition-opacity hover:text-[var(--color-text)] focus-visible:opacity-100 group-hover:opacity-100"
               >
                 <X className="h-2.5 w-2.5" />

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { useCondorWebSocket } from "@/hooks/useWebSocket";
+import { t } from "@/lib/i18n";
 
 interface Trade {
   price: number;
@@ -77,8 +78,7 @@ export function RecentTrades({ server, connector, pair }: RecentTradesProps) {
   if (!pair) {
     return (
       <div className="flex h-full items-center justify-center text-xs text-[var(--color-text-muted)]">
-        Select a pair
-      </div>
+        {t("Select a pair")}</div>
     );
   }
 
@@ -87,23 +87,21 @@ export function RecentTrades({ server, connector, pair }: RecentTradesProps) {
       {/* Header */}
       <div className="border-b border-[var(--color-border)] px-3 py-2">
         <h3 className="text-xs font-semibold uppercase tracking-wider text-[var(--color-text-muted)]">
-          Recent Trades
-        </h3>
+          {t("Recent Trades")}</h3>
       </div>
 
       {/* Column headers */}
       <div className="grid grid-cols-3 gap-1 border-b border-[var(--color-border)] px-3 py-1.5 text-[10px] font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
-        <span>Time</span>
-        <span className="text-right">Price</span>
-        <span className="text-right">Amount</span>
+        <span>{t("Time")}</span>
+        <span className="text-right">{t("Price")}</span>
+        <span className="text-right">{t("Amount")}</span>
       </div>
 
       {/* Trades list */}
       <div className="flex-1 overflow-y-auto">
         {trades.length === 0 ? (
           <div className="flex items-center justify-center py-6 text-xs text-[var(--color-text-muted)]">
-            Waiting for trades...
-          </div>
+            {t("Waiting for trades...")}</div>
         ) : (
           trades.map((trade, i) => (
             <div
